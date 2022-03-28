@@ -14,6 +14,11 @@
 		6172F2D35A4C3AA820D92908 /* libPods-AnimalDogamApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6423831EA8574132BED9D8CC /* libPods-AnimalDogamApp.a */; };
 		7EF68E3733C33B6898317E18 /* libPods-AnimalDogamApp-AnimalDogamAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE59519B596E51CEFDCCC0 /* libPods-AnimalDogamApp-AnimalDogamAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		959CEB08FA2E4403A02CA6B5 /* OneMobileBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D848BE654B5F448FADD35E78 /* OneMobileBold.ttf */; };
+		8E30152872084CFE9CA1D479 /* OneMobileLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F7FD2CDD68B485F95C0069E /* OneMobileLight.ttf */; };
+		5FD89F023A0948DB9538732E /* OneMobilePOP.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28107EAE0B804FC48DAAA778 /* OneMobilePOP.ttf */; };
+		00BD0085F36143A4AE294997 /* OneMobileRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4C0BF04F88645E88E2DFD2C /* OneMobileRegular.ttf */; };
+		BDC9A27D85E1431BB78FBE31 /* OneMobileTitle.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85E8BDBC4DEA40D093D60BB8 /* OneMobileTitle.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +49,11 @@
 		C0A881CF5CF3F2B244570E2A /* Pods-AnimalDogamApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnimalDogamApp.debug.xcconfig"; path = "Target Support Files/Pods-AnimalDogamApp/Pods-AnimalDogamApp.debug.xcconfig"; sourceTree = "<group>"; };
 		D00AAFFCFCFDA5787532823F /* Pods-AnimalDogamApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnimalDogamApp.release.xcconfig"; path = "Target Support Files/Pods-AnimalDogamApp/Pods-AnimalDogamApp.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		D848BE654B5F448FADD35E78 /* OneMobileBold.ttf */ = {isa = PBXFileReference; name = "OneMobileBold.ttf"; path = "../assets/fonts/OneMobileBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0F7FD2CDD68B485F95C0069E /* OneMobileLight.ttf */ = {isa = PBXFileReference; name = "OneMobileLight.ttf"; path = "../assets/fonts/OneMobileLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		28107EAE0B804FC48DAAA778 /* OneMobilePOP.ttf */ = {isa = PBXFileReference; name = "OneMobilePOP.ttf"; path = "../assets/fonts/OneMobilePOP.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A4C0BF04F88645E88E2DFD2C /* OneMobileRegular.ttf */ = {isa = PBXFileReference; name = "OneMobileRegular.ttf"; path = "../assets/fonts/OneMobileRegular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		85E8BDBC4DEA40D093D60BB8 /* OneMobileTitle.ttf */ = {isa = PBXFileReference; name = "OneMobileTitle.ttf"; path = "../assets/fonts/OneMobileTitle.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +132,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E233CBF5F47BEE60B243DCF8 /* Pods */,
+				BCEDF655301B4E959B5C4BB6 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -148,6 +159,19 @@
 			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		BCEDF655301B4E959B5C4BB6 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				D848BE654B5F448FADD35E78 /* OneMobileBold.ttf */,
+				0F7FD2CDD68B485F95C0069E /* OneMobileLight.ttf */,
+				28107EAE0B804FC48DAAA778 /* OneMobilePOP.ttf */,
+				A4C0BF04F88645E88E2DFD2C /* OneMobileRegular.ttf */,
+				85E8BDBC4DEA40D093D60BB8 /* OneMobileTitle.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -245,6 +269,11 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				959CEB08FA2E4403A02CA6B5 /* OneMobileBold.ttf in Resources */,
+				8E30152872084CFE9CA1D479 /* OneMobileLight.ttf in Resources */,
+				5FD89F023A0948DB9538732E /* OneMobilePOP.ttf in Resources */,
+				00BD0085F36143A4AE294997 /* OneMobileRegular.ttf in Resources */,
+				BDC9A27D85E1431BB78FBE31 /* OneMobileTitle.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
-import { NavigationRouteContext } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useCallback, useRef, useState } from 'react';
+import { Image } from 'react-native';
 import {
   Alert,
   Pressable,
@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   View,
+  useWindowDimensions,
 } from 'react-native';
 import { RootStackParamList } from '../../App';
 import DismissKeyboardView from '../components/DismissKeyboardView';
@@ -45,6 +46,15 @@ function SignIn({ navigation }: SignInScreenProps) {
   const canGoNext = email && password;
   return (
     <DismissKeyboardView>
+      <View style={styles.appLogoWrapper}>
+        <Image
+          source={{ uri: 'https://picsum.photos/seed/picsum/100/100' }} // Sample image
+          style={styles.appLogo}
+        />
+      </View>
+      <View style={styles.appNameWrapper}>
+        <Text style={styles.appNameText}>동물 도감</Text>
+      </View>
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>이메일</Text>
         <TextInput
@@ -76,7 +86,6 @@ function SignIn({ navigation }: SignInScreenProps) {
           importantForAutofill="yes"
           autoComplete="password" // 자동완성
           textContentType="password"
-          keyboardType="decimal-pad" // 비밀번호를 숫자로만 받고 싶은 경우
           ref={passwordRef}
           onSubmitEditing={onSubmit} // 엔터 쳤을 때 처리할 동작
           clearButtonMode="while-editing" // 입력 중에 X 표시 누르면 모두 지워지게끔 (for IOS)
@@ -95,7 +104,9 @@ function SignIn({ navigation }: SignInScreenProps) {
           <Text style={styles.loginButtonText}>로그인</Text>
         </Pressable>
         <Pressable onPress={toSignUp}>
-          <Text>회원가입 하기</Text>
+          <Text style={{ fontFamily: 'OneMobileRegular' }}>
+            아직 회원이 아니신가요? 회원가입
+          </Text>
         </Pressable>
       </View>
     </DismissKeyboardView>
@@ -103,30 +114,56 @@ function SignIn({ navigation }: SignInScreenProps) {
 }
 
 const styles = StyleSheet.create({
+  appLogoWrapper: {
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  appLogo: {
+    width: 100,
+    height: 100,
+  },
+  appNameWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  appNameText: {
+    fontSize: 35,
+    fontFamily: 'OneMobilePOP',
+    color: 'black',
+  },
   inputWrapper: {
-    padding: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
   },
   textInput: {
     padding: 5,
     borderBottomWidth: StyleSheet.hairlineWidth, // 눈에 보이지만 가장 얇은 두께
   },
-  label: { fontWeight: 'bold', fontSize: 16, marginBottom: 20 },
+  label: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    marginBottom: 5,
+    fontFamily: 'OneMobileBold',
+  },
   loginButton: {
-    backgroundColor: 'gray',
-    paddingHorizontal: 20,
+    backgroundColor: '#FF9F62',
     paddingVertical: 10,
-    borderRadius: 5,
+    paddingHorizontal: 50,
+    borderRadius: 10,
     marginBottom: 10,
   },
   loginButtonActive: {
-    backgroundColor: 'blue',
+    backgroundColor: '#FF7C29',
   },
   loginButtonText: {
     color: 'white',
     fontSize: 16,
+    fontFamily: 'OneMobileBold',
   },
   buttonZone: {
     alignItems: 'center',
+    paddingVertical: 10,
   },
 });
 
