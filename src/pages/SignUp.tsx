@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useRef, useState } from 'react';
 import {
@@ -49,6 +50,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
       return Alert.alert('알림', '비밀번호를 입력해주세요.');
     }
     if (
+      // 이메일 형식 test
       !/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/.test(
         email,
       )
