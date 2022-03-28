@@ -45,10 +45,10 @@ function SignIn({ navigation }: SignInScreenProps) {
 
   const canGoNext = email && password;
   return (
-    <DismissKeyboardView>
+    <DismissKeyboardView style={{ backgroundColor: 'white' }}>
       <View style={styles.appLogoWrapper}>
         <Image
-          source={{ uri: 'https://picsum.photos/seed/picsum/100/100' }} // Sample image
+          source={{ uri: 'https://ifh.cc/g/fvOgR4.png' }} // Sample image
           style={styles.appLogo}
         />
       </View>
@@ -119,13 +119,14 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   appLogo: {
-    width: 100,
-    height: 100,
+    width: 192,
+    height: 81,
   },
   appNameWrapper: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 10,
+    paddingTop: 10,
+    paddingBottom: 30,
   },
   appNameText: {
     fontSize: 35,
@@ -141,7 +142,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth, // 눈에 보이지만 가장 얇은 두께
   },
   label: {
-    fontWeight: 'bold',
     fontSize: 15,
     marginBottom: 5,
     fontFamily: 'OneMobileBold',

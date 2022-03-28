@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import {
   Alert,
+  Image,
   Platform,
   Pressable,
   StyleSheet,
@@ -65,7 +66,13 @@ function SignUp({ navigation }: SignUpScreenProps) {
 
   const canGoNext = email && name && password;
   return (
-    <DismissKeyboardView>
+    <DismissKeyboardView style={{ backgroundColor: 'white' }}>
+      <View style={styles.appLogoWrapper}>
+        <Image
+          source={{ uri: 'https://ifh.cc/g/Hsn11h.png' }} // Sample image
+          style={styles.appLogo}
+        />
+      </View>
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>이름</Text>
         <TextInput
@@ -103,7 +110,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
         <TextInput
           style={styles.textInput}
           onChangeText={onChangeEmail}
-          placeholder="이메일을 입력해주세요"
+          placeholder="이메일을 입력해주세요."
           placeholderTextColor="#666"
           textContentType="emailAddress"
           value={email}
@@ -118,7 +125,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
         <Text style={styles.label}>비밀번호</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="비밀번호를 입력해주세요(영문,숫자,특수문자)"
+          placeholder="영문,숫자,특수문자 포함 8자 이상 입력하세요."
           placeholderTextColor="#666"
           onChangeText={onChangePassword}
           value={password}
@@ -149,34 +156,44 @@ function SignUp({ navigation }: SignUpScreenProps) {
 }
 
 const styles = StyleSheet.create({
+  appLogoWrapper: {
+    alignItems: 'center',
+    paddingTop: 5,
+  },
+  appLogo: {
+    width: 156,
+    height: 112,
+  },
   textInput: {
     padding: 5,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   inputWrapper: {
-    padding: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
   },
   label: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 20,
+    fontSize: 15,
+    marginBottom: 5,
+    fontFamily: 'OneMobileBold',
   },
   buttonZone: {
     alignItems: 'center',
   },
   loginButton: {
-    backgroundColor: 'gray',
-    paddingHorizontal: 20,
+    backgroundColor: '#FF9F62',
     paddingVertical: 10,
-    borderRadius: 5,
+    paddingHorizontal: 50,
+    borderRadius: 10,
     marginBottom: 10,
   },
   loginButtonActive: {
-    backgroundColor: 'blue',
+    backgroundColor: '#FF7C29',
   },
   loginButtonText: {
     color: 'white',
     fontSize: 16,
+    fontFamily: 'OneMobileBold',
   },
 });
 
