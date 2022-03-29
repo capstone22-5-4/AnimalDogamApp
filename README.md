@@ -1,6 +1,6 @@
 # AnimalDogamApp
 
-**2022.03.27 update**
+**2022.03.28 update**
 
 ## Starting an app in local
 
@@ -36,6 +36,9 @@ npm run android
 - yarn.lock 파일은 변경 금지
 - git pull한 후에는 `npm install` 진행 후 실행
 - 환경변수를 사용할 경우 `.env` 파일 확인 후 실행(ignore 되어 pull 되지 않음)
+
+- react-native는 0.66버전 유지(0.66.4 사용 / 업그레이드 금지)
+- react-native-reanimated는 2.2.0 버전 이하로 유지
 
 ---
 

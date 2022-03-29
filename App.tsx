@@ -1,6 +1,8 @@
+import 'react-native-gesture-handler';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useState } from 'react';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
@@ -15,6 +17,7 @@ export type RootStackParamList = {
 // type DetailsScreenProps = NativeStackScreenProps<ParamListBase, 'Details'>;
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
