@@ -1,13 +1,22 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { useState } from 'react';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
+import Home from './src/pages/Home';
+import Dogam from './src/pages/Dogam';
 
-export type LoggedInParamList = {};
+export type LoggedInParamList = {
+  Home: undefined;
+  Dogam: undefined;
+  AnimalUpload: undefined;
+  Ranking: undefined;
+  Quest: undefined;
+  Acheivement: undefined;
+  Setting: undefined;
+};
 
 export type RootStackParamList = {
   SignIn: undefined;
@@ -20,10 +29,15 @@ const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(true);
   return (
     <NavigationContainer>
-      {isLoggedIn ? null : ( // *TODO: null 대신 메인 서비스 네비게이션으로 대체
+      {isLoggedIn ? (
+        <Drawer.Navigator initialRouteName="Home">
+          <Drawer.Screen name="Home" component={Home} />
+          <Drawer.Screen name="Dogam" component={Dogam} />
+        </Drawer.Navigator> // *TODO: null 대신 메인 서비스 네비게이션으로 대체
+      ) : (
         <Stack.Navigator>
           <Stack.Screen
             name="SignIn"

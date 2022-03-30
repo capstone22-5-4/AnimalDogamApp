@@ -1,7 +1,5 @@
 # AnimalDogamApp
 
-**2022.03.28 update**
-
 ## Starting an app in local
 
 #### 1. react-native 환경설정
@@ -10,14 +8,26 @@
 - Android SDK **30**, Emulator: **Nexus 5**
 - adb 설치 필요 & ANDROID_HOME 환경변수 설정
 - https://reactnative.dev/docs/environment-setup 참조
+- yarn이 설치되어 있지 않은 경우 다음 명령어를 실행하여 설치
+  `npm install -g yarn`
 
 #### 2. 앱 실행하기
 
 ```
 git clone https://github.com/capstone22-5-4/AnimalDogamApp.git
 cd AnimalDogamApp
-npm run android
+yarn android
 ```
+
+---
+
+## Note
+
+- 패키지 매니저로 npm 대신 **yarn**을 사용(npm 명령어는 사용하지 말 것)
+- package.json 파일이 변경 된 경우(ex. pull을 하였거나 패키지를 다운로드 한 경우)에는 `yarn`으로 패키지 의존성을 설치 한 후에 진행
+- 환경변수를 사용할 경우 `.env` 파일 확인 후 실행(ignore 되어 pull 되지 않음)
+- react-native는 0.66버전 유지(0.66.4 사용 / 업그레이드 금지)
+- react-native-reanimated는 2.2.0 버전 이하로 유지
 
 ---
 
@@ -31,35 +41,21 @@ npm run android
 
 ---
 
-## Note
-
-- yarn.lock 파일은 변경 금지
-- git pull한 후에는 `npm install` 진행 후 실행
-- 환경변수를 사용할 경우 `.env` 파일 확인 후 실행(ignore 되어 pull 되지 않음)
-
-- react-native는 0.66버전 유지(0.66.4 사용 / 업그레이드 금지)
-- react-native-reanimated는 2.2.0 버전 이하로 유지
-
----
-
 ## Error solution
 
 #### 1. 프로젝트 빌드를 실패할 경우 (Build FALIED)
 
-    ```
-    cd android
+```
+cd android
     ./gradlew clean
 
     cd .. // 프로젝트 홈 directory로 이동
-    npm start --reset-cache
-     ```
-
-<br />
+    yarn start --reset-cache
+```
 
 #### 2. Error: listen EADDRINUSE: address already in use :::8081
 
 : 이미 metro 서버가 켜져 있는 경우이므로, metro 서버를 실행하고 있는 터미널을 종료 후 다시 실행
-<br />
 
 #### 3. java.lang.RuntimeException: Unable to load script. Make sure you're either running Metro (run 'npx react-native start') or that your bundle 'index.android.bundle' is packaged correctly for release.
 
@@ -71,8 +67,6 @@ cd android
 cd ..
 npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle
 ```
-
-<br />
 
 #### 4. Execution failed for task ':app:packageDebug'. > java.lang.OutOfMemoryError (no error message)
 
