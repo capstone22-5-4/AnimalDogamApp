@@ -1,33 +1,33 @@
+import { NavigationRouteContext } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LoggedInParamList } from '../../App';
 
 type HomeScreenProps = NativeStackScreenProps<LoggedInParamList, 'Home'>;
 
 function Home({ navigation }: HomeScreenProps) {
+  const toAnimalUpload = useCallback(() => {
+    navigation.navigate('AnimalUpload');
+  }, [navigation]);
+
+  const toDogam = useCallback(() => {
+    navigation.navigate('Dogam');
+  }, [navigation]);
+
+  const toAchievement = useCallback(() => {
+    navigation.navigate('Achievement');
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
-      <Pressable
-        style={styles.mainButton}
-        onPress={() => {
-          navigation.navigate('AnimalUpload');
-        }}
-      >
+      <Pressable style={styles.mainButton} onPress={toAnimalUpload}>
         <Text style={styles.buttonText}>동물 수집하기</Text>
       </Pressable>
-      <Pressable
-        style={styles.mainButton}
-        onPress={() => navigation.navigate('Dogam')}
-      >
+      <Pressable style={styles.mainButton} onPress={toDogam}>
         <Text style={styles.buttonText}>나의 도감</Text>
       </Pressable>
-      <Pressable
-        style={styles.mainButton}
-        onPress={() => {
-          navigation.navigate('Achievement');
-        }}
-      >
+      <Pressable style={styles.mainButton} onPress={toAchievement}>
         <Text style={styles.buttonText}>나의 업적</Text>
       </Pressable>
     </View>

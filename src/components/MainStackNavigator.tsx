@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../pages/Home';
 import AnimalUpload from '../pages/AnimalUpload';
@@ -10,6 +10,10 @@ import { LoggedInParamList } from '../../App';
 const Stack = createStackNavigator<LoggedInParamList>();
 
 const MainStackNavigator = ({ navigation }) => {
+  const toOpenDrawer = useCallback(() => {
+    navigation.openDrawer();
+  }, [navigation]);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -17,7 +21,7 @@ const MainStackNavigator = ({ navigation }) => {
         component={Home}
         options={{
           headerLeft: () => (
-            <Pressable onPress={() => navigation.openDrawer()}>
+            <Pressable onPress={toOpenDrawer}>
               <Text>Menu</Text>
             </Pressable>
           ),
