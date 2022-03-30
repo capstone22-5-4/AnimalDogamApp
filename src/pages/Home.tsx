@@ -1,7 +1,11 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { LoggedInParamList } from '../../App';
 
-function Home({ navigation }) {
+type HomeScreenProps = NativeStackScreenProps<LoggedInParamList, 'Home'>;
+
+function Home({ navigation }: HomeScreenProps) {
   return (
     <View style={styles.container}>
       <Pressable

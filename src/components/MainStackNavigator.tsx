@@ -4,9 +4,10 @@ import Home from '../pages/Home';
 import AnimalUpload from '../pages/AnimalUpload';
 import Dogam from '../pages/Dogam';
 import Achievement from '../pages/Achievement';
-import { Alert, Pressable, Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
+import { LoggedInParamList } from '../../App';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<LoggedInParamList>();
 
 const MainStackNavigator = ({ navigation }) => {
   return (

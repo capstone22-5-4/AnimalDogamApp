@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
-import Home from './src/pages/Home';
 import Dogam from './src/pages/Dogam';
 import Ranking from './src/pages/Ranking';
 import Quest from './src/pages/Quest';
@@ -24,7 +23,7 @@ export type LoggedInParamList = {
   AnimalUpload: undefined;
   Ranking: undefined;
   Quest: undefined;
-  Acheivement: undefined;
+  Achievement: undefined;
   Setting: undefined;
 };
 
@@ -33,25 +32,25 @@ export type RootStackParamList = {
   SignUp: undefined;
 };
 
-const Stack = createNativeStackNavigator();
-const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const Drawer = createDrawerNavigator<LoggedInParamList>();
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(true);
+  const [isLoggedIn, setLoggedIn] = useState(true); // 메인 서비스 화면을 보려면 임시로 state를 true로 변경할 것
   return (
     <NavigationContainer>
       {isLoggedIn ? (
         <Drawer.Navigator initialRouteName="Home">
           <Drawer.Screen
-            name="홈"
+            name="Home"
             component={MainStackNavigator}
             options={{ headerShown: false }}
           />
-          <Drawer.Screen name="나의 도감" component={Dogam} />
-          <Drawer.Screen name="랭킹" component={Ranking} />
-          <Drawer.Screen name="일일 퀘스트" component={Quest} />
-          <Drawer.Screen name="업적" component={Achievement} />
-          <Drawer.Screen name="설정" component={Setting} />
+          <Drawer.Screen name="Dogam" component={Dogam} />
+          <Drawer.Screen name="Ranking" component={Ranking} />
+          <Drawer.Screen name="Quest" component={Quest} />
+          <Drawer.Screen name="Achievement" component={Achievement} />
+          <Drawer.Screen name="Setting" component={Setting} />
         </Drawer.Navigator>
       ) : (
         <Stack.Navigator>
