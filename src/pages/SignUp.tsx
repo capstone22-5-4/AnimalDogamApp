@@ -69,10 +69,10 @@ function SignUp({ navigation }: SignUpScreenProps) {
     ) {
       return Alert.alert('알림', '올바른 이메일 주소가 아닙니다.');
     }
-    if (!/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@^!%*#?&]).{8,50}$/.test(password)) {
+    if (!/^(?=.*[A-Za-z])(?=.*[0-9]).{8,50}$/.test(password)) {
       return Alert.alert(
         '알림',
-        '비밀번호는 영문,숫자,특수문자($@^!%*#?&)를 모두 포함하여 8자 이상 입력해야합니다.',
+        '비밀번호는 영문,숫자를 조합하여 8자 이상 입력해주세요.',
       );
     }
     console.log(email, name, nickname, password);
@@ -169,7 +169,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
         <Text style={styles.label}>비밀번호</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="영문,숫자,특수문자 포함 8자 이상 입력하세요."
+          placeholder="영문, 숫자를 모두 포함하여 8자 이상"
           placeholderTextColor="#666"
           onChangeText={onChangePassword}
           value={password}
