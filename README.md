@@ -11,7 +11,20 @@
 - yarn이 설치되어 있지 않은 경우 다음 명령어를 실행하여 설치
   `npm install -g yarn`
 
-#### 2. 앱 실행하기
+#### 2. `.env` 파일 생성 (for DEV)
+
+- 프로젝트 루트 directory(~/AnimalDogamApp)에 `.env` 파일을 생성한 후 아래 코드 붙여넣기
+
+```
+API_URL=http://10.0.2.2:8880
+```
+
+#### 3. 서버 실행
+
+- git clone https://github.com/capstone22-5-4/nodejs.git // 처음에만
+- 프로젝트 directory로 이동 후, `node ./src/mainkp.js`로 실행
+
+#### 4. 앱 실행하기
 
 ```
 git clone https://github.com/capstone22-5-4/AnimalDogamApp.git
