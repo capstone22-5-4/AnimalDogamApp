@@ -19,6 +19,21 @@ LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
 ]);
 
+export type LoggedInParamList = {
+  Home: undefined;
+  Dogam: undefined;
+  AnimalUpload: undefined;
+  Ranking: undefined;
+  Quest: undefined;
+  Achievement: undefined;
+  Setting: undefined;
+};
+
+export type RootStackParamList = {
+  SignIn: undefined;
+  SignUp: undefined;
+};
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 

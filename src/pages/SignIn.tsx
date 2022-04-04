@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import Config from 'react-native-config';
-import { RootStackParamList } from '../../App';
+import { RootStackParamList } from '../../AppInner';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
@@ -55,7 +55,7 @@ function SignIn({ navigation }: SignInScreenProps) {
           },
         },
       );
-      console.log(response);
+      console.log('data: ' + response); // TODO
       Alert.alert('알림', '로그인 되었습니다.');
     } catch (error) {
       const errorResponse = (error as AxiosError).response;
