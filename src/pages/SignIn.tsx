@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import axios, { AxiosError } from 'axios';
 import React, { useCallback, useRef, useState } from 'react';
 import { Image } from 'react-native';
 import {
@@ -10,12 +11,14 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 import { RootStackParamList } from '../../App';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
 function SignIn({ navigation }: SignInScreenProps) {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const emailRef = useRef<TextInput | null>(null);
@@ -29,15 +32,40 @@ function SignIn({ navigation }: SignInScreenProps) {
     setPassword(text);
   }, []);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
+    if (loading) {
+      return;
+    }
     if (!email || !email.trim()) {
       return Alert.alert('알림', '이메일을 입력해주세요.');
     }
     if (!password || !password.trim()) {
       return Alert.alert('알림', '비밀번호를 입력해주세요.');
     }
-    Alert.alert('알림', '로그인 되었습니다.');
-  }, [email, password]);
+    try {
+      setLoading(true);
+      const data = { email: email, pw: password };
+      const qs = require('qs');
+      const response = await axios.post(
+        `${Config.API_URL}/user/login`,
+        qs.stringify(data),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
+      );
+      console.log(response);
+      Alert.alert('알림', '로그인 되었습니다.');
+    } catch (error) {
+      const errorResponse = (error as AxiosError).response;
+      if (errorResponse) {
+        Alert.alert('알림', '로그인에 실패하였습니다.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [loading, email, password]);
 
   const toSignUp = useCallback(() => {
     navigation.navigate('SignUp');
