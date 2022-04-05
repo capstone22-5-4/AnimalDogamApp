@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
+import React from 'react';
 import { LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -18,6 +18,22 @@ import { RootState } from './src/store/reducer';
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
 ]);
+
+export type LoggedInParamList = {
+  Home: undefined;
+  홈: undefined;
+  Dogam: undefined;
+  AnimalUpload: undefined;
+  Ranking: undefined;
+  Quest: undefined;
+  Achievement: undefined;
+  Setting: undefined;
+};
+
+export type RootStackParamList = {
+  SignIn: undefined;
+  SignUp: undefined;
+};
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();

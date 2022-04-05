@@ -1,8 +1,7 @@
-import { NavigationRouteContext } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useCallback } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { LoggedInParamList } from '../../App';
+import { LoggedInParamList } from '../../AppInner';
 
 type HomeScreenProps = NativeStackScreenProps<LoggedInParamList, 'Home'>;
 
