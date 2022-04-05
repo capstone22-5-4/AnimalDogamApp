@@ -5,7 +5,7 @@ import AnimalUpload from '../pages/AnimalUpload';
 import Dogam from '../pages/Dogam';
 import Achievement from '../pages/Achievement';
 import { Pressable, Text } from 'react-native';
-import { LoggedInParamList } from '../../App';
+import { LoggedInParamList } from '../../AppInner';
 
 const Stack = createStackNavigator<LoggedInParamList>();
 
@@ -17,7 +17,7 @@ const MainStackNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="홈"
         component={Home}
         options={{
           headerLeft: () => (

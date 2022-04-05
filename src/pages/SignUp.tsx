@@ -95,18 +95,18 @@ function SignUp({ navigation }: SignUpScreenProps) {
       );
       console.log(response.data);
       Alert.alert('알림', '회원가입이 완료되었습니다.');
+      setLoading(false);
+      navigation.navigate('SignIn');
     } catch (error) {
       const errorResponse = (error as AxiosError).response;
       console.error(errorResponse);
       if (errorResponse) {
         Alert.alert('알림', '회원가입에 실패하였습니다.');
       }
-    } finally {
       setLoading(false);
+    } finally {
     }
-
-    Alert.alert('알림', '회원가입 되었습니다.');
-  }, [loading, email, name, nickname, password]);
+  }, [loading, email, name, nickname, password, navigation]);
 
   const canGoNext = email && name && nickname && password;
   return (

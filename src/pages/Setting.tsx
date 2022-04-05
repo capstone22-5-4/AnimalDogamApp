@@ -9,7 +9,8 @@ function Setting() {
   const dispatch = useAppDispatch();
   const onLogout = useCallback(async () => {
     try {
-      await axios.get(`${Config.API_URL}/user/logout`);
+      const response = await axios.get(`${Config.API_URL}/user/logout`);
+      console.log(response.data);
       Alert.alert('알림', '로그아웃 되었습니다.');
       dispatch(
         userSlice.actions.setUser({

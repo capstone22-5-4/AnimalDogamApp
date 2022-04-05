@@ -21,6 +21,7 @@ LogBox.ignoreLogs([
 
 export type LoggedInParamList = {
   Home: undefined;
+  홈: undefined;
   Dogam: undefined;
   AnimalUpload: undefined;
   Ranking: undefined;

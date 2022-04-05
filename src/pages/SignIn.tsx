@@ -59,6 +59,7 @@ function SignIn({ navigation }: SignInScreenProps) {
         },
       );
       console.log(response.data);
+      setLoading(false);
       Alert.alert('알림', '로그인 되었습니다.');
       dispatch(
         userSlice.actions.setUser({
@@ -71,8 +72,9 @@ function SignIn({ navigation }: SignInScreenProps) {
       if (errorResponse) {
         Alert.alert('알림', '로그인에 실패하였습니다.');
       }
-    } finally {
       setLoading(false);
+    } finally {
+      // setLoading(false);
     }
   }, [loading, email, password, dispatch]);
 
