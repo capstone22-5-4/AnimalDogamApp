@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // 전역 상태(global state)
 const initialState = {
-  name: '',
+  nickname: '',
   email: '',
-  accessToken: '',
+  //accessToken: '',
 };
 const userSlice = createSlice({
   name: 'user',
@@ -12,8 +12,8 @@ const userSlice = createSlice({
   reducers: {
     setUser(state, action) {
       state.email = action.payload.email;
-      state.name = action.payload.name;
-      state.accessToken = action.payload.accessToken;
+      state.nickname = action.payload.nickname;
+      //state.accessToken = action.payload.accessToken;
     },
   },
   extraReducers: (builder) => {},

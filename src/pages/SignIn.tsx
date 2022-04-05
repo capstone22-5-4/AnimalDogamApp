@@ -14,6 +14,8 @@ import {
 import Config from 'react-native-config';
 import { RootStackParamList } from '../../AppInner';
 import DismissKeyboardView from '../components/DismissKeyboardView';
+import userSlice from '../slices/user';
+import { useAppDispatch } from '../store';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
@@ -23,6 +25,7 @@ function SignIn({ navigation }: SignInScreenProps) {
   const [password, setPassword] = useState('');
   const emailRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
+  const dispatch = useAppDispatch();
 
   const onChangeEmail = useCallback((text) => {
     setEmail(text);
@@ -55,8 +58,14 @@ function SignIn({ navigation }: SignInScreenProps) {
           },
         },
       );
-      console.log('data: ' + response); // TODO
+      console.log(response.data);
       Alert.alert('알림', '로그인 되었습니다.');
+      dispatch(
+        userSlice.actions.setUser({
+          nickname: response.data.nickname,
+          email: response.data.email,
+        }),
+      );
     } catch (error) {
       const errorResponse = (error as AxiosError).response;
       if (errorResponse) {
@@ -65,7 +74,7 @@ function SignIn({ navigation }: SignInScreenProps) {
     } finally {
       setLoading(false);
     }
-  }, [loading, email, password]);
+  }, [loading, email, password, dispatch]);
 
   const toSignUp = useCallback(() => {
     navigation.navigate('SignUp');
