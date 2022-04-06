@@ -11,6 +11,7 @@ import Ranking from './src/pages/Ranking';
 import Quest from './src/pages/Quest';
 import Achievement from './src/pages/Achievement';
 import Setting from './src/pages/Setting';
+import FeedShop from './src/pages/FeedShop';
 import MainStackNavigator from './src/components/MainStackNavigator';
 import { useSelector } from 'react-redux';
 import { RootState } from './src/store/reducer';
@@ -28,6 +29,7 @@ export type LoggedInParamList = {
   Quest: undefined;
   Achievement: undefined;
   Setting: undefined;
+  FeedShop: undefined;
 };
 
 export type RootStackParamList = {
@@ -45,15 +47,16 @@ function AppInner() {
       {isLoggedIn ? (
         <Drawer.Navigator initialRouteName="Home">
           <Drawer.Screen
-            name="Home"
+            name="메인"
             component={MainStackNavigator}
             options={{ headerShown: false }}
           />
-          <Drawer.Screen name="Dogam" component={Dogam} />
-          <Drawer.Screen name="Ranking" component={Ranking} />
-          <Drawer.Screen name="Quest" component={Quest} />
-          <Drawer.Screen name="Achievement" component={Achievement} />
-          <Drawer.Screen name="Setting" component={Setting} />
+          <Drawer.Screen name="나의 도감" component={Dogam} />
+          <Drawer.Screen name="랭킹" component={Ranking} />
+          <Drawer.Screen name="일일 퀘스트" component={Quest} />
+          <Drawer.Screen name="업적" component={Achievement} />
+          <Drawer.Screen name="상점" component={FeedShop} />
+          <Drawer.Screen name="설정" component={Setting} />
         </Drawer.Navigator>
       ) : (
         <Stack.Navigator>
