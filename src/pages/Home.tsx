@@ -1,7 +1,8 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useCallback } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LoggedInParamList } from '../../AppInner';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 type HomeScreenProps = NativeStackScreenProps<LoggedInParamList, 'Home'>;
 
@@ -21,13 +22,55 @@ function Home({ navigation }: HomeScreenProps) {
   return (
     <View style={styles.container}>
       <Pressable style={styles.mainButton} onPress={toAnimalUpload}>
-        <Text style={styles.buttonText}>동물 수집하기</Text>
+        <View style={styles.buttonImageContainer}>
+          <Image
+            source={require('../../images/char_puang.png')}
+            style={styles.buttonImage}
+          />
+        </View>
+        <View style={styles.buttonTextContainer}>
+          <Text style={styles.buttonMainText}>동물 수집하기</Text>
+          <Text style={styles.buttonSubText} numberOfLines={1}>
+            동물 친구를 발견하셨나요?
+          </Text>
+        </View>
+        <View style={styles.icon}>
+          <FontAwesome5Icon name="chevron-right" size={20} />
+        </View>
       </Pressable>
       <Pressable style={styles.mainButton} onPress={toDogam}>
-        <Text style={styles.buttonText}>나의 도감</Text>
+        <View style={styles.buttonImageContainer}>
+          <Image
+            source={require('../../images/home_dogam.png')}
+            style={styles.buttonImage}
+          />
+        </View>
+        <View style={styles.buttonTextContainer}>
+          <Text style={styles.buttonMainText}>나의 도감</Text>
+          <Text style={styles.buttonSubText} numberOfLines={1}>
+            나의 동물들을 보러갈까요?
+          </Text>
+        </View>
+        <View style={styles.icon}>
+          <FontAwesome5Icon name="chevron-right" size={20} />
+        </View>
       </Pressable>
       <Pressable style={styles.mainButton} onPress={toAchievement}>
-        <Text style={styles.buttonText}>나의 업적</Text>
+        <View style={styles.buttonImageContainer}>
+          <Image
+            source={require('../../images/home_ranking.png')}
+            style={styles.buttonImage}
+          />
+        </View>
+        <View style={styles.buttonTextContainer}>
+          <Text style={styles.buttonMainText}>업적</Text>
+          <Text style={styles.buttonSubText} numberOfLines={1}>
+            달성한 업적이 궁금한가요?
+          </Text>
+        </View>
+        <View style={styles.icon}>
+          <FontAwesome5Icon name="chevron-right" size={20} />
+        </View>
       </Pressable>
     </View>
   );
@@ -38,20 +81,44 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
+    backgroundColor: 'white',
+    paddingVertical: 20,
   },
   mainButton: {
+    flex: 1,
     borderRadius: 8,
     padding: 6,
-    height: 50,
-    width: '70%',
+    width: '90%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'orange',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'gray',
+    marginVertical: 15,
+    flexDirection: 'row',
+    paddingHorizontal: 20,
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 20,
+  buttonImage: {
+    resizeMode: 'contain',
+    width: '100%',
+    height: '100%',
   },
+  buttonImageContainer: { flex: 3.5 },
+  buttonTextContainer: {
+    flex: 8,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    paddingLeft: 20,
+  },
+  buttonMainText: {
+    color: 'black',
+    fontSize: 22,
+    fontFamily: 'OneMobileBold',
+    marginRight: 15,
+  },
+  buttonSubText: { fontFamily: 'OneMobileRegular', paddingTop: 3 },
+  icon: { flex: 0.5 },
 });
 
 export default Home;

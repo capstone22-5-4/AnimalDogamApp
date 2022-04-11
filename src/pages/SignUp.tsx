@@ -100,9 +100,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
     } catch (error) {
       const errorResponse = (error as AxiosError).response;
       console.error(errorResponse);
-      if (errorResponse) {
-        Alert.alert('알림', '회원가입에 실패하였습니다.');
-      }
+      Alert.alert('알림', '회원가입에 실패하였습니다.');
       setLoading(false);
     } finally {
     }
