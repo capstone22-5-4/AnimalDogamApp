@@ -204,7 +204,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
 const styles = StyleSheet.create({
   appLogoWrapper: {
     alignItems: 'center',
-    paddingTop: 5,
+    paddingTop: 20,
   },
   appLogo: {
     width: 156,
@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
   },
   buttonZone: {
     alignItems: 'center',
+    paddingTop: 10,
   },
   loginButton: {
     backgroundColor: '#FF9F62',
