@@ -154,7 +154,7 @@ function SignIn({ navigation }: SignInScreenProps) {
 
 const styles = StyleSheet.create({
   appLogoWrapper: {
-    paddingTop: 100,
+    paddingTop: 50,
     alignItems: 'center',
   },
   appLogo: {
