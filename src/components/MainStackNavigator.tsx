@@ -37,11 +37,44 @@ const MainStackNavigator = ({ navigation }) => {
           },
           headerTintColor: 'black',
           headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'OneMobileBold',
+          },
         }}
       />
-      <Stack.Screen name="AnimalUpload" component={AnimalUpload} />
-      <Stack.Screen name="Dogam" component={Dogam} />
-      <Stack.Screen name="Achievement" component={Achievement} />
+      <Stack.Screen
+        name="AnimalUpload"
+        component={AnimalUpload}
+        options={{
+          title: '동물 수집하기',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'OneMobileBold',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Dogam"
+        component={Dogam}
+        options={{
+          title: '나의 도감',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'OneMobileBold',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Achievement"
+        component={Achievement}
+        options={{
+          title: '업적',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'OneMobileBold',
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 };

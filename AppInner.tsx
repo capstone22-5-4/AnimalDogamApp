@@ -77,60 +77,84 @@ function AppInner() {
             name="나의 도감"
             component={Dogam}
             options={{
-              headerShown: false,
+              headerShown: true,
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="book" size={20} color={color} />
               ),
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: 'OneMobileBold',
+              },
             }}
           />
           <Drawer.Screen
             name="랭킹"
             component={Ranking}
             options={{
-              headerShown: false,
+              headerShown: true,
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="medal" size={20} color={color} />
               ),
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: 'OneMobileBold',
+              },
             }}
           />
           <Drawer.Screen
             name="일일 퀘스트"
             component={Quest}
             options={{
-              headerShown: false,
+              headerShown: true,
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="list" size={20} color={color} />
               ),
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: 'OneMobileBold',
+              },
             }}
           />
           <Drawer.Screen
             name="업적"
             component={Achievement}
             options={{
-              headerShown: false,
+              headerShown: true,
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="crown" size={20} color={color} />
               ),
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: 'OneMobileBold',
+              },
             }}
           />
           <Drawer.Screen
             name="상점"
             component={FeedShop}
             options={{
-              headerShown: false,
+              headerShown: true,
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="store" size={20} color={color} />
               ),
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: 'OneMobileBold',
+              },
             }}
           />
           <Drawer.Screen
             name="설정"
             component={Setting}
             options={{
-              headerShown: false,
+              headerShown: true,
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="tools" size={20} color={color} />
               ),
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: 'OneMobileBold',
+              },
             }}
           />
         </Drawer.Navigator>
