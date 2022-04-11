@@ -4,8 +4,9 @@ import Home from '../pages/Home';
 import AnimalUpload from '../pages/AnimalUpload';
 import Dogam from '../pages/Dogam';
 import Achievement from '../pages/Achievement';
-import { Pressable, Text } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { LoggedInParamList } from '../../AppInner';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Stack = createStackNavigator<LoggedInParamList>();
 
@@ -22,9 +23,20 @@ const MainStackNavigator = ({ navigation }) => {
         options={{
           headerLeft: () => (
             <Pressable onPress={toOpenDrawer}>
-              <Text>Menu</Text>
+              <FontAwesome5Icon
+                name="bars"
+                size={20}
+                style={styles.openMenuIcon}
+              />
             </Pressable>
           ),
+          title: '홈',
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: 'gray',
+          },
+          headerTintColor: 'black',
+          headerTitleAlign: 'center',
         }}
       />
       <Stack.Screen name="AnimalUpload" component={AnimalUpload} />
@@ -35,3 +47,9 @@ const MainStackNavigator = ({ navigation }) => {
 };
 
 export default MainStackNavigator;
+
+const styles = StyleSheet.create({
+  openMenuIcon: {
+    paddingLeft: 20,
+  },
+});

@@ -15,6 +15,8 @@ import FeedShop from './src/pages/FeedShop';
 import MainStackNavigator from './src/components/MainStackNavigator';
 import { useSelector } from 'react-redux';
 import { RootState } from './src/store/reducer';
+import CustomDrawer from './src/components/CustomDrawer';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
@@ -45,18 +47,92 @@ function AppInner() {
   return (
     <NavigationContainer>
       {isLoggedIn ? (
-        <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Navigator
+          initialRouteName="Home"
+          drawerContent={(props) => <CustomDrawer {...props} />}
+          screenOptions={{
+            headerShown: false,
+            drawerLabelStyle: {
+              marginLeft: -20,
+              fontFamily: 'OneMobileRegular',
+              fontSize: 15,
+            },
+            drawerActiveBackgroundColor: '#F97500',
+            drawerActiveTintColor: 'white',
+            drawerInactiveTintColor: '#333',
+          }}
+        >
           <Drawer.Screen
             name="메인"
             component={MainStackNavigator}
-            options={{ headerShown: false }}
+            options={{
+              title: '홈',
+              headerShown: false,
+              drawerIcon: ({ color }) => (
+                <FontAwesome5Icon name="home" size={20} color={color} />
+              ),
+            }}
           />
-          <Drawer.Screen name="나의 도감" component={Dogam} />
-          <Drawer.Screen name="랭킹" component={Ranking} />
-          <Drawer.Screen name="일일 퀘스트" component={Quest} />
-          <Drawer.Screen name="업적" component={Achievement} />
-          <Drawer.Screen name="상점" component={FeedShop} />
-          <Drawer.Screen name="설정" component={Setting} />
+          <Drawer.Screen
+            name="나의 도감"
+            component={Dogam}
+            options={{
+              headerShown: false,
+              drawerIcon: ({ color }) => (
+                <FontAwesome5Icon name="book" size={20} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="랭킹"
+            component={Ranking}
+            options={{
+              headerShown: false,
+              drawerIcon: ({ color }) => (
+                <FontAwesome5Icon name="medal" size={20} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="일일 퀘스트"
+            component={Quest}
+            options={{
+              headerShown: false,
+              drawerIcon: ({ color }) => (
+                <FontAwesome5Icon name="list" size={20} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="업적"
+            component={Achievement}
+            options={{
+              headerShown: false,
+              drawerIcon: ({ color }) => (
+                <FontAwesome5Icon name="crown" size={20} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="상점"
+            component={FeedShop}
+            options={{
+              headerShown: false,
+              drawerIcon: ({ color }) => (
+                <FontAwesome5Icon name="store" size={20} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="설정"
+            component={Setting}
+            options={{
+              headerShown: false,
+              drawerIcon: ({ color }) => (
+                <FontAwesome5Icon name="tools" size={20} color={color} />
+              ),
+            }}
+          />
         </Drawer.Navigator>
       ) : (
         <Stack.Navigator>
