@@ -19,6 +19,7 @@ import { useAppDispatch } from '../store';
 import axios, { AxiosError } from 'axios';
 import userSlice from '../slices/user';
 import Config from 'react-native-config';
+import { Gravatar } from 'react-native-gravatar';
 
 const CustomDrawer = (props) => {
   const nickname = useSelector((state: RootState) => state.user.nickname);
@@ -49,12 +50,16 @@ const CustomDrawer = (props) => {
           source={require('../../images/menu_background.png')}
           style={styles.profileBackground}
         >
-          <Image
-            source={require('../../images/profile_sample.png')}
+          <Gravatar
+            options={{
+              email: email,
+              parameters: { size: '180', d: 'retro' },
+              secure: true,
+            }}
             style={styles.profileImage}
           />
-          <Text>{nickname}</Text>
-          <Text>{email}</Text>
+          <Text style={styles.nicknameText}>{nickname}</Text>
+          <Text style={styles.emailText}>{email}</Text>
         </ImageBackground>
         <View style={styles.menuContainer}>
           <DrawerItemList {...props} />
@@ -83,10 +88,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#fffff',
     paddingTop: 10,
   },
-  profileBackground: {
-    padding: 20,
+  nicknameText: {
+    fontSize: 15,
+    fontFamily: 'OneMobileBold',
+    color: 'black',
   },
-  profileImage: { height: 80, width: 80, borderRadius: 40, marginBottom: 10 },
+  emailText: {
+    fontSize: 14,
+    fontFamily: 'OneMobileRegular',
+    fontStyle: 'italic',
+  },
+  profileBackground: {
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+  },
+  profileImage: {
+    height: 50,
+    width: 50,
+    borderRadius: 40,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'white',
+  },
   logoutArea: {
     paddingVertical: 10,
     paddingHorizontal: 20,
