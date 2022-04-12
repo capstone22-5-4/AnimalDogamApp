@@ -1,32 +1,45 @@
 import React, { useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  ListRenderItem,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
+type RankingProps = {
+  rank: number;
+  nickname: string;
+  score: number;
+};
 
 function Ranking() {
-  const [ranks, setRanks] = useState([
-    { rank: '1', nickname: 'gildong', score: 880 },
-    { rank: '2', nickname: 'puang', score: 820 },
-    { rank: '3', nickname: 'cau123', score: 770 },
-    { rank: '4', nickname: 'zzanggu', score: 750 },
-    { rank: '5', nickname: 'adminNickname', score: 730 },
-    { rank: '6', nickname: 'capstone22', score: 720 },
-    { rank: '7', nickname: 'dogamAnimal', score: 500 },
-    { rank: '8', nickname: 'gogo9876', score: 470 },
-    { rank: '9', nickname: 'happy', score: 220 },
-    { rank: '10', nickname: 'simpson', score: 180 },
-    { rank: '11', nickname: 'apple001', score: 150 },
-    { rank: '12', nickname: 'animalLove', score: 110 },
+  const [ranks, setRanks] = useState<RankingProps[] | null>([
+    { rank: 1, nickname: 'gildong', score: 880 },
+    { rank: 2, nickname: 'puang', score: 820 },
+    { rank: 3, nickname: 'cau123', score: 770 },
+    { rank: 4, nickname: 'zzanggu', score: 750 },
+    { rank: 5, nickname: 'adminNickname', score: 730 },
+    { rank: 6, nickname: 'capstone22', score: 720 },
+    { rank: 7, nickname: 'dogamAnimal', score: 500 },
+    { rank: 8, nickname: 'gogo9876', score: 470 },
+    { rank: 9, nickname: 'happy', score: 220 },
+    { rank: 10, nickname: 'simpson', score: 180 },
+    { rank: 11, nickname: 'apple001', score: 150 },
+    { rank: 12, nickname: 'animalLove', score: 110 },
   ]); // mockup data
 
-  const Item = ({ rankNo, nickname, score }) => (
+  const Item = ({ rank, nickname, score }: RankingProps) => (
     <View style={styles.item}>
-      <Text style={styles.rankingText}>{rankNo}위</Text>
+      <Text style={styles.rankingText}>{rank}위</Text>
       <Text style={styles.nicknameText}>{nickname}</Text>
       <Text style={styles.scoreText}>{score}점</Text>
     </View>
   );
 
-  const renderItem = ({ item }) => (
-    <Item rankNo={item.rank} nickname={item.nickname} score={item.score} />
+  const renderItem: ListRenderItem<RankingProps> = ({ item }) => (
+    <Item rank={item.rank} nickname={item.nickname} score={item.score} />
   );
 
   return (
@@ -41,7 +54,7 @@ function Ranking() {
         <FlatList
           data={ranks}
           renderItem={renderItem}
-          keyExtractor={(item) => item.rank}
+          keyExtractor={(item) => item.rank.toString()}
           style={styles.flatList}
         />
       </View>
@@ -81,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     marginVertical: 0,
-    marginHorizontal: 2,
+    marginHorizontal: 3,
     borderWidth: StyleSheet.hairlineWidth,
   },
   nicknameText: {
@@ -105,6 +118,6 @@ const styles = StyleSheet.create({
   flatList: {
     flexGrow: 0,
     height: '90%',
-    backgroundColor: 'orange',
+    backgroundColor: '#F97500',
   },
 });
