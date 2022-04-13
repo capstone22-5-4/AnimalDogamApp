@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import Trophy from '../animations/Trophy';
 
 type RankingProps = {
   rank: number;
@@ -45,10 +46,11 @@ function Ranking() {
   return (
     <View style={styles.container}>
       <View style={styles.rankingImageWrapper}>
-        <Image
+        {/* <Image
           source={require('../../images/ranking_main.png')}
           style={styles.rankingImage}
-        />
+        /> */}
+        <Trophy style={styles.rankingImage} />
       </View>
       <View style={styles.tableWrapper}>
         <FlatList
@@ -77,8 +79,9 @@ const styles = StyleSheet.create({
   },
   rankingImage: {
     flex: 1,
-    resizeMode: 'contain',
-    marginVertical: 10,
+    // resizeMode: 'contain',
+    // marginVertical: 10,
+    height: '100%',
   },
   tableWrapper: {
     flex: 4,
