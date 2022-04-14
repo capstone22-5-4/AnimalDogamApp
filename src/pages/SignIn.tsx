@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import axios, { AxiosError } from 'axios';
 import React, { useCallback, useRef, useState } from 'react';
 import { Image } from 'react-native';
 import {
@@ -10,16 +11,21 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { RootStackParamList } from '../../App';
+import Config from 'react-native-config';
+import { RootStackParamList } from '../../AppInner';
 import DismissKeyboardView from '../components/DismissKeyboardView';
+import userSlice from '../slices/user';
+import { useAppDispatch } from '../store';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
 function SignIn({ navigation }: SignInScreenProps) {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const emailRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
+  const dispatch = useAppDispatch();
 
   const onChangeEmail = useCallback((text) => {
     setEmail(text);
@@ -29,15 +35,48 @@ function SignIn({ navigation }: SignInScreenProps) {
     setPassword(text);
   }, []);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
+    if (loading) {
+      return;
+    }
     if (!email || !email.trim()) {
       return Alert.alert('알림', '이메일을 입력해주세요.');
     }
     if (!password || !password.trim()) {
       return Alert.alert('알림', '비밀번호를 입력해주세요.');
     }
-    Alert.alert('알림', '로그인 되었습니다.');
-  }, [email, password]);
+    try {
+      setLoading(true);
+      const data = { email: email, pw: password };
+      const qs = require('qs');
+      const response = await axios.post(
+        `${Config.API_URL}/user/login`,
+        qs.stringify(data),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
+      );
+      console.log(response.data);
+      setLoading(false);
+      Alert.alert('알림', '로그인 되었습니다.');
+      dispatch(
+        userSlice.actions.setUser({
+          nickname: response.data.nickname,
+          email: response.data.email,
+        }),
+      );
+    } catch (error) {
+      const errorResponse = (error as AxiosError).response;
+      if (errorResponse) {
+        Alert.alert('알림', '로그인에 실패하였습니다.');
+      }
+      setLoading(false);
+    } finally {
+      // setLoading(false);
+    }
+  }, [loading, email, password, dispatch]);
 
   const toSignUp = useCallback(() => {
     navigation.navigate('SignUp');
@@ -48,12 +87,12 @@ function SignIn({ navigation }: SignInScreenProps) {
     <DismissKeyboardView style={{ backgroundColor: 'white' }}>
       <View style={styles.appLogoWrapper}>
         <Image
-          source={{ uri: 'https://ifh.cc/g/fvOgR4.png' }} // Sample image
+          source={{ uri: 'https://ifh.cc/g/fvOgR4.png' }} // *TODO: Change the app logo when determined
           style={styles.appLogo}
         />
       </View>
       <View style={styles.appNameWrapper}>
-        <Text style={styles.appNameText}>동물 도감</Text>
+        <Text style={styles.appNameText}>동 물 도 감</Text>
       </View>
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>이메일</Text>
@@ -115,8 +154,8 @@ function SignIn({ navigation }: SignInScreenProps) {
 
 const styles = StyleSheet.create({
   appLogoWrapper: {
+    paddingTop: 50,
     alignItems: 'center',
-    paddingTop: 20,
   },
   appLogo: {
     width: 192,

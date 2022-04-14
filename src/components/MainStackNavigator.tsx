@@ -4,8 +4,9 @@ import Home from '../pages/Home';
 import AnimalUpload from '../pages/AnimalUpload';
 import Dogam from '../pages/Dogam';
 import Achievement from '../pages/Achievement';
-import { Pressable, Text } from 'react-native';
-import { LoggedInParamList } from '../../App';
+import { Pressable, StyleSheet } from 'react-native';
+import { LoggedInParamList } from '../../AppInner';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Stack = createStackNavigator<LoggedInParamList>();
 
@@ -17,21 +18,71 @@ const MainStackNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="홈"
         component={Home}
         options={{
           headerLeft: () => (
             <Pressable onPress={toOpenDrawer}>
-              <Text>Menu</Text>
+              <FontAwesome5Icon
+                name="bars"
+                size={20}
+                style={styles.openMenuIcon}
+              />
             </Pressable>
           ),
+          title: '홈',
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: 'gray',
+          },
+          headerTintColor: 'black',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'OneMobileBold',
+          },
         }}
       />
-      <Stack.Screen name="AnimalUpload" component={AnimalUpload} />
-      <Stack.Screen name="Dogam" component={Dogam} />
-      <Stack.Screen name="Achievement" component={Achievement} />
+      <Stack.Screen
+        name="AnimalUpload"
+        component={AnimalUpload}
+        options={{
+          title: '동물 수집하기',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'OneMobileBold',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Dogam"
+        component={Dogam}
+        options={{
+          title: '나의 도감',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'OneMobileBold',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Achievement"
+        component={Achievement}
+        options={{
+          title: '업적',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'OneMobileBold',
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 };
 
 export default MainStackNavigator;
+
+const styles = StyleSheet.create({
+  openMenuIcon: {
+    paddingLeft: 20,
+  },
+});
