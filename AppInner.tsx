@@ -81,6 +81,10 @@ function AppInner() {
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="book" size={20} color={color} />
               ),
+              headerStyle: {
+                borderBottomWidth: 1,
+                borderBottomColor: 'gray',
+              },
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'OneMobileBold',
@@ -95,6 +99,10 @@ function AppInner() {
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="medal" size={20} color={color} />
               ),
+              headerStyle: {
+                borderBottomWidth: 1,
+                borderBottomColor: 'gray',
+              },
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'OneMobileBold',
@@ -109,6 +117,10 @@ function AppInner() {
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="list" size={20} color={color} />
               ),
+              headerStyle: {
+                borderBottomWidth: 1,
+                borderBottomColor: 'gray',
+              },
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'OneMobileBold',
@@ -123,6 +135,10 @@ function AppInner() {
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="crown" size={20} color={color} />
               ),
+              headerStyle: {
+                borderBottomWidth: 1,
+                borderBottomColor: 'gray',
+              },
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'OneMobileBold',
@@ -137,6 +153,10 @@ function AppInner() {
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="store" size={20} color={color} />
               ),
+              headerStyle: {
+                borderBottomWidth: 1,
+                borderBottomColor: 'gray',
+              },
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'OneMobileBold',
@@ -151,6 +171,10 @@ function AppInner() {
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="tools" size={20} color={color} />
               ),
+              headerStyle: {
+                borderBottomWidth: 1,
+                borderBottomColor: 'gray',
+              },
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'OneMobileBold',
