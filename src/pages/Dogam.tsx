@@ -1,12 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native';
 import axios from 'axios';
 import Config from 'react-native-config';
 import { useAppDispatch } from '../store';
@@ -16,6 +9,7 @@ import { RootState } from '../store/reducer';
 import FastImage from 'react-native-fast-image';
 import DogamAnimals from '../animations/DogamAnimals';
 import lessAnimalSlice from '../slices/lessAnimal';
+import * as Progress from 'react-native-progress';
 
 function Dogam() {
   const animalPhotos = useSelector((state: RootState) => state.photo.photos);
@@ -70,6 +64,8 @@ function Dogam() {
     );
   }, []);
 
+  let collectionRate = animalPhotos.length / 100;
+
   return (
     <View style={styles.container}>
       <View style={styles.collectionRateContainer}>
@@ -78,8 +74,9 @@ function Dogam() {
         </View>
         <View style={styles.collectionRateTextWrapper}>
           <Text style={styles.collectionRateText}>
-            도감 수집률 ({animalPhotos.length}/120)
+            도감 수집률 ({animalPhotos.length}/100)
           </Text>
+          <Progress.Bar progress={collectionRate} width={200} color="orange" />
         </View>
       </View>
 
@@ -117,12 +114,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'ONEMobileBold',
     color: 'black',
+    marginBottom: 10,
   },
   collectionRateTextWrapper: {
     flex: 7,
+    justifyContent: 'center',
+    marginLeft: 10,
   },
   animationWrapper: {
     flex: 3,
+    alignItems: 'center',
+    margin: 5,
   },
   animalNameText: {
     fontFamily: 'ONEMobileBold',
