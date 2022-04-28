@@ -79,13 +79,14 @@ function Dogam() {
           <Progress.Bar progress={collectionRate} width={200} color="orange" />
         </View>
       </View>
-
-      <FlatList
-        data={animalPhotos}
-        keyExtractor={(o) => o.no}
-        numColumns={3}
-        renderItem={renderItem}
-      />
+      <View style={styles.photoGrid}>
+        <FlatList
+          data={animalPhotos}
+          keyExtractor={(o) => o.no}
+          numColumns={3}
+          renderItem={renderItem}
+        />
+      </View>
     </View>
   );
 }
@@ -94,8 +95,8 @@ export default Dogam;
 
 const styles = StyleSheet.create({
   photoWrapper: {
-    height: Dimensions.get('window').width / 3 - 10,
-    width: Dimensions.get('window').width / 3 - 10,
+    height: Dimensions.get('window').width / 3 - 20,
+    width: Dimensions.get('window').width / 3 - 20,
     backgroundColor: 'yellow',
     margin: 5,
   },
@@ -137,5 +138,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  photoGrid: {
+    flex: 1,
+    marginHorizontal: 10,
   },
 });
