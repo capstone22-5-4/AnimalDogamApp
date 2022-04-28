@@ -78,6 +78,7 @@ function AppInner() {
             component={Dogam}
             options={{
               headerShown: true,
+              unmountOnBlur: true,
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="book" size={20} color={color} />
               ),
