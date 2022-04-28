@@ -2,7 +2,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import axios, { AxiosError } from 'axios';
 import React, { useCallback, useRef, useState } from 'react';
-import { Image } from 'react-native';
 import {
   Alert,
   Pressable,
@@ -12,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import Config from 'react-native-config';
+import FastImage from 'react-native-fast-image';
 import { RootStackParamList } from '../../AppInner';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import userSlice from '../slices/user';
@@ -86,13 +86,13 @@ function SignIn({ navigation }: SignInScreenProps) {
   return (
     <DismissKeyboardView style={{ backgroundColor: 'white' }}>
       <View style={styles.appLogoWrapper}>
-        <Image
+        <FastImage
           source={{ uri: 'https://ifh.cc/g/fvOgR4.png' }} // *TODO: Change the app logo when determined
           style={styles.appLogo}
         />
       </View>
       <View style={styles.appNameWrapper}>
-        <Text style={styles.appNameText}>동 물 도 감</Text>
+        <Text style={styles.appNameText}>신비한 동물도감</Text>
       </View>
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>이메일</Text>
