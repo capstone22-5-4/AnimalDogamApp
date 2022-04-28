@@ -14,9 +14,17 @@ import photoSlice, { Photo } from '../slices/photo';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/reducer';
 import FastImage from 'react-native-fast-image';
+import DogamAnimals from '../animations/DogamAnimals';
+import lessAnimalSlice from '../slices/lessAnimal';
 
 function Dogam() {
   const animalPhotos = useSelector((state: RootState) => state.photo.photos);
+  const lessAnimalList = useSelector(
+    (state: RootState) => state.lessAnimal.lessAnimalList,
+  );
+  const lessAnimalNum = useSelector(
+    (state: RootState) => state.lessAnimal.lessAnimalNum,
+  );
   const dispatch = useAppDispatch();
   useEffect(() => {
     async function getPhotos() {
@@ -33,7 +41,21 @@ function Dogam() {
     getPhotos();
   }, [dispatch]);
 
-  console.log(animalPhotos);
+  useEffect(() => {
+    async function getPhotos() {
+      const response = await axios.get<{ data: String[] }>(
+        `${Config.API_URL}/book/list/less`,
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
+      );
+      dispatch(lessAnimalSlice.actions.setLessAnimal(response.data));
+    }
+    getPhotos();
+  }, [dispatch]);
+  //console.log(animalPhotos);
 
   const renderItem = useCallback(({ item }: { item: Photo }) => {
     return (
@@ -50,6 +72,17 @@ function Dogam() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.collectionRateContainer}>
+        <View style={styles.animationWrapper}>
+          <DogamAnimals style={styles.animationStyle} />
+        </View>
+        <View style={styles.collectionRateTextWrapper}>
+          <Text style={styles.collectionRateText}>
+            도감 수집률 ({animalPhotos.length}/120)
+          </Text>
+        </View>
+      </View>
+
       <FlatList
         data={animalPhotos}
         keyExtractor={(o) => o.no}
@@ -73,11 +106,34 @@ const styles = StyleSheet.create({
     borderWidth: 0.7,
     alignItems: 'center',
   },
+  collectionRateContainer: {
+    borderWidth: 0.5,
+    margin: 10,
+    borderRadius: 10,
+    height: Dimensions.get('window').height / 6,
+    flexDirection: 'row',
+  },
+  collectionRateText: {
+    fontSize: 20,
+    fontFamily: 'ONEMobileBold',
+    color: 'black',
+  },
+  collectionRateTextWrapper: {
+    flex: 7,
+  },
+  animationWrapper: {
+    flex: 3,
+  },
   animalNameText: {
     fontFamily: 'ONEMobileBold',
     fontSize: 18,
   },
+  animationStyle: {
+    width: '100%',
+    height: '100%',
+  },
   container: {
+    flex: 1,
     backgroundColor: 'white',
   },
 });
