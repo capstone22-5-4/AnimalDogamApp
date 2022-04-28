@@ -1,5 +1,12 @@
 import React, { useCallback, useEffect } from 'react';
-import { Dimensions, FlatList, Image, Text, View } from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import axios from 'axios';
 import Config from 'react-native-config';
 import { useAppDispatch } from '../store';
@@ -30,27 +37,23 @@ function Dogam() {
 
   const renderItem = useCallback(({ item }: { item: Photo }) => {
     return (
-      <FastImage
-        source={{ uri: `${Config.API_URL}/book/${item.photo}` }}
-        resizeMode="contain"
-        style={{
-          height: Dimensions.get('window').width / 2,
-          width: Dimensions.get('window').width / 2,
-        }}
-      />
+      <View style={styles.photoContainer}>
+        <FastImage
+          source={{ uri: `${Config.API_URL}/book/${item.photo}` }}
+          resizeMode="cover"
+          style={styles.photoWrapper}
+        />
+        <Text style={styles.animalNameText}>{item.animalName}</Text>
+      </View>
     );
   }, []);
 
   return (
-    // <Image
-    //   source={{ uri: 'http://3.35.222.94:8880/book/undifined.jpg' }}
-    //   style={{ width: 156, height: 112 }}
-    // />
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={animalPhotos}
         keyExtractor={(o) => o.no}
-        numColumns={2}
+        numColumns={3}
         renderItem={renderItem}
       />
     </View>
@@ -58,3 +61,23 @@ function Dogam() {
 }
 
 export default Dogam;
+
+const styles = StyleSheet.create({
+  photoWrapper: {
+    height: Dimensions.get('window').width / 3 - 10,
+    width: Dimensions.get('window').width / 3 - 10,
+    backgroundColor: 'yellow',
+    margin: 5,
+  },
+  photoContainer: {
+    borderWidth: 0.7,
+    alignItems: 'center',
+  },
+  animalNameText: {
+    fontFamily: 'ONEMobileBold',
+    fontSize: 18,
+  },
+  container: {
+    backgroundColor: 'white',
+  },
+});
