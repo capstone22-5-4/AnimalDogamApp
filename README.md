@@ -1,41 +1,8 @@
 # AnimalDogamApp
 
-## Starting an app in local
-
-#### 1. react-native 환경설정
-
-- jdk 11 version & 환경변수 설정(JAVA_HOME)
-- Android SDK **30**, Emulator: **Nexus 5**
-- adb 설치 필요 & ANDROID_HOME 환경변수 설정
-- https://reactnative.dev/docs/environment-setup 참조
-- yarn이 설치되어 있지 않은 경우 다음 명령어를 실행하여 설치
-  `npm install -g yarn`
-
-#### 2. `.env` 파일 생성 (for DEV)
-
-- 프로젝트 루트 directory(~/AnimalDogamApp)에 `.env` 파일을 생성한 후 아래 코드 붙여넣기
-
-```
-API_URL=http://10.0.2.2:8880
-```
-
-#### 3. 서버 실행
-
-- git clone https://github.com/capstone22-5-4/nodejs.git // 처음에만
-- 프로젝트 directory(~/nodejs)로 이동 후, `node ./src/mainkp.js`로 실행
-
-#### 4. 앱 실행하기
-
-```
-git clone https://github.com/capstone22-5-4/AnimalDogamApp.git
-cd AnimalDogamApp
-yarn android
-```
-
----
-
 ## Note
 
+- 안드로이드 emulator에 사진 파일 넣는 법: https://planactor.tistory.com/324
 - <span style='background-color: yellow'> 패키지 매니저로 npm 대신 **yarn**을 사용 **(npm 명령어는 사용하지 말 것)** </span>
 - package.json 파일이 변경 된 경우(ex. pull을 하였거나 패키지를 다운로드 한 경우)에는 `yarn`으로 패키지 의존성을 설치 한 후에 진행
 - 환경변수를 사용할 경우 `.env` 파일 확인 후 실행(ignore 되어 pull 되지 않음)
