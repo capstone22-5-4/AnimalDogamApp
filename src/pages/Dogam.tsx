@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   Dimensions,
   FlatList,
+  Image,
+  ImageBackground,
   Modal,
   Pressable,
   StyleSheet,
@@ -116,17 +118,24 @@ function Dogam() {
           }}
         >
           <View style={styles.encycloContainer}>
-            <Text>{encyclo[animalName].description}</Text>
-            <Pressable
-              style={{
-                borderRadius: 20,
-                padding: 10,
-                elevation: 2,
-              }}
-              onPress={() => setModalVisible(false)}
+            <ImageBackground
+              source={require('../../images/blackboard_bg.jpg')}
+              resizeMode="stretch"
+              style={styles.background}
             >
-              <Text>닫기</Text>
-            </Pressable>
+              <Text style={styles.animalNameInEncycloText}>{animalName}</Text>
+              <Text style={styles.descriptionText}>
+                {encyclo[animalName].description}
+              </Text>
+              <View style={styles.closeButtonContainer}>
+                <Pressable
+                  style={styles.closeButton}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={styles.closeButtonText}>닫기</Text>
+                </Pressable>
+              </View>
+            </ImageBackground>
           </View>
         </Modal>
       ) : null}
@@ -137,9 +146,46 @@ function Dogam() {
 export default Dogam;
 
 const styles = StyleSheet.create({
+  background: {
+    width: '100%',
+    height: '100%',
+  },
+  animalNameInEncycloText: {
+    color: 'yellow',
+    textAlign: 'center',
+    marginVertical: 20,
+    fontSize: 20,
+    fontFamily: 'OneMobileTitle',
+  },
+  descriptionText: {
+    color: 'white',
+    fontSize: 15,
+    fontFamily: 'KOTRA_Songuelssi',
+    margin: 10,
+    lineHeight: 30,
+  },
   encycloContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeButton: {
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+    width: Dimensions.get('window').width / 2,
+    alignItems: 'center',
+    backgroundColor: '#F27E00',
+  },
+  closeButtonContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontFamily: 'OneMobileBold',
+    fontSize: 15,
   },
   photoWrapper: {
     height: Dimensions.get('window').width / 3 - 20,
