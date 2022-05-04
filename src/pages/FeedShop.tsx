@@ -2,13 +2,37 @@ import React from 'react';
 import { Pressable,Image, Text, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
+/* 
+강아지 사료
+거북이 밀웜
+고양이 닭고기
+기린 미모사(풀)
+닭 알곡(잡곡), 풀
+비둘기 알곡, 과일
+사슴 풀
+여우 잡식성 - 작은동물들, 과일 물고기
+코끼리 풀 과일
+판다 대나무
+펭귄 물고기, 크릴새우
+호랑이 사슴, 토끼, ... 동물들
+
+7가지 판매
+풀 - 기린 닭 사슴 코끼리
+대나무 - 판다
+물고기 - 여우, 펭귄
+소고기 - 고양이, 호랑이, 여우
+지렁이 - 비둘기, 거북이
+사료 - 강아지
+과일 - 코끼리 비둘기 여우
+*/
+
 function FeedShop() {
   return (
     <ScrollView>
       <View style = {styles.stateContainer}>
         <View style = {styles.smallstateContainer}>
           <Text style={styles.statetext}>나의 보유 코인</Text>
-          <Text style={styles.statetext}>180</Text>
+          <Text style={styles.statetext}>180</Text> 
         </View>
 
 
