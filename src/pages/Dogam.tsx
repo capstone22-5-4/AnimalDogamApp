@@ -1,5 +1,15 @@
-import React, { useCallback, useEffect } from 'react';
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  ImageBackground,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import axios from 'axios';
 import Config from 'react-native-config';
 import { useAppDispatch } from '../store';
@@ -10,8 +20,12 @@ import FastImage from 'react-native-fast-image';
 import DogamAnimals from '../animations/DogamAnimals';
 import lessAnimalSlice from '../slices/lessAnimal';
 import * as Progress from 'react-native-progress';
+import encyclo from '../data/encyclo.json';
 
 function Dogam() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [animalName, setAnimalName] = useState('');
+
   const animalPhotos = useSelector((state: RootState) => state.photo.photos);
   const lessAnimalList = useSelector(
     (state: RootState) => state.lessAnimal.lessAnimalList,
@@ -19,6 +33,12 @@ function Dogam() {
   const lessAnimalNum = useSelector(
     (state: RootState) => state.lessAnimal.lessAnimalNum,
   );
+
+  const goDetail = (name: string) => {
+    setAnimalName(name);
+    setModalVisible(true);
+  };
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     async function getPhotos() {
@@ -49,17 +69,18 @@ function Dogam() {
     }
     getPhotos();
   }, [dispatch]);
-  //console.log(animalPhotos);
 
   const renderItem = useCallback(({ item }: { item: Photo }) => {
     return (
       <View style={styles.photoContainer}>
-        <FastImage
-          source={{ uri: `${Config.API_URL}/book/${item.photo}` }}
-          resizeMode="cover"
-          style={styles.photoWrapper}
-        />
-        <Text style={styles.animalNameText}>{item.animalName}</Text>
+        <Pressable onPress={() => goDetail(item.animalName)}>
+          <FastImage
+            source={{ uri: `${Config.API_URL}/book/${item.photo}` }}
+            resizeMode="cover"
+            style={styles.photoWrapper}
+          />
+          <Text style={styles.animalNameText}>{item.animalName}</Text>
+        </Pressable>
       </View>
     );
   }, []);
@@ -87,6 +108,37 @@ function Dogam() {
           renderItem={renderItem}
         />
       </View>
+      {modalVisible ? (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.encycloContainer}>
+            <ImageBackground
+              source={require('../../images/blackboard_bg.jpg')}
+              resizeMode="stretch"
+              style={styles.background}
+            >
+              <Text style={styles.animalNameInEncycloText}>{animalName}</Text>
+              <Text style={styles.descriptionText}>
+                {encyclo[animalName].description}
+              </Text>
+              <View style={styles.closeButtonContainer}>
+                <Pressable
+                  style={styles.closeButton}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={styles.closeButtonText}>닫기</Text>
+                </Pressable>
+              </View>
+            </ImageBackground>
+          </View>
+        </Modal>
+      ) : null}
     </View>
   );
 }
@@ -94,6 +146,47 @@ function Dogam() {
 export default Dogam;
 
 const styles = StyleSheet.create({
+  background: {
+    width: '100%',
+    height: '100%',
+  },
+  animalNameInEncycloText: {
+    color: 'yellow',
+    textAlign: 'center',
+    marginVertical: 20,
+    fontSize: 20,
+    fontFamily: 'OneMobileTitle',
+  },
+  descriptionText: {
+    color: 'white',
+    fontSize: 15,
+    fontFamily: 'KOTRA_Songuelssi',
+    margin: 10,
+    lineHeight: 30,
+  },
+  encycloContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeButton: {
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+    width: Dimensions.get('window').width / 2,
+    alignItems: 'center',
+    backgroundColor: '#F27E00',
+  },
+  closeButtonContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontFamily: 'OneMobileBold',
+    fontSize: 15,
+  },
   photoWrapper: {
     height: Dimensions.get('window').width / 3 - 20,
     width: Dimensions.get('window').width / 3 - 20,
@@ -130,6 +223,7 @@ const styles = StyleSheet.create({
   animalNameText: {
     fontFamily: 'ONEMobileBold',
     fontSize: 18,
+    textAlign: 'center',
   },
   animationStyle: {
     width: '100%',
