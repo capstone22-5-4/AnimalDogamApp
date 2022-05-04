@@ -1,0 +1,12 @@
+{
+  "토끼": {
+    "description": "토끼 설명",
+    "link": "www.naver.com",
+    "food": "당근"
+  },
+  "고양이": {
+    "description": "고양이 설명",
+    "link": "www.naver.com",
+    "food": "???"
+  }
+}
