@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import { Pressable,Image, Text, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {Modal, Alert} from 'react-native';
@@ -35,8 +35,9 @@ function FeedShop() {
   const [modalVisible3, setModalVisible3] = useState(false);
   const [modalVisible4, setModalVisible4] = useState(false);
   const [feedname, setfeedname] = useState('');
-  const [coin, setcoin] = useState('');
+  const [coin, setcoin] = useState(100);
   const [feedpicture, setfeedpicture] = useState(1);
+  const [feedcoin, setfeedcoin] = useState(1);
 
   
 
@@ -106,23 +107,26 @@ function FeedShop() {
             "{feedname}"을(를) 구매하시겠습니까?
           </Text>
           <Text>
-            가격: 80코인
+            가격: {feedcoin}코인
           </Text>
           <Text>
-            현재 보유 코인: 180코인
+            현재 보유 코인: {coin}코인
           </Text>
 
           <View style= {styles.stateContainer2}>
             <Pressable
             style={[styles.ModalbuttonContainer]}
-            onPress={() => {setModalVisible2(!modalVisible2),setModalVisible3(true)}}
+            onPress={() => {setModalVisible2(!modalVisible2)
+              if (coin>=feedcoin) return setModalVisible3(true), setcoin(coin-feedcoin)
+              else if (coin<feedcoin) return setModalVisible4(true)
+            }}
             >    
             <Text style={styles.statetext}>예</Text>
             </Pressable>
 
             <Pressable
             style={[styles.ModalbuttonContainer]}
-            onPress={() => {setModalVisible2(!modalVisible2),setModalVisible4(true)}}
+            onPress={() => {setModalVisible2(!modalVisible2)}}
             >    
             <Text style={styles.statetext}>아니오</Text>
             </Pressable>
@@ -198,7 +202,7 @@ function FeedShop() {
       <View style = {styles.stateContainer}>
         <View style = {styles.smallstateContainer}>
           <Text style={styles.statetext}>나의 보유 코인</Text>
-          <Text style={styles.statetext}>180</Text> 
+          <Text style={styles.statetext}>{coin}</Text> 
         </View>
 
         <Pressable 
@@ -239,7 +243,7 @@ function FeedShop() {
           <View style={styles.FeedTextContainer3}>
             <Pressable style={styles.buttonContainer}
             onPress={()=>{setfeedname('대나무'), setModalVisible2(true), 
-              setfeedpicture(0)}}>          
+              setfeedpicture(0),setfeedcoin(80)}}>          
               <Text style={styles.buttonContainer2}>
                 구매
               </Text>
