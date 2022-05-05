@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   Dimensions,
   FlatList,
-  Image,
   ImageBackground,
+  Linking,
   Modal,
   Pressable,
   StyleSheet,
@@ -20,17 +20,19 @@ import FastImage from 'react-native-fast-image';
 import DogamAnimals from '../animations/DogamAnimals';
 import lessAnimalSlice from '../slices/lessAnimal';
 import * as Progress from 'react-native-progress';
-//import encyclo from '../data/encyclo.json';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 interface IEncyclo {
   [key: string]: { [key: string]: string };
 }
+
 const encycloData = require('../data/encyclo.json');
 const encyclo: IEncyclo = encycloData;
 
 function Dogam() {
   const [modalVisible, setModalVisible] = useState(false);
   const [animalName, setAnimalName] = useState('');
+  const [photoUrl, setPhotoUrl] = useState('');
 
   const animalPhotos = useSelector((state: RootState) => state.photo.photos);
   // const lessAnimalList = useSelector(
@@ -135,6 +137,14 @@ function Dogam() {
               </Text>
               <View style={styles.closeButtonContainer}>
                 <Pressable
+                  style={styles.detailButton}
+                  onPress={() => Linking.openURL(encyclo[animalName].link)}
+                >
+                  <Text style={styles.closeButtonText}>더 알아보기</Text>
+                </Pressable>
+              </View>
+              <View style={styles.closeButtonContainer}>
+                <Pressable
                   style={styles.closeButton}
                   onPress={() => setModalVisible(false)}
                 >
@@ -145,6 +155,22 @@ function Dogam() {
           </View>
         </Modal>
       ) : null}
+      <Pressable
+        style={{
+          width: 60,
+          height: 60,
+          backgroundColor: '#FF6300',
+          position: 'absolute',
+          bottom: 20,
+          right: 20,
+          borderRadius: 50,
+          alignItems: 'center',
+          justifyContent: 'center',
+          elevation: 10,
+        }}
+      >
+        <FontAwesome5Icon name="book-open" size={20} color={'white'} />
+      </Pressable>
     </View>
   );
 }
@@ -183,6 +209,14 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width / 2,
     alignItems: 'center',
     backgroundColor: '#F27E00',
+  },
+  detailButton: {
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+    width: Dimensions.get('window').width / 2,
+    alignItems: 'center',
+    backgroundColor: '#4c0000',
   },
   closeButtonContainer: {
     alignItems: 'center',
