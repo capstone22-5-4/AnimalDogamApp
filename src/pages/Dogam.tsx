@@ -20,19 +20,25 @@ import FastImage from 'react-native-fast-image';
 import DogamAnimals from '../animations/DogamAnimals';
 import lessAnimalSlice from '../slices/lessAnimal';
 import * as Progress from 'react-native-progress';
-import encyclo from '../data/encyclo.json';
+//import encyclo from '../data/encyclo.json';
+
+interface IEncyclo {
+  [key: string]: { [key: string]: string };
+}
+const encycloData = require('../data/encyclo.json');
+const encyclo: IEncyclo = encycloData;
 
 function Dogam() {
   const [modalVisible, setModalVisible] = useState(false);
   const [animalName, setAnimalName] = useState('');
 
   const animalPhotos = useSelector((state: RootState) => state.photo.photos);
-  const lessAnimalList = useSelector(
-    (state: RootState) => state.lessAnimal.lessAnimalList,
-  );
-  const lessAnimalNum = useSelector(
-    (state: RootState) => state.lessAnimal.lessAnimalNum,
-  );
+  // const lessAnimalList = useSelector(
+  //   (state: RootState) => state.lessAnimal.lessAnimalList,
+  // );
+  // const lessAnimalNum = useSelector(
+  //   (state: RootState) => state.lessAnimal.lessAnimalNum,
+  // );
 
   const goDetail = (name: string) => {
     setAnimalName(name);
