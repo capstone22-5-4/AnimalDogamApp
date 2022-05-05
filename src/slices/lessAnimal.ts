@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-export interface InitialState {
+export interface lessAnimal {
   lessAnimalList: String[];
   lessAnimalNum: number;
 }
 
-const initialState: InitialState = {
+const initialState: lessAnimal = {
   lessAnimalList: [],
   lessAnimalNum: 0,
 };

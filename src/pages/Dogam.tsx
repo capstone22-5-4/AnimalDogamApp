@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Dimensions,
@@ -32,12 +33,13 @@ const encyclo: IEncyclo = encycloData;
 function Dogam() {
   const [modalVisible, setModalVisible] = useState(false);
   const [animalName, setAnimalName] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
+  const [lessAnimalModalVisible, setLessAnimalModalVisible] = useState(false);
 
   const animalPhotos = useSelector((state: RootState) => state.photo.photos);
-  // const lessAnimalList = useSelector(
-  //   (state: RootState) => state.lessAnimal.lessAnimalList,
-  // );
+
+  const lessAnimalList = useSelector(
+    (state: RootState) => state.lessAnimal.lessAnimalList,
+  );
   // const lessAnimalNum = useSelector(
   //   (state: RootState) => state.lessAnimal.lessAnimalNum,
   // );
@@ -59,12 +61,9 @@ function Dogam() {
         },
       );
       dispatch(photoSlice.actions.loadPhotos(response.data));
+      //console.log(response.data);
     }
-    getPhotos();
-  }, [dispatch]);
-
-  useEffect(() => {
-    async function getPhotos() {
+    async function getLessAnimals() {
       const response = await axios.get<{ data: String[] }>(
         `${Config.API_URL}/book/list/less`,
         {
@@ -74,8 +73,10 @@ function Dogam() {
         },
       );
       dispatch(lessAnimalSlice.actions.setLessAnimal(response.data));
+      //console.log(response.data);
     }
     getPhotos();
+    getLessAnimals();
   }, [dispatch]);
 
   const renderItem = useCallback(({ item }: { item: Photo }) => {
@@ -156,21 +157,44 @@ function Dogam() {
         </Modal>
       ) : null}
       <Pressable
-        style={{
-          width: 60,
-          height: 60,
-          backgroundColor: '#FF6300',
-          position: 'absolute',
-          bottom: 20,
-          right: 20,
-          borderRadius: 50,
-          alignItems: 'center',
-          justifyContent: 'center',
-          elevation: 10,
-        }}
+        style={styles.lessAnimalButton}
+        onPress={() => setLessAnimalModalVisible(true)}
       >
         <FontAwesome5Icon name="book-open" size={20} color={'white'} />
       </Pressable>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={lessAnimalModalVisible}
+        onRequestClose={() => {
+          setLessAnimalModalVisible(!lessAnimalModalVisible);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.lessAnimalListContainer}>
+            <Text style={styles.lessAnimalTitle}>
+              내가 아직 만나지 못한 동물들
+            </Text>
+            <FlatList
+              data={lessAnimalList}
+              numColumns={1}
+              renderItem={({ item }) => (
+                <Text style={styles.lessAnimalsName}>{item}</Text>
+              )}
+              disableVirtualization={false}
+            />
+
+            <View style={styles.closeButtonContainer}>
+              <Pressable
+                style={[styles.closeButton, { margin: 20 }]}
+                onPress={() => setLessAnimalModalVisible(false)}
+              >
+                <Text style={styles.closeButtonText}>닫기</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -178,6 +202,43 @@ function Dogam() {
 export default Dogam;
 
 const styles = StyleSheet.create({
+  lessAnimalsName: {
+    color: '#000',
+    fontSize: 20,
+    fontFamily: 'OneMobileRegular',
+    margin: 5,
+  },
+  lessAnimalTitle: {
+    fontSize: 30,
+    margin: 10,
+    fontFamily: 'Cafe24Shiningstar',
+    color: '#000',
+  },
+  lessAnimalButton: {
+    width: 60,
+    height: 60,
+    backgroundColor: '#FF6300',
+    position: 'absolute',
+    bottom: 20,
+    right: 15,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+  },
+  modalContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  lessAnimalListContainer: {
+    backgroundColor: '#FFE8C9',
+    width: Dimensions.get('window').width - 50,
+    height: Dimensions.get('window').height - 100,
+    alignItems: 'center',
+    borderRadius: 10,
+  },
   background: {
     width: '100%',
     height: '100%',
@@ -276,5 +337,6 @@ const styles = StyleSheet.create({
   photoGrid: {
     flex: 1,
     marginHorizontal: 10,
+    marginBottom: 15,
   },
 });
