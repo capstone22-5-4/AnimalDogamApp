@@ -2,6 +2,8 @@ import React , {useState} from 'react';
 import { Pressable,Image, Text, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {Modal, Alert} from 'react-native';
+import { ScreenContainer } from 'react-native-screens';
+import { listenerCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
 
 /* 
 강아지 사료
@@ -29,11 +31,30 @@ import {Modal, Alert} from 'react-native';
 
 function FeedShop() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalVisible3, setModalVisible3] = useState(false);
+  const [modalVisible4, setModalVisible4] = useState(false);
+  const [feedname, setfeedname] = useState('');
+  const [coin, setcoin] = useState('');
+  const [feedpicture, setfeedpicture] = useState(1);
+
+  
 
 
+  const array = [
+    {
+    id: 0,
+    src: require("../../images/대나무.png"),
+    },
+    {
+    id: 1,
+    src: require("../../images/풀.png"),
+    },
 
-
-
+    //추가 먹이있으면 array 에 정렬
+    //구매버튼 클릭시 array에서 필요한 먹이를 setfeddpicture로 전달
+  ];
+    
   return (
     <ScrollView>
       <Modal
@@ -59,7 +80,117 @@ function FeedShop() {
 
         </View>
 
-        
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible2}
+        onRequestClose={() => {
+          setModalVisible2(!modalVisible2);
+        }}
+
+      >
+        <View style = {styles.encycloContainer}>
+          <Text style = {styles.bigtext}>구매하기</Text>
+          <View style = {styles.imageContainer}>
+            
+            <Image
+              source={array[feedpicture].src}
+              style={styles.FeedImageonbuybutton}
+            />
+
+          </View>
+          
+          <Text>
+            "{feedname}"을(를) 구매하시겠습니까?
+          </Text>
+          <Text>
+            가격: 80코인
+          </Text>
+          <Text>
+            현재 보유 코인: 180코인
+          </Text>
+
+          <View style= {styles.stateContainer2}>
+            <Pressable
+            style={[styles.ModalbuttonContainer]}
+            onPress={() => {setModalVisible2(!modalVisible2),setModalVisible3(true)}}
+            >    
+            <Text style={styles.statetext}>예</Text>
+            </Pressable>
+
+            <Pressable
+            style={[styles.ModalbuttonContainer]}
+            onPress={() => {setModalVisible2(!modalVisible2),setModalVisible4(true)}}
+            >    
+            <Text style={styles.statetext}>아니오</Text>
+            </Pressable>
+
+
+          </View>
+          
+
+        </View>
+
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible3}
+        onRequestClose={() => {
+          setModalVisible3(!modalVisible3);
+        }}
+
+      >
+        <View style = {styles.encycloContainer}>
+          <View style = {styles.buyresultContainer}>
+            <View style = {styles.buyresultTextContainer}>
+              <Text style = {styles.bigtext}>"{feedname}"을(를)</Text>
+              <Text style = {styles.bigtext}>
+              성공적으로 구매하였습니다.</Text>
+            </View>
+            <Pressable
+              style={[styles.ModalbuttonContainer]}
+              onPress={() => setModalVisible3(!modalVisible3)}
+              >
+              <Text style={styles.statetext}>확인</Text>
+            </Pressable>
+
+          </View>
+          
+
+        </View>
+
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible4}
+        onRequestClose={() => {
+          setModalVisible4(!modalVisible4);
+        }}
+
+      >
+        <View style = {styles.encycloContainer}>
+          <View style = {styles.buyresultContainer}>
+            <View style = {styles.buyresultTextContainer}>
+              <Text style = {styles.bigtext}>코인이 부족해요!</Text>
+              
+            </View>
+            <Pressable
+              style={[styles.ModalbuttonContainer]}
+              onPress={() => setModalVisible4(!modalVisible4)}
+              >
+              <Text style={styles.statetext}>확인</Text>
+            </Pressable>
+
+          </View>
+          
+
+        </View>
 
       </Modal>
 
@@ -106,17 +237,49 @@ function FeedShop() {
             </Text>
           </View>
           <View style={styles.FeedTextContainer3}>
-            <Pressable style={styles.buttonContainer}>
+            <Pressable style={styles.buttonContainer}
+            onPress={()=>{setfeedname('대나무'), setModalVisible2(true), 
+              setfeedpicture(0)}}>          
               <Text style={styles.buttonContainer2}>
                 구매
               </Text>
 
             </Pressable>
           </View>
-          
+        </View>      
+      </View>
 
+
+      <View style={styles.FeedContainer}>
+        <View style={styles.FeedImageContainer}>
+          <Image
+            source={require('../../images/풀.png')}
+            style={styles.FeedImage}
+          />
+          <Text style={styles.MainText} numberOfLines={1}>
+            풀
+          </Text>
         </View>
-        
+        <View style={styles.FeedTextContainer}>
+          <View style={styles.FeedTextContainer2}>
+            <Text style={styles.SubText} numberOfLines={1}>
+              먹는 동물: 기린 닭 사슴 코끼리
+            </Text>
+            <Text style={styles.SubText} numberOfLines={1}>
+              가격: 10 코인
+            </Text>
+          </View>
+          <View style={styles.FeedTextContainer3}>
+            <Pressable style={styles.buttonContainer}
+            onPress={()=>{setfeedname('풀'), setModalVisible2(true), 
+              setfeedpicture(1)}}>          
+              <Text style={styles.buttonContainer2}>
+                구매
+              </Text>
+
+            </Pressable>
+          </View>
+        </View>      
       </View>
       </ScrollView>
   );
@@ -125,6 +288,40 @@ function FeedShop() {
   
 }
 const styles = StyleSheet.create({
+  buyresultTextContainer:{
+    flex: 3,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+
+
+  },
+  buyresultContainer:{
+    width: 250,
+    height: 150,
+    borderWidth: 1,
+    backgroundColor : 'white'
+  },
+
+  imageContainer:{
+    marginVertical: 10,
+    height: 150,
+    width: 150,
+    borderRadius: 90,
+    borderWidth: 1,
+    backgroundColor : '#FFF7EB'
+
+  },
+
+  FeedImageonbuybutton:{
+    marginVertical: 10,
+    resizeMode: 'contain',
+    width: '100%',
+    height: '100%',
+    flex:1
+
+  },
   bigtext:{
     color: 'black',
     fontSize: 20,
@@ -144,7 +341,7 @@ const styles = StyleSheet.create({
 
   encycloContainer: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: 'transpart',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -152,6 +349,9 @@ const styles = StyleSheet.create({
 
   stateContainer:{
     flex:1,
+    flexDirection: 'row',},
+
+  stateContainer2:{
     flexDirection: 'row',},
 
   smallstateContainer:{
