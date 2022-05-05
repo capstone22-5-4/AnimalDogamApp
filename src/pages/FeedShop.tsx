@@ -1,6 +1,7 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { Pressable,Image, Text, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import {Modal, Alert} from 'react-native';
 
 /* 
 강아지 사료
@@ -27,17 +28,53 @@ import { ScrollView } from 'react-native-gesture-handler';
 */
 
 function FeedShop() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+
+
+
+
   return (
     <ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+
+      >
+        <View style = {styles.encycloContainer}>
+          <Text style = {styles.bigtext}>나의 보유 먹이</Text>
+          <View style = {styles.feedhavetextContainer}>
+
+          </View>
+          <Pressable
+          style={[styles.ModalbuttonContainer]}
+          onPress={() => setModalVisible(!modalVisible)}
+          >
+          <Text style={styles.statetext}>닫기</Text>
+          </Pressable>
+
+        </View>
+
+        
+
+      </Modal>
+
+
       <View style = {styles.stateContainer}>
         <View style = {styles.smallstateContainer}>
           <Text style={styles.statetext}>나의 보유 코인</Text>
           <Text style={styles.statetext}>180</Text> 
         </View>
 
-
-
-        <Pressable style = {styles.smallstateContainer2}>
+        <Pressable 
+          style = {styles.smallstateContainer2}
+          onPress={()=>setModalVisible(true)}
+                  
+        >
 
           <Text style={styles.statetext2}>나의 보유 먹이</Text>
           <Image
@@ -88,6 +125,31 @@ function FeedShop() {
   
 }
 const styles = StyleSheet.create({
+  bigtext:{
+    color: 'black',
+    fontSize: 20,
+    fontFamily: 'OneMobileBold',
+    padding: 3,
+
+  },
+
+  feedhavetextContainer:{
+    width: 250,
+    height: 150,
+    borderRadius: 8,
+    borderWidth: 1,
+    backgroundColor : '#FFF7EB'
+
+  },
+
+  encycloContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+
   stateContainer:{
     flex:1,
     flexDirection: 'row',},
@@ -122,14 +184,12 @@ const styles = StyleSheet.create({
       fontSize: 12,
       fontFamily: 'OneMobileBold',
       padding: 3,
-      flex:5
     },
 
     statetext2:{
       color: 'white',
       fontSize: 12,
       fontFamily: 'OneMobileBold',
-      flex:5
     },
 
     buttonImage: {
@@ -138,19 +198,12 @@ const styles = StyleSheet.create({
       height: '150%',
       flex:1
     },
-  
-
-
 
   FeedImage: {
     resizeMode: 'contain',
     width: '100%',
     height: '100%',
   },
-
-  
-
-
 
   FeedImageContainer: { 
     flex: 1,
@@ -163,20 +216,15 @@ const styles = StyleSheet.create({
   },
 
   FeedTextContainer2: {
-    flex: 3,
+    flex: 1,
     paddingLeft: 20,
   },
   FeedTextContainer3: {
     flex: 1,
+    alignItems: 'flex-end',
   },
 
   buttonContainer: {
-    flex:1,
-    alignItems: 'flex-end',
-    
-  },
-  buttonContainer2:{
-    flex: 1,
     borderRadius: 8,
     padding: 5,
     alignItems: 'center',
@@ -184,8 +232,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     paddingHorizontal: 25,
+    
+  },
+  ModalbuttonContainer: {
+    padding: 5,
+    alignItems: 'center',
+    paddingHorizontal: 25,
+    
+  },
+  buttonContainer2:{
     color: 'white',
     fontSize: 12,
+    
   },
 
   FeedContainer: {
