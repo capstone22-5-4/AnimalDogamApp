@@ -4,6 +4,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import {Modal, Alert} from 'react-native';
 import { ScreenContainer } from 'react-native-screens';
 import { listenerCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/reducer';
+
 
 /* 
 강아지 사료
@@ -21,8 +24,7 @@ import { listenerCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exce
 
 7가지 판매
 풀 - 기린 닭 사슴 코끼리
-대나무 - 판다
-물고기 - 여우, 펭귄
+물고기 - 여우, 수달
 소고기 - 고양이, 호랑이, 여우
 지렁이 - 비둘기, 거북이
 사료 - 강아지
@@ -30,27 +32,45 @@ import { listenerCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exce
 */
 
 function FeedShop() {
+  const credits = useSelector((state: RootState) => state.user.credit); // 코인
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
   const [modalVisible4, setModalVisible4] = useState(false);
   const [feedname, setfeedname] = useState('');
-  const [coin, setcoin] = useState(100);
+  const [coin, setcoin] = useState(credits);
   const [feedpicture, setfeedpicture] = useState(1);
   const [feedcoin, setfeedcoin] = useState(1);
 
   
 
-
   const array = [
     {
     id: 0,
-    src: require("../../images/대나무.png"),
+    src: require("../../images/물고기.png"),
     },
     {
     id: 1,
     src: require("../../images/풀.png"),
     },
+    {
+    id: 2,
+    src: require("../../images/소고기.jpg"),
+    },
+    {
+    id: 3,
+    src: require("../../images/지렁이.jpg"),
+    },
+    {
+    id: 4,
+    src: require("../../images/사료.png"),
+    },
+    {
+    id: 5,
+    src: require("../../images/과일.jpg"),
+    },
+
 
     //추가 먹이있으면 array 에 정렬
     //구매버튼 클릭시 array에서 필요한 먹이를 setfeddpicture로 전달
@@ -92,7 +112,9 @@ function FeedShop() {
         }}
 
       >
+      
         <View style = {styles.encycloContainer}>
+          <View style ={styles.buyfeedContainer}>
           <Text style = {styles.bigtext}>구매하기</Text>
           <View style = {styles.imageContainer}>
             
@@ -133,6 +155,9 @@ function FeedShop() {
 
 
           </View>
+
+          </View>
+          
           
 
         </View>
@@ -224,26 +249,26 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/대나무.png')}
+            source={require('../../images/물고기.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
-            대나무
+            물고기
           </Text>
         </View>
         <View style={styles.FeedTextContainer}>
           <View style={styles.FeedTextContainer2}>
             <Text style={styles.SubText} numberOfLines={1}>
-              먹는 동물: 판다
+              먹는 동물: 여우 수달 
             </Text>
             <Text style={styles.SubText} numberOfLines={1}>
-              가격: 80 코인
+              가격: 10 코인
             </Text>
           </View>
           <View style={styles.FeedTextContainer3}>
             <Pressable style={styles.buttonContainer}
-            onPress={()=>{setfeedname('대나무'), setModalVisible2(true), 
-              setfeedpicture(0),setfeedcoin(80)}}>          
+            onPress={()=>{setfeedname('물고기'), setModalVisible2(true), 
+              setfeedpicture(0),setfeedcoin(10)}}>          
               <Text style={styles.buttonContainer2}>
                 구매
               </Text>
@@ -276,7 +301,142 @@ function FeedShop() {
           <View style={styles.FeedTextContainer3}>
             <Pressable style={styles.buttonContainer}
             onPress={()=>{setfeedname('풀'), setModalVisible2(true), 
-              setfeedpicture(1)}}>          
+              setfeedpicture(1),setfeedcoin(10)}}>          
+              <Text style={styles.buttonContainer2}>
+                구매
+              </Text>
+
+            </Pressable>
+          </View>
+        </View>      
+      </View>
+      
+
+
+      <View style={styles.FeedContainer}>
+        <View style={styles.FeedImageContainer}>
+          <Image
+            source={require('../../images/소고기.jpg')}
+            style={styles.FeedImage}
+          />
+          <Text style={styles.MainText} numberOfLines={1}>
+            소고기
+          </Text>
+        </View>
+        <View style={styles.FeedTextContainer}>
+          <View style={styles.FeedTextContainer2}>
+            <Text style={styles.SubText} numberOfLines={1}>
+              먹는 동물: 고양이 호랑이 여우
+            </Text>
+            <Text style={styles.SubText} numberOfLines={1}>
+              가격: 10 코인
+            </Text>
+          </View>
+          <View style={styles.FeedTextContainer3}>
+            <Pressable style={styles.buttonContainer}
+            onPress={()=>{setfeedname('소고기'), setModalVisible2(true), 
+              setfeedpicture(2),setfeedcoin(10)}}>          
+              <Text style={styles.buttonContainer2}>
+                구매
+              </Text>
+
+            </Pressable>
+          </View>
+        </View>      
+      </View>
+
+
+      <View style={styles.FeedContainer}>
+        <View style={styles.FeedImageContainer}>
+          <Image
+            source={require('../../images/지렁이.jpg')}
+            style={styles.FeedImage}
+          />
+          <Text style={styles.MainText} numberOfLines={1}>
+            지렁이
+          </Text>
+        </View>
+        <View style={styles.FeedTextContainer}>
+          <View style={styles.FeedTextContainer2}>
+            <Text style={styles.SubText} numberOfLines={1}>
+              먹는 동물: 비둘기 거북이
+            </Text>
+            <Text style={styles.SubText} numberOfLines={1}>
+              가격: 10 코인
+            </Text>
+          </View>
+          <View style={styles.FeedTextContainer3}>
+            <Pressable style={styles.buttonContainer}
+            onPress={()=>{setfeedname('지렁이'), setModalVisible2(true), 
+              setfeedpicture(3),setfeedcoin(10)}}>          
+              <Text style={styles.buttonContainer2}>
+                구매
+              </Text>
+
+            </Pressable>
+          </View>
+        </View>      
+      </View>
+
+
+
+      <View style={styles.FeedContainer}>
+        <View style={styles.FeedImageContainer}>
+          <Image
+            source={require('../../images/사료.png')}
+            style={styles.FeedImage}
+          />
+          <Text style={styles.MainText} numberOfLines={1}>
+            사료
+          </Text>
+        </View>
+        <View style={styles.FeedTextContainer}>
+          <View style={styles.FeedTextContainer2}>
+            <Text style={styles.SubText} numberOfLines={1}>
+              먹는 동물: 강아지
+            </Text>
+            <Text style={styles.SubText} numberOfLines={1}>
+              가격: 10 코인
+            </Text>
+          </View>
+          <View style={styles.FeedTextContainer3}>
+            <Pressable style={styles.buttonContainer}
+            onPress={()=>{setfeedname('사료'), setModalVisible2(true), 
+              setfeedpicture(4),setfeedcoin(10)}}>          
+              <Text style={styles.buttonContainer2}>
+                구매
+              </Text>
+
+            </Pressable>
+          </View>
+        </View>      
+      </View>
+
+
+      <View style={styles.FeedContainer}>
+        <View style={styles.FeedImageContainer}>
+          <Image
+            source={require('../../images/과일.jpg')}
+            style={styles.FeedImage}
+          />
+          <Text style={styles.MainText} numberOfLines={1}>
+            과일
+          </Text>
+        </View>
+        <View style={styles.FeedTextContainer}>
+          <View style={styles.FeedTextContainer2}>
+            <Text style={styles.SubText} numberOfLines={1}>
+              먹는 동물: 코끼리 비둘기 여우
+            </Text>
+            <Text style={styles.SubText} numberOfLines={1}>
+              가격: 10 코인
+            </Text>
+          </View>
+
+          <View style={styles.FeedTextContainer3}>
+            <Pressable style={styles.buttonContainer}
+            onPress={()=>{setfeedname('과일'), setModalVisible2(true), 
+              setfeedpicture(5),setfeedcoin(10)}}>          
               <Text style={styles.buttonContainer2}>
                 구매
               </Text>
@@ -292,6 +452,17 @@ function FeedShop() {
   
 }
 const styles = StyleSheet.create({
+  buyfeedContainer:{
+    width: 250,
+    height: 350,
+    borderWidth: 1,
+    backgroundColor : 'white',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+
   buyresultTextContainer:{
     flex: 3,
     flexDirection: 'column',
