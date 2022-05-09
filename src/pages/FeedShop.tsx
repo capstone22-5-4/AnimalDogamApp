@@ -39,10 +39,14 @@ function FeedShop() {
   const [modalVisible3, setModalVisible3] = useState(false);
   const [modalVisible4, setModalVisible4] = useState(false);
   const [feedname, setfeedname] = useState('');
-  const [coin, setcoin] = useState(credits);
+  const [coin, setcoin] = useState(1000);
   const [feedpicture, setfeedpicture] = useState(1);
   const [feedcoin, setfeedcoin] = useState(1);
 
+  //초기값은 서버에서 받아오거나 앱 내의 값으로 설정해준다.
+  const [feeditems, setfeeditems] = useState([{id:0,num: 0},{id:1,num: 0},{id:2,num: 0},{id:3,num: 0},{id:4,num: 0},{id:5,num: 0} ])
+
+  
   
 
   const array = [
@@ -90,6 +94,26 @@ function FeedShop() {
         <View style = {styles.encycloContainer}>
           <Text style = {styles.bigtext}>나의 보유 먹이</Text>
           <View style = {styles.feedhavetextContainer}>
+            <View style ={styles.FeedTextContainer4}>
+              <Text style={styles.statetext}>물고기</Text>
+              <Text style={styles.statetext}>풀</Text>
+              <Text style={styles.statetext}>소고기</Text>
+              <Text style={styles.statetext}>지렁이</Text>
+              <Text style={styles.statetext}>사료</Text>
+              <Text style={styles.statetext}>과일</Text>
+
+
+            </View>
+            <View style ={styles.FeedTextContainer4}>
+              <Text style={styles.statetext}>{feeditems[0].num}개</Text>
+              <Text style={styles.statetext}>{feeditems[1].num}개</Text>
+              <Text style={styles.statetext}>{feeditems[2].num}개</Text>
+              <Text style={styles.statetext}>{feeditems[3].num}개</Text>
+              <Text style={styles.statetext}>{feeditems[4].num}개</Text>
+              <Text style={styles.statetext}>{feeditems[5].num}개</Text>
+
+            </View>
+            
 
           </View>
           <Pressable
@@ -139,7 +163,7 @@ function FeedShop() {
             <Pressable
             style={[styles.ModalbuttonContainer]}
             onPress={() => {setModalVisible2(!modalVisible2)
-              if (coin>=feedcoin) return setModalVisible3(true), setcoin(coin-feedcoin)
+              if (coin>=feedcoin) return setModalVisible3(true), setcoin(coin-feedcoin),setfeeditems(feeditems.map(feeditems => feeditems.id==feedpicture ? {...feeditems, num: feeditems.num+1}:feeditems))
               else if (coin<feedcoin) return setModalVisible4(true)
             }}
             >    
@@ -510,7 +534,8 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 8,
     borderWidth: 1,
-    backgroundColor : '#FFF7EB'
+    backgroundColor : '#FFF7EB',
+    flexDirection: 'row'
 
   },
 
@@ -597,6 +622,11 @@ const styles = StyleSheet.create({
   FeedTextContainer3: {
     flex: 1,
     alignItems: 'flex-end',
+  },
+  FeedTextContainer4: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center'
   },
 
   buttonContainer: {
