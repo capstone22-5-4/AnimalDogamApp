@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import Config from 'react-native-config';
 import { WebView } from 'react-native-webview';
 
 function AnimalUpload() {
@@ -7,7 +8,7 @@ function AnimalUpload() {
     <View style={styles.container}>
       <WebView
         source={{
-          uri: 'http://3.35.222.94:8880/analmal',
+          uri: `${Config.API_URL}/analmal`,
         }}
       />
     </View>

@@ -87,13 +87,11 @@ function SignIn({ navigation }: SignInScreenProps) {
     <DismissKeyboardView style={{ backgroundColor: 'white' }}>
       <View style={styles.appLogoWrapper}>
         <FastImage
-          source={{ uri: 'https://ifh.cc/g/fvOgR4.png' }} // *TODO: Change the app logo when determined
+          source={require('../../images/logo_main_square.jpg')} // *TODO: Change the app logo when determined
           style={styles.appLogo}
         />
       </View>
-      <View style={styles.appNameWrapper}>
-        <Text style={styles.appNameText}>신비한 동물도감</Text>
-      </View>
+
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>이메일</Text>
         <TextInput
@@ -154,12 +152,11 @@ function SignIn({ navigation }: SignInScreenProps) {
 
 const styles = StyleSheet.create({
   appLogoWrapper: {
-    paddingTop: 50,
     alignItems: 'center',
   },
   appLogo: {
-    width: 192,
-    height: 81,
+    width: 250,
+    height: 250,
   },
   appNameWrapper: {
     alignItems: 'center',
@@ -173,7 +170,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   inputWrapper: {
-    paddingVertical: 12,
+    paddingBottom: 12,
     paddingHorizontal: 30,
   },
   textInput: {
