@@ -1,5 +1,23 @@
 # AnimalDogamApp
 
+## Redux-toolkit 내부 데이터 사용법
+
+```tsx
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/reducer';
+...
+function foo() {
+  const credits = useSelector((state: RootState) => state.user.credit); // 코인
+  const score = useSelector((state: RootState) => state.user.score); // 점수
+
+  ...
+  <Text>나의 보유 코인: {credit}</Text>
+  <Text>나의 점수: {score}</Text>
+}
+```
+
+참고자료: https://velog.io/@chaerin00/Redux-Redux-toolkit-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0
+
 ## Note
 
 - 안드로이드 emulator에 사진 파일 넣는 법: https://planactor.tistory.com/324
@@ -28,11 +46,13 @@
 #### 1. 프로젝트 빌드를 실패할 경우 (Build FALIED)
 
 ```
+
 cd android
-    ./gradlew clean
+./gradlew clean
 
     cd .. // 프로젝트 홈 directory로 이동
     yarn start --reset-cache
+
 ```
 
 #### 2. Error: listen EADDRINUSE: address already in use :::8081
@@ -44,10 +64,12 @@ cd android
 : android/app/src/main/assets 폴더 만들기
 
 ```
+
 cd android
 ./gradlew clean
 cd ..
 npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle
+
 ```
 
 #### 4. Execution failed for task ':app:packageDebug'. > java.lang.OutOfMemoryError (no error message)
@@ -55,5 +77,11 @@ npx react-native bundle --platform android --dev false --entry-file index.js --b
 : android/gradle.properties에 다음 줄 추가
 
 ```
+
 org.gradle.jvmargs=-XX\:MaxHeapSize\=1024m -Xmx1024m
+
+```
+
+```
+
 ```
