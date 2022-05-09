@@ -1,10 +1,7 @@
 import React from 'react';
 import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/reducer';
 
 function Quest() {
-  const credits = useSelector((state: RootState) => state.user.credit);
   return (
     <View>
       <View style={styles.visitButtonContainer}>
