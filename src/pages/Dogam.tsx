@@ -94,7 +94,7 @@ function Dogam() {
     );
   }, []);
 
-  let collectionRate = animalPhotos.length / 100;
+  let collectionRate = animalPhotos.length / 61;
 
   return (
     <View style={styles.container}>
@@ -104,7 +104,7 @@ function Dogam() {
         </View>
         <View style={styles.collectionRateTextWrapper}>
           <Text style={styles.collectionRateText}>
-            도감 수집률 ({animalPhotos.length}/100)
+            도감 수집률 ({animalPhotos.length}/61)
           </Text>
           <Progress.Bar progress={collectionRate} width={200} color="orange" />
         </View>
