@@ -1,7 +1,21 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
+import Config from 'react-native-config';
 
 function Quest() {
+  useEffect(() => {
+    async function getFriendDogam() {
+      const response = await axios.get(`${Config.API_URL}/book/list/rand`, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      console.log(response.data);
+    }
+    getFriendDogam();
+  });
+
   return (
     <View>
       <View style={styles.visitButtonContainer}>
