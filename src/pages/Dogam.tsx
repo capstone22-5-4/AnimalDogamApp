@@ -11,7 +11,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Config from 'react-native-config';
 import { useAppDispatch } from '../store';
 import photoSlice, { Photo } from '../slices/photo';
@@ -52,15 +52,21 @@ function Dogam() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     async function getPhotos() {
-      const response = await axios.get<{ data: Photo[] }>(
-        `${Config.API_URL}/book/list/has`,
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+      try {
+        const response = await axios.get<{ data: Photo[] }>(
+          `${Config.API_URL}/book/list/has`,
+          {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            withCredentials: true,
           },
-        },
-      );
-      dispatch(photoSlice.actions.loadPhotos(response.data));
+        );
+        dispatch(photoSlice.actions.loadPhotos(response.data));
+      } catch (error) {
+        const errorResponse = (error as AxiosError).response;
+        console.log(errorResponse);
+      }
       //console.log(response.data);
     }
     async function getLessAnimals() {
@@ -70,6 +76,7 @@ function Dogam() {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
+          withCredentials: true,
         },
       );
       dispatch(lessAnimalSlice.actions.setLessAnimal(response.data));

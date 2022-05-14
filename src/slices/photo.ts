@@ -8,6 +8,7 @@ export interface Photo {
 
 interface InitialState {
   photos: Photo[];
+  otherPhotos: Photo[];
 }
 
 const initialState: InitialState = {
@@ -20,6 +21,9 @@ const photoSlice = createSlice({
   reducers: {
     loadPhotos(state, action) {
       state.photos = action.payload;
+    },
+    loadOtherPhotos(state, action) {
+      state.otherPhotos = action.payload.slice(1, undefined);
     },
   },
   extraReducers: (builder) => {},
