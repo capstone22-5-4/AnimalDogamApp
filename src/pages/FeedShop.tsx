@@ -1,4 +1,4 @@
-import React , {useState, useEffect} from 'react';
+import React , {useState, useEffect,useCallback} from 'react';
 import { Pressable,Image, Text, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {Modal, Alert} from 'react-native';
@@ -6,6 +6,9 @@ import { ScreenContainer } from 'react-native-screens';
 import { listenerCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/reducer';
+import axios, { AxiosError } from 'axios';
+import Config from 'react-native-config';
+import { ConfigItem } from '@babel/core';
 
 
 /* 
@@ -39,15 +42,44 @@ function FeedShop() {
   const [modalVisible3, setModalVisible3] = useState(false);
   const [modalVisible4, setModalVisible4] = useState(false);
   const [feedname, setfeedname] = useState('');
-  const [coin, setcoin] = useState(1000);
+  const [coin, setcoin] = useState(credits);  //credits로 변경
   const [feedpicture, setfeedpicture] = useState(1);
   const [feedcoin, setfeedcoin] = useState(1);
-
   //초기값은 서버에서 받아오거나 앱 내의 값으로 설정해준다.
   const [feeditems, setfeeditems] = useState([{id:0,num: 0},{id:1,num: 0},{id:2,num: 0},{id:3,num: 0},{id:4,num: 0},{id:5,num: 0} ])
 
   
+  //서버에서 foodlist 가져오기 필요하다면 제작하고 직접 setfeeditems 초기값으로 넣어준다.
+  let getfeeditemdata = async () => {
+    
+    
+    await axios.get(`${Config.API_URL}/foodlist`)
+        .then(response=>{
+        })
+        //.catch(err => console.log(err))
+
+
+  };
+
+  //서버에 먹이 추가
+  let postfeeditemdata = async ( ) => {
+    const data = { food_name: feedname, cost: feedcoin };
+    const qs = require('qs');
+    await axios.post(`${Config.API_URL}/buyfood`,
+      qs.stringify(data)  
+    ,{
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      }
+    },)
+  };
+
+
+
   
+  
+  
+
 
   const array = [
     {
@@ -60,11 +92,11 @@ function FeedShop() {
     },
     {
     id: 2,
-    src: require("../../images/소고기.jpg"),
+    src: require("../../images/소고기.png"),
     },
     {
     id: 3,
-    src: require("../../images/지렁이.jpg"),
+    src: require("../../images/지렁이.png"),
     },
     {
     id: 4,
@@ -72,7 +104,7 @@ function FeedShop() {
     },
     {
     id: 5,
-    src: require("../../images/과일.jpg"),
+    src: require("../../images/과일.png"),
     },
 
 
@@ -80,6 +112,10 @@ function FeedShop() {
     //구매버튼 클릭시 array에서 필요한 먹이를 setfeddpicture로 전달
   ];
     
+
+
+
+  //서버에 데이터를 전송하는 부분은 먹이 -> 예를 눌렀을 경우
   return (
     <ScrollView>
       <Modal
@@ -163,7 +199,12 @@ function FeedShop() {
             <Pressable
             style={[styles.ModalbuttonContainer]}
             onPress={() => {setModalVisible2(!modalVisible2)
-              if (coin>=feedcoin) return setModalVisible3(true), setcoin(coin-feedcoin),setfeeditems(feeditems.map(feeditems => feeditems.id==feedpicture ? {...feeditems, num: feeditems.num+1}:feeditems))
+              if (coin>=feedcoin) return setModalVisible3(true), 
+              setcoin(coin-feedcoin),setfeeditems(feeditems.map(feeditems => feeditems.id==feedpicture ? {...feeditems, num: feeditems.num+1}:feeditems)),
+              
+              postfeeditemdata()
+
+
               else if (coin<feedcoin) return setModalVisible4(true)
             }}
             >    
@@ -340,7 +381,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/소고기.jpg')}
+            source={require('../../images/소고기.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
@@ -373,7 +414,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/지렁이.jpg')}
+            source={require('../../images/지렁이.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
@@ -440,7 +481,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/과일.jpg')}
+            source={require('../../images/과일.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
