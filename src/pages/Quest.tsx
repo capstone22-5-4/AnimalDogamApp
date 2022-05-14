@@ -21,7 +21,10 @@ function Quest() {
   const [flag, setFlag] = useState(false);
   const [visitModalVisible, setVisitModalVisible] = useState(false);
   const [loadingModalVisible, setLoadingModalVisible] = useState(false);
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
   const [dogamOwnerName, setDogamOwnerName] = useState('');
+  const [pressedAnimalName, setPressedAnimalName] = useState('');
+  const [pressedAnimalPhoto, setPressedAnimalPhoto] = useState('');
 
   const otherDogamPhoto = useSelector(
     (state: RootState) => state.photo.otherPhotos,
@@ -45,7 +48,7 @@ function Quest() {
   const renderItem = useCallback(({ item }: { item: Photo }) => {
     return (
       <View style={styles.photoContainer}>
-        <Pressable onPress={() => {}}>
+        <Pressable onPress={() => goDetail(item.animalName, item.photo)}>
           <FastImage
             source={{ uri: `${Config.API_URL}/book/${item.photo}` }}
             resizeMode="cover"
@@ -56,6 +59,12 @@ function Quest() {
       </View>
     );
   }, []);
+
+  const goDetail = (name: string, photo: string) => {
+    setPressedAnimalName(name);
+    setPressedAnimalPhoto(photo);
+    setDetailModalVisible(true);
+  };
 
   const handleVisit = () => {
     setFlag(!flag);
@@ -126,6 +135,44 @@ function Quest() {
           </View>
         </View>
       </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={detailModalVisible}
+        onRequestClose={() => {
+          setDetailModalVisible(!detailModalVisible);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.visitDetailModal}>
+            <View style={styles.visitDetailAnimalNameTextContainer}>
+              <Text style={styles.visitDetailAnimalNameText}>
+                {pressedAnimalName}
+              </Text>
+            </View>
+            <View style={styles.detailPhotoContainer}>
+              <FastImage
+                source={{ uri: `${Config.API_URL}/book/${pressedAnimalPhoto}` }}
+                resizeMode="contain"
+                style={styles.detailPhoto}
+              />
+            </View>
+            <View style={styles.feedButtonContainer}>
+              <Pressable style={styles.closeButton} onPress={() => {}}>
+                <Text style={styles.closeButtonText}>먹이주기</Text>
+              </Pressable>
+            </View>
+            <View style={styles.closeButtonContainer}>
+              <Pressable
+                style={styles.closeButton}
+                onPress={() => setDetailModalVisible(false)}
+              >
+                <Text style={styles.closeButtonText}>닫기</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -133,6 +180,33 @@ function Quest() {
 export default Quest;
 
 const styles = StyleSheet.create({
+  visitDetailModal: {
+    width: Dimensions.get('window').width - 40,
+    height: Dimensions.get('window').height * 0.8,
+    backgroundColor: '#b8efff',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  detailPhotoContainer: {
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  detailPhoto: {
+    height: 250,
+    width: 250,
+    margin: 5,
+  },
+  visitDetailAnimalNameTextContainer: {
+    alignItems: 'center',
+    padding: 10,
+  },
+  visitDetailAnimalNameText: {
+    fontSize: 25,
+    color: 'black',
+    fontFamily: 'OneMobileBold',
+  },
   visitLoadingTextContainer: {
     alignItems: 'center',
     flex: 1,
@@ -176,6 +250,11 @@ const styles = StyleSheet.create({
     fontFamily: 'OneMobileRegluar',
     color: 'white',
   },
+  feedButtonContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 0,
+  },
   closeButton: {
     borderRadius: 10,
     padding: 10,
@@ -195,7 +274,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   modalContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
