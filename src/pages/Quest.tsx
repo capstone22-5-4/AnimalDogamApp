@@ -279,37 +279,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
-  lessAnimalListContainer: {
-    backgroundColor: '#FFE8C9',
-    width: Dimensions.get('window').width - 50,
-    height: Dimensions.get('window').height - 100,
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  background: {
-    width: '100%',
-    height: '100%',
-  },
-  animalNameInEncycloText: {
-    color: 'yellow',
-    textAlign: 'center',
-    marginVertical: 20,
-    fontSize: 20,
-    fontFamily: 'OneMobileTitle',
-  },
-  descriptionText: {
-    color: 'white',
-    fontSize: 15,
-    fontFamily: 'KOTRA_Songuelssi',
-    margin: 10,
-    lineHeight: 30,
-  },
-  encycloContainer: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   photoWrapper: {
     height: Dimensions.get('window').width / 3 - 20,
     width: Dimensions.get('window').width / 3 - 20,
@@ -319,24 +288,6 @@ const styles = StyleSheet.create({
   photoContainer: {
     borderWidth: 0.7,
     alignItems: 'center',
-  },
-  collectionRateContainer: {
-    borderWidth: 0.5,
-    margin: 10,
-    borderRadius: 10,
-    height: Dimensions.get('window').height / 6,
-    flexDirection: 'row',
-  },
-  collectionRateText: {
-    fontSize: 20,
-    fontFamily: 'ONEMobileBold',
-    color: 'black',
-    marginBottom: 10,
-  },
-  collectionRateTextWrapper: {
-    flex: 7,
-    justifyContent: 'center',
-    marginLeft: 10,
   },
   animationWrapper: {
     alignItems: 'center',
