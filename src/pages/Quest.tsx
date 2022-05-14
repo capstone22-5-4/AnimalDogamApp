@@ -12,6 +12,7 @@ import {
 import Config from 'react-native-config';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
+import VisitLoading from '../animations/VisitLoading';
 import photoSlice, { Photo } from '../slices/photo';
 import { useAppDispatch } from '../store';
 import { RootState } from '../store/reducer';
@@ -106,6 +107,25 @@ function Quest() {
           </View>
         </View>
       </Modal>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={loadingModalVisible}
+        onRequestClose={() => {
+          setVisitModalVisible(!loadingModalVisible);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.visitLoadingModal}>
+            <View style={styles.animationWrapper}>
+              <VisitLoading style={styles.animationStyle} />
+            </View>
+            <View style={styles.visitLoadingTextContainer}>
+              <Text style={styles.visitLoadingText}>잠시만 기다려주세요.</Text>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -113,6 +133,24 @@ function Quest() {
 export default Quest;
 
 const styles = StyleSheet.create({
+  visitLoadingTextContainer: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  visitLoadingText: {
+    fontSize: 30,
+    fontFamily: 'Cafe24Shiningstar',
+    marginBottom: 20,
+  },
+  visitLoadingModal: {
+    backgroundColor: 'white',
+    width: Dimensions.get('window').width - 40,
+    height: Dimensions.get('window').height / 2,
+    position: 'absolute',
+    left: 20,
+    top: Dimensions.get('window').height / 4,
+    borderRadius: 10,
+  },
   modalTitleContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -222,9 +260,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   animationWrapper: {
-    flex: 3,
     alignItems: 'center',
-    margin: 5,
+    justifyContent: 'center',
+    flex: 5,
   },
   animalNameText: {
     fontFamily: 'ONEMobileBold',
@@ -232,8 +270,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   animationStyle: {
-    width: '100%',
-    height: '100%',
+    width: '90%',
+    height: '90%',
   },
   container: {
     flex: 1,
