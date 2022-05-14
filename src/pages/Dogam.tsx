@@ -59,6 +59,7 @@ function Dogam() {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
+            withCredentials: true,
           },
         );
         dispatch(photoSlice.actions.loadPhotos(response.data));
@@ -75,6 +76,7 @@ function Dogam() {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
+          withCredentials: true,
         },
       );
       dispatch(lessAnimalSlice.actions.setLessAnimal(response.data));
