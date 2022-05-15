@@ -19,6 +19,12 @@ const userSlice = createSlice({
       state.credit = action.payload.credit;
       //state.accessToken = action.payload.accessToken;
     },
+    setCredit(state, action) {
+      state.credit = action.payload;
+    },
+    setScore(state, action) {
+      state.score = action.payload;
+    },
   },
   extraReducers: (builder) => {},
 });

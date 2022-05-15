@@ -148,7 +148,7 @@ function FeedShop() {
             <View style={styles.FeedTextContainer4}>
               <Text style={styles.statetext}>{feeditems[0].num}개</Text>
               <Text style={styles.statetext}>{feeditems[1].num}개</Text>
-              <Text style={styles.statetext}>{feeditems[2].num}개</Text>
+              <Text style={styles.statetext}>{소고기}개</Text>
               <Text style={styles.statetext}>{feeditems[3].num}개</Text>
               <Text style={styles.statetext}>{feeditems[4].num}개</Text>
               <Text style={styles.statetext}>{feeditems[5].num}개</Text>
