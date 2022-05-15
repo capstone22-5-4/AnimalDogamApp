@@ -2,13 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Pressable, Image, Text, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Modal, Alert } from 'react-native';
-import { ScreenContainer } from 'react-native-screens';
-import { listenerCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
-import { useSelector } from 'react-redux';
 import { RootState } from '../store/reducer';
 import axios, { AxiosError } from 'axios';
 import Config from 'react-native-config';
-import { ConfigItem } from '@babel/core';
+import { useAppDispatch } from '../store';
+import foodSlice from '../slices/food';
+import { useSelector } from 'react-redux';
 
 /* 
 강아지 사료
@@ -36,6 +35,9 @@ import { ConfigItem } from '@babel/core';
 function FeedShop() {
   const credits = useSelector((state: RootState) => state.user.credit); // 코인
 
+  // 예시입니다. 소고기라는 변수에 소고기 보유 수량이 담기게 됩니다.
+  const 소고기 = useSelector((state: RootState) => state.food.소고기);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
@@ -53,6 +55,26 @@ function FeedShop() {
     { id: 4, num: 0 },
     { id: 5, num: 0 },
   ]);
+
+  const dispatch = useAppDispatch();
+  // 서버에서 사용자의 먹이 불러와서 redux에 저장하기
+  useEffect(() => {
+    async function loadFood() {
+      try {
+        const response = await axios.get(`${Config.API_URL}/foodlist`, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          withCredentials: true,
+        });
+        dispatch(foodSlice.actions.setFood(response.data));
+      } catch (error) {
+        const errorResponse = (error as AxiosError).response;
+        console.log(errorResponse);
+      }
+    }
+    loadFood();
+  }, [dispatch]);
 
   //서버에서 foodlist 가져오기 필요하다면 제작하고 직접 setfeeditems 초기값으로 넣어준다.
   let getfeeditemdata = async () => {
