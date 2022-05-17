@@ -43,7 +43,6 @@ function FeedShop() {
   let 사료 = useSelector((state: RootState) => state.food.사료);
   let 과일 = useSelector((state: RootState) => state.food.과일);
 
-  console.log("지렁이: ",지렁이)
   
   const [feeditems, setfeeditems] = useState([
     { id: 0, num: 물고기 },
@@ -61,8 +60,7 @@ function FeedShop() {
     feeditems[3].num=지렁이
     feeditems[4].num=사료
     feeditems[5].num=과일
-    console.log("지렁이: ",지렁이)
-    console.log(feeditems)
+    console.log("아이템",feeditems)
   },[물고기,풀,소고기,지렁이,사료,과일]);
   
 
@@ -141,7 +139,7 @@ function FeedShop() {
     }
     loadFood();
     
-  }, [dispatch, coin, feeditems,물고기,소고기,지렁이,풀,사료,과일]);
+  }, [dispatch, coin, feeditems,물고기,풀,소고기,지렁이,사료,과일]);
 
   
   
