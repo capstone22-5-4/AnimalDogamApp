@@ -13,6 +13,8 @@ function Habitat() {
   const P1 = { animalname: '거북', latitude: 37.565051, longitude: 126.978567 };
   const P2 = { animalname: '토끼', latitude: 37.565383, longitude: 126.976292 };
 
+  let markerKey = 0;
+
   useEffect(() => {
     async function loadLocation() {
       try {
@@ -34,6 +36,10 @@ function Habitat() {
     console.log(locationData);
   }, [isFocused]);
 
+  const markerList = locationData.map((location) => (
+    <Marker key={markerKey++} coordinate={location} pinColor="blue" />
+  ));
+
   return (
     <View>
       <NaverMapView
@@ -41,7 +47,7 @@ function Habitat() {
         showsMyLocationButton={true}
         center={{ ...P0, zoom: 16 }}
       >
-        <Marker
+        {/* <Marker
           coordinate={locationData[0]}
           pinColor="yellow"
           onClick={() => console.warn('onClick! p1')}
@@ -55,7 +61,8 @@ function Habitat() {
           coordinate={P2}
           pinColor="red"
           onClick={() => console.warn('onClick! p2')}
-        />
+        /> */}
+        {markerList}
       </NaverMapView>
     </View>
   );
