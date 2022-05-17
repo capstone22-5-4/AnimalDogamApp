@@ -133,6 +133,10 @@ function Quest() {
           </Text>
         </Pressable>
       </View>
+
+     
+
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -143,16 +147,32 @@ function Quest() {
 
       >
         <View style={styles.encycloContainer}>
-          <View style = {styles.feedhavetextContainer}>
-          {feedanimalmatch()}
+          <View style={styles.feedhaveContainer}>
+            <Text style={styles.visitButtonText}>구매하기</Text>
             
+            {feedanimalmatch()}
+            
+
+            <View style={styles.feedhavestateContainer}>
+              <Pressable
+                style={[styles.ModalbuttonContainer]}
+                onPress={() => {
+                  
+                }}
+              >
+                <Text style={styles.visitButtonText}>예</Text>
+              </Pressable>
+
+              <Pressable
+                style={[styles.ModalbuttonContainer]}
+                onPress={() => {
+                  setfeedlistModalVisible(!feedlistModalVisible)
+                }}
+              >
+                <Text style={styles.visitButtonText}>아니오</Text>
+              </Pressable>
+            </View>
           </View>
-          <Pressable
-          style={[styles.ModalbuttonContainer]}
-          onPress={() => setfeedlistModalVisible(!feedlistModalVisible)}
-          >
-          <Text style={styles.visitButtonText}>예</Text>
-          </Pressable>
         </View>
 
       </Modal>
@@ -399,18 +419,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  feedhavetextContainer:{
+  feedhaveContainer:{
     width: 250,
-    height: 150,
-    borderRadius: 8,
+    height: 350,
     borderWidth: 1,
-    backgroundColor : '#FFF7EB',
-    flexDirection: 'row'
+    backgroundColor: 'white',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
 
   },ModalbuttonContainer: {
     padding: 5,
     alignItems: 'center',
     paddingHorizontal: 25,
     
+  },
+  feedhavestateContainer: {
+    flexDirection: 'row',
   },
 });
