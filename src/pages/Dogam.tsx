@@ -31,6 +31,7 @@ const encycloData = require('../data/encyclo.json');
 const encyclo: IEncyclo = encycloData;
 
 function Dogam() {
+  //const credits = useSelector((state: RootState) => state.user.credit);
   const [modalVisible, setModalVisible] = useState(false);
   const [animalName, setAnimalName] = useState('');
   const [lessAnimalModalVisible, setLessAnimalModalVisible] = useState(false);
@@ -102,6 +103,7 @@ function Dogam() {
   }, []);
 
   let collectionRate = animalPhotos.length / 61;
+  //console.log({ credits });
 
   return (
     <View style={styles.container}>
