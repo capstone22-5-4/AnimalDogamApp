@@ -13,6 +13,8 @@ import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import VisitLoading from '../animations/VisitLoading';
 import Chicken from '../animations/Chicken';
+import Tiger from '../animations/Tiger';
+import Turtle from '../animations/Turtle';
 import photoSlice, { Photo } from '../slices/photo';
 import { useAppDispatch } from '../store';
 import { RootState } from '../store/reducer';
@@ -336,7 +338,6 @@ function Quest() {
           ),
         ),
         await axios.get(`${Config.API_URL}/use지렁이`)
-        //return <Chicken style={styles.animationStyle} /> 
       }
       else{
         setnofeedstate(true)
@@ -363,7 +364,6 @@ function Quest() {
 
   const feedanimalmatch = () =>{
     if (pressedAnimalName=="닭"){
-      //<Chicken style={styles.animationStyle} /> 
       return <Text>풀</Text>
     }
     if (pressedAnimalName=="기린"){
@@ -396,8 +396,42 @@ function Quest() {
     if (pressedAnimalName=="강아지"){
       return <Text>사료</Text>
     }
+  }
 
-
+  const animationMatch = () =>{
+    if (pressedAnimalName=="닭"){
+      return <Chicken style={styles.animationStyle} />
+    }
+    if (pressedAnimalName=="기린"){
+      return <Text>풀</Text>
+    }
+    if (pressedAnimalName=="사슴"){
+      return <Text>풀 과일</Text>
+    }
+    if (pressedAnimalName=="코끼리"){
+      return <Text>풀</Text>
+    }
+    if (pressedAnimalName=="여우"){
+      return <Text>물고기 소고기 과일</Text>
+    }
+    if (pressedAnimalName=="수달"){
+      return <Text>물고기</Text>
+    }
+    if (pressedAnimalName=="고양이"){
+      return <Text>소고기</Text>
+    }
+    if (pressedAnimalName=="호랑이"){
+      return <Tiger style={styles.animationStyle} />
+    }
+    if (pressedAnimalName=="비둘기"){
+      return <Text>지렁이 과일</Text>
+    }
+    if (pressedAnimalName=="거북"){
+      return <Turtle style={styles.animationStyle} />
+    }
+    if (pressedAnimalName=="강아지"){
+      return <Text>사료</Text>
+    }
   }
   return (
     <View>
@@ -441,23 +475,16 @@ function Quest() {
         }}
       >
         <View style={styles.encycloContainer}>
-          <View style={styles.buyresultContainer}>
-            <View style={styles.buyresultTextContainer}>
-              <Text style={styles.ModalbigText}>
-                고마워요 잘 먹겠습니다!!
-              </Text>
-             <View style={styles.animationContainer}>
-                  <Chicken style={styles.animationStyle} />
-                </View>
-              </View>
-            <Pressable
-              style={[styles.ModalbuttonContainer]}
-              onPress={() => {setthanksModalVisible(!thanksModalVisible)           
-              }}
-            >
-              <Text style={styles.visitButtonText}>확인</Text>
-            </Pressable>
+          <View style={styles.thanksTextContainer}>
+            <Text style={styles.ModalbigText}>
+              고마워요
+            </Text>
+            <Text style={styles.ModalbigText}>
+              잘 먹겠습니다!!
+            </Text>
           </View>
+            
+          {animationMatch()}
         </View>
       </Modal>
 
@@ -489,7 +516,7 @@ function Quest() {
                     setfeedlistModalVisible(!feedlistModalVisible)
                   }else{
                     setthanksModalVisible(!thanksModalVisible)
-                    setTimeout(() => setthanksModalVisible(false), 3000);
+                    setTimeout(() => setthanksModalVisible(false), 5000);
                   }
                 }}
               >
@@ -782,9 +809,9 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   ModalbigText: {
-    fontSize: 15,
+    fontSize: 20,
     fontFamily: 'OneMobileRegluar',
-    color: 'black',
+    color: 'white',
   },
   buyresultContainer: {
     width: 250,
@@ -797,6 +824,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  thanksTextContainer: {
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+    marginTop: 30,
+    //width: Dimensions.get('window').width - 20,
+    alignItems: 'center',
+    backgroundColor: '#F27E00',
   },
   animationContainer: {
     width: 300,
