@@ -7,6 +7,7 @@ import axios, { AxiosError } from 'axios';
 import Config from 'react-native-config';
 import { useAppDispatch } from '../store';
 import foodSlice from '../slices/food';
+import coinSlice from '../slices/user';
 import { useSelector } from 'react-redux';
 
 /* 
@@ -33,11 +34,42 @@ import { useSelector } from 'react-redux';
 */
 
 function FeedShop() {
+
+  
+
+  
+
+ 
+ 
   const credits = useSelector((state: RootState) => state.user.credit); // 코인
-
   // 예시입니다. 소고기라는 변수에 소고기 보유 수량이 담기게 됩니다.
-  const 소고기 = useSelector((state: RootState) => state.food.소고기);
-
+  let 물고기= useSelector((state: RootState) => state.food.물고기);
+  let 풀 = useSelector((state: RootState) => state.food.풀);
+  let 소고기 = useSelector((state: RootState) => state.food.소고기);
+  let 지렁이 = useSelector((state: RootState) => state.food.지렁이);
+  let 사료 = useSelector((state: RootState) => state.food.사료);
+  let 과일 = useSelector((state: RootState) => state.food.과일);
+  if (물고기==NaN){
+    물고기=0
+  }
+  if (풀==NaN){
+    풀=0
+  }
+  if (소고기==NaN){
+    소고기=0
+  }
+  if (지렁이==NaN){
+    지렁이=0
+  }
+  if (사료==NaN){
+    사료=0
+  }
+  if (과일==NaN){
+    과일=0
+  }
+  
+  
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
@@ -48,13 +80,16 @@ function FeedShop() {
   const [feedcoin, setfeedcoin] = useState(1);
   //초기값은 서버에서 받아오거나 앱 내의 값으로 설정해준다.
   const [feeditems, setfeeditems] = useState([
-    { id: 0, num: 0 },
-    { id: 1, num: 0 },
-    { id: 2, num: 0 },
-    { id: 3, num: 0 },
-    { id: 4, num: 0 },
-    { id: 5, num: 0 },
+    { id: 0, num: 물고기 },
+    { id: 1, num: 풀 }, 
+    { id: 2, num: 소고기},
+    { id: 3, num: 지렁이 },
+    { id: 4, num: 사료},
+    { id: 5, num: 과일 },
   ]);
+
+  
+  
 
   const dispatch = useAppDispatch();
   // 서버에서 사용자의 먹이 불러와서 redux에 저장하기
@@ -74,13 +109,23 @@ function FeedShop() {
       }
     }
     loadFood();
-  }, [dispatch]);
-
-  //서버에서 foodlist 가져오기 필요하다면 제작하고 직접 setfeeditems 초기값으로 넣어준다.
-  let getfeeditemdata = async () => {
-    await axios.get(`${Config.API_URL}/foodlist`).then((response) => {});
-    //.catch(err => console.log(err))
-  };
+    async function loadCoin() {
+      try {
+        const response = await axios.get(`${Config.API_URL}/credit`, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          withCredentials: true,
+        });
+        dispatch(coinSlice.actions.setCredit(response.data));
+      } catch (error) {
+        const errorResponse = (error as AxiosError).response;
+        console.log(errorResponse);
+      }
+    }
+    loadCoin();
+  }, [dispatch, coin, feeditems]);
+  
 
   //서버에 먹이 추가
   let postfeeditemdata = async () => {
@@ -104,11 +149,11 @@ function FeedShop() {
     },
     {
       id: 2,
-      src: require('../../images/소고기.jpg'),
+      src: require('../../images/소고기.png'),
     },
     {
       id: 3,
-      src: require('../../images/지렁이.jpg'),
+      src: require('../../images/지렁이.png'),
     },
     {
       id: 4,
@@ -116,7 +161,7 @@ function FeedShop() {
     },
     {
       id: 5,
-      src: require('../../images/과일.jpg'),
+      src: require('../../images/과일.png'),
     },
 
     //추가 먹이있으면 array 에 정렬
@@ -148,7 +193,7 @@ function FeedShop() {
             <View style={styles.FeedTextContainer4}>
               <Text style={styles.statetext}>{feeditems[0].num}개</Text>
               <Text style={styles.statetext}>{feeditems[1].num}개</Text>
-              <Text style={styles.statetext}>{소고기}개</Text>
+              <Text style={styles.statetext}>{feeditems[2].num}개</Text>
               <Text style={styles.statetext}>{feeditems[3].num}개</Text>
               <Text style={styles.statetext}>{feeditems[4].num}개</Text>
               <Text style={styles.statetext}>{feeditems[5].num}개</Text>
@@ -360,7 +405,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/소고기.jpg')}
+            source={require('../../images/소고기.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
@@ -395,7 +440,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/지렁이.jpg')}
+            source={require('../../images/지렁이.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
@@ -465,7 +510,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/과일.jpg')}
+            source={require('../../images/과일.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>

@@ -13,6 +13,7 @@ import Config from 'react-native-config';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import VisitLoading from '../animations/VisitLoading';
+import Chicken from '../animations/Chicken';
 import photoSlice, { Photo } from '../slices/photo';
 import { useAppDispatch } from '../store';
 import { RootState } from '../store/reducer';
@@ -20,11 +21,13 @@ import { RootState } from '../store/reducer';
 function Quest() {
   const [flag, setFlag] = useState(false);
   const [visitModalVisible, setVisitModalVisible] = useState(false);
+  const [feedlistModalVisible, setfeedlistModalVisible] = useState(false);
   const [loadingModalVisible, setLoadingModalVisible] = useState(false);
   const [detailModalVisible, setDetailModalVisible] = useState(false);
   const [dogamOwnerName, setDogamOwnerName] = useState('');
   const [pressedAnimalName, setPressedAnimalName] = useState('');
   const [pressedAnimalPhoto, setPressedAnimalPhoto] = useState('');
+
 
   const otherDogamPhoto = useSelector(
     (state: RootState) => state.photo.otherPhotos,
@@ -74,7 +77,53 @@ function Quest() {
       setVisitModalVisible(true);
     }, 3000);
   };
+  /*
+  7가지 판매
+  풀 - 기린 닭 사슴 코끼리
+  물고기 - 여우, 수달
+  소고기 - 고양이, 호랑이, 여우
+  지렁이 - 비둘기, 거북이
+  사료 - 강아지
+  과일 - 코끼리 비둘기 여우
+  */
+  const feedanimalmatch = () =>{
+    if (pressedAnimalName=="닭"){
+      <Text>풀</Text>
+      return <Chicken style={styles.animationStyle} /> 
+    }
+    if (pressedAnimalName=="기린"){
+      return <Text>풀</Text>
+    }
+    if (pressedAnimalName=="사슴"){
+      return <Text>풀 과일</Text>
+    }
+    if (pressedAnimalName=="코끼리"){
+      return <Text>풀</Text>
+    }
+    if (pressedAnimalName=="여우"){
+      return <Text>물고기 소고기 과일</Text>
+    }
+    if (pressedAnimalName=="수달"){
+      return <Text>물고기</Text>
+    }
+    if (pressedAnimalName=="고양이"){
+      return <Text>소고기</Text>
+    }
+    if (pressedAnimalName=="호랑이"){
+      return <Text>소고기</Text>
+    }
+    if (pressedAnimalName=="비둘기"){
+      return <Text>지렁이 과일</Text>
+    }
+    if (pressedAnimalName=="거북"){
+      return <Text>지렁이</Text>
+    }
+    if (pressedAnimalName=="강아지"){
+      return <Text>사료</Text>
+    }
 
+
+  }
   return (
     <View>
       <View style={styles.visitButtonContainer}>
@@ -84,6 +133,32 @@ function Quest() {
           </Text>
         </Pressable>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={feedlistModalVisible}
+        onRequestClose={() => {
+          setfeedlistModalVisible(!feedlistModalVisible);
+        }}
+
+      >
+        <View style={styles.encycloContainer}>
+          <View style = {styles.feedhavetextContainer}>
+          {feedanimalmatch()}
+            
+          </View>
+          <Pressable
+          style={[styles.ModalbuttonContainer]}
+          onPress={() => setfeedlistModalVisible(!feedlistModalVisible)}
+          >
+          <Text style={styles.visitButtonText}>예</Text>
+          </Pressable>
+        </View>
+
+      </Modal>
+
+
+
       <Modal
         animationType="fade"
         transparent={false}
@@ -158,7 +233,13 @@ function Quest() {
               />
             </View>
             <View style={styles.feedButtonContainer}>
-              <Pressable style={styles.closeButton} onPress={() => {}}>
+              <Pressable style={styles.closeButton} onPress={() => {
+                  setfeedlistModalVisible(true)
+
+// 먹이 보유 리스트 보여주기
+// 먹이선택시 동물이랑 비교-> 먹을 수 있는지 -> 성공/ 실패 -> 성공시 애니메이션, 실패시 동물이 못먹는 먹이
+// 퀘스트 부분 성공
+              }}>
                 <Text style={styles.closeButtonText}>먹이주기</Text>
               </Pressable>
             </View>
@@ -311,5 +392,25 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
     marginBottom: 15,
+  },
+  encycloContainer: {
+    flex: 1,
+    backgroundColor: 'transpart',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  feedhavetextContainer:{
+    width: 250,
+    height: 150,
+    borderRadius: 8,
+    borderWidth: 1,
+    backgroundColor : '#FFF7EB',
+    flexDirection: 'row'
+
+  },ModalbuttonContainer: {
+    padding: 5,
+    alignItems: 'center',
+    paddingHorizontal: 25,
+    
   },
 });
