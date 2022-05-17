@@ -8,7 +8,7 @@ type StyleProps = {
 function DogamAnimals({ style }: StyleProps) {
   return (
     <LottieView
-      source={require('../../assets/animations/chicken.json')}
+      source={require('../../assets/animations/dogam_animals.json')}
       autoPlay
       resizeMode="contain"
       loop

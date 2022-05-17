@@ -13,6 +13,13 @@ import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import VisitLoading from '../animations/VisitLoading';
 import Chicken from '../animations/Chicken';
+import Cat from '../animations/Cat';
+import Deer from '../animations/Deer';
+import Dog from '../animations/Dog';
+import Elephant from '../animations/Elephant';
+import Fox from '../animations/Fox';
+import Girafe from '../animations/Girafe';
+import Pigeon from '../animations/Pigeon';
 import Tiger from '../animations/Tiger';
 import Turtle from '../animations/Turtle';
 import photoSlice, { Photo } from '../slices/photo';
@@ -101,7 +108,8 @@ function Quest() {
   let 사료 = useSelector((state: RootState) => state.food.사료);
   let 과일 = useSelector((state: RootState) => state.food.과일);
 
-  const [nofeedstate, setnofeedstate] = useState(false);
+
+  let nofeedstate1 = false
   const [feeditems, setfeeditems] = useState([
     { id: 0, num: 물고기 },
     { id: 1, num: 풀 }, 
@@ -118,6 +126,7 @@ function Quest() {
     feeditems[3].num=지렁이
     feeditems[4].num=사료
     feeditems[5].num=과일
+    console.log("아이템",feeditems)
   },[물고기,풀,소고기,지렁이,사료,과일]);
 
   // 서버에서 사용자의 먹이 불러와서 redux에 저장하기
@@ -156,10 +165,13 @@ function Quest() {
   }, [dispatch, feeditems,물고기,풀,소고기,지렁이,사료,과일]);
 
 
+  async function waitusefeed(){
+    await usefeed();
+  }
 
   let usefeed = async ()=>{
-    console.log("들어옴")
-    setnofeedstate(false)
+    console.log("이용전 소고기수",feeditems[2].num)
+    
     if (pressedAnimalName=="닭"){
       if (feeditems[1].num>=1){
         setfeeditems(
@@ -172,11 +184,11 @@ function Quest() {
         await axios.get(`${Config.API_URL}/use풀`)
       }
       else{
-        setnofeedstate(true)
+        nofeedstate1 = true
       }
       
     }
-    if (pressedAnimalName=="기린"){
+    else if (pressedAnimalName=="기린"){
       if (feeditems[1].num>=1){
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -188,10 +200,10 @@ function Quest() {
         await axios.get(`${Config.API_URL}/use풀`)
       }
       else{
-        setnofeedstate(true)
+        nofeedstate1 = true
       }
     }
-    if (pressedAnimalName=="사슴"){
+    else if (pressedAnimalName=="사슴"){
       if (feeditems[1].num>=1 && feeditems[5].num>=1){
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -211,10 +223,10 @@ function Quest() {
         await axios.get(`${Config.API_URL}/use과일`)
       }
       else{
-        setnofeedstate(true)
+        nofeedstate1 = true
       }
     }
-    if (pressedAnimalName=="코끼리"){
+    else if (pressedAnimalName=="코끼리"){
       if (feeditems[1].num>=1){
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -226,10 +238,10 @@ function Quest() {
         await axios.get(`${Config.API_URL}/use풀`)
       }
       else{
-        setnofeedstate(true)
+        nofeedstate1 = true
       }
     }
-    if (pressedAnimalName=="여우"){
+    else if (pressedAnimalName=="여우"){
       if (feeditems[0].num>=1 && feeditems[2].num>=1 && feeditems[5].num>=1){
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -257,10 +269,10 @@ function Quest() {
         await axios.get(`${Config.API_URL}/use과일`)
       }
       else{
-        setnofeedstate(true)
+        nofeedstate1 = true
       }
     }
-    if (pressedAnimalName=="수달"){
+    else if (pressedAnimalName=="수달"){
       if (feeditems[0].num>=1){
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -272,10 +284,10 @@ function Quest() {
         await axios.get(`${Config.API_URL}/use물고기`)
       }
       else{
-        setnofeedstate(true)
+        nofeedstate1 = true
       }
     }
-    if (pressedAnimalName=="고양이"){
+    else if (pressedAnimalName=="고양이"){
       if (feeditems[2].num>=1){
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -287,10 +299,10 @@ function Quest() {
         await axios.get(`${Config.API_URL}/use소고기`)
       }
       else{
-        setnofeedstate(true)
+        nofeedstate1 = true
       }
     }
-    if (pressedAnimalName=="호랑이"){
+    else if (pressedAnimalName=="호랑이"){
       if (feeditems[2].num>=1){
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -300,12 +312,13 @@ function Quest() {
           ),
         ),
         await axios.get(`${Config.API_URL}/use소고기`)
+        console.log("tiger",feeditems);
       }
-      else{
-        setnofeedstate(true)
+      else {
+        nofeedstate1 = true
       }
     }
-    if (pressedAnimalName=="비둘기"){
+    else if (pressedAnimalName=="비둘기"){
       if (feeditems[3].num>=1 && feeditems[5].num>=1){
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -325,10 +338,10 @@ function Quest() {
         await axios.get(`${Config.API_URL}/use과일`)
       }
       else{
-        setnofeedstate(true)
+        nofeedstate1 = true
       }
     }
-    if (pressedAnimalName=="거북"){
+    else if (pressedAnimalName=="거북"){
       if (feeditems[3].num>=1){
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -340,10 +353,10 @@ function Quest() {
         await axios.get(`${Config.API_URL}/use지렁이`)
       }
       else{
-        setnofeedstate(true)
+        nofeedstate1 = true
       }
     }
-    if (pressedAnimalName=="강아지"){
+    else if (pressedAnimalName=="강아지"){
       if (feeditems[4].num>=1){
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -355,7 +368,7 @@ function Quest() {
         await axios.get(`${Config.API_URL}/use사료`)
       }
       else{
-        setnofeedstate(true)
+        nofeedstate1 = true
       }
     }
 
@@ -398,39 +411,42 @@ function Quest() {
     }
   }
 
+
+  //working
   const animationMatch = () =>{
+    
     if (pressedAnimalName=="닭"){
       return <Chicken style={styles.animationStyle} />
     }
     if (pressedAnimalName=="기린"){
-      return <Text>풀</Text>
+      return <Girafe style={styles.animationStyle} />
     }
     if (pressedAnimalName=="사슴"){
-      return <Text>풀 과일</Text>
+      return <Deer style={styles.animationStyle} />
     }
     if (pressedAnimalName=="코끼리"){
-      return <Text>풀</Text>
+      return <Elephant style={styles.animationStyle} />
     }
     if (pressedAnimalName=="여우"){
-      return <Text>물고기 소고기 과일</Text>
+      return <Fox style={styles.animationStyle} />
     }
     if (pressedAnimalName=="수달"){
-      return <Text>물고기</Text>
+      return <Text>수달</Text>
     }
     if (pressedAnimalName=="고양이"){
-      return <Text>소고기</Text>
+      return <Cat style={styles.animationStyle} />
     }
     if (pressedAnimalName=="호랑이"){
       return <Tiger style={styles.animationStyle} />
     }
     if (pressedAnimalName=="비둘기"){
-      return <Text>지렁이 과일</Text>
+      return <Pigeon style={styles.animationStyle} />
     }
     if (pressedAnimalName=="거북"){
       return <Turtle style={styles.animationStyle} />
     }
     if (pressedAnimalName=="강아지"){
-      return <Text>사료</Text>
+      return <Dog style={styles.animationStyle} />
     }
   }
   return (
@@ -471,7 +487,7 @@ function Quest() {
         transparent={true}
         visible={thanksModalVisible}
         onRequestClose={() => {
-          setnofeedModalVisible(!thanksModalVisible);
+          setthanksModalVisible(!thanksModalVisible);
         }}
       >
         <View style={styles.encycloContainer}>
@@ -503,21 +519,25 @@ function Quest() {
             <Text style={styles.ModalText}>필요한 먹이 리스트</Text>
             
             {feedanimalmatch()}
-            
-
+            {nofeedstate1 = false}
             <View style={styles.feedhavestateContainer}>
               <Pressable
                 style={[styles.ModalbuttonContainer]}
                 onPress={() => {
-                  {usefeed()}
-                  console.log("good",feeditems)
-                  if (nofeedstate==true){
+                  usefeed();
+                  if (nofeedstate1){
                     setnofeedModalVisible(!nofeedModalVisible)
                     setfeedlistModalVisible(!feedlistModalVisible)
                   }else{
-                    setthanksModalVisible(!thanksModalVisible)
+                    setthanksModalVisible(true)
                     setTimeout(() => setthanksModalVisible(false), 5000);
                   }
+                    
+                  console.log("good",feeditems);
+                  console.log("nofeedstate1",nofeedstate1);
+
+                  //nofeedstate값을 바꾸고자함
+                  
                 }}
               >
                 <Text style={styles.visitButtonText}>예</Text>
