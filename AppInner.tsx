@@ -173,6 +173,7 @@ function AppInner() {
               drawerIcon: ({ color }) => (
                 <FontAwesome5Icon name="map" size={20} color={color} />
               ),
+              unmountOnBlur: true,
               headerStyle: {
                 borderBottomWidth: 1,
                 borderBottomColor: 'gray',
