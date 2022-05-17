@@ -36,20 +36,42 @@ import { useSelector } from 'react-redux';
 function FeedShop() {
 
   
-
-  
-
- 
- 
-  const credits = useSelector((state: RootState) => state.user.credit); // 코인
-  // 예시입니다. 소고기라는 변수에 소고기 보유 수량이 담기게 됩니다.
   let 물고기= useSelector((state: RootState) => state.food.물고기);
   let 풀 = useSelector((state: RootState) => state.food.풀);
   let 소고기 = useSelector((state: RootState) => state.food.소고기);
   let 지렁이 = useSelector((state: RootState) => state.food.지렁이);
   let 사료 = useSelector((state: RootState) => state.food.사료);
   let 과일 = useSelector((state: RootState) => state.food.과일);
-  if (물고기==NaN){
+
+  console.log("지렁이: ",지렁이)
+  
+  const [feeditems, setfeeditems] = useState([
+    { id: 0, num: 물고기 },
+    { id: 1, num: 풀 }, 
+    { id: 2, num: 소고기 },
+    { id: 3, num: 지렁이 },
+    { id: 4, num: 사료 },
+    { id: 5, num: 과일 },
+  ]);
+
+  useEffect(() => {
+    feeditems[0].num=물고기
+    feeditems[1].num=풀
+    feeditems[2].num=소고기
+    feeditems[3].num=지렁이
+    feeditems[4].num=사료
+    feeditems[5].num=과일
+    console.log("지렁이: ",지렁이)
+    console.log(feeditems)
+  },[물고기,풀,소고기,지렁이,사료,과일]);
+  
+
+  const credits = useSelector((state: RootState) => state.user.credit); // 코인
+  // 예시입니다. 소고기라는 변수에 소고기 보유 수량이 담기게 됩니다.
+  
+
+  //서버에 0값이 저장되어있다면 필요가없음
+  /*if (물고기==NaN){
     물고기=0
   }
   if (풀==NaN){
@@ -66,10 +88,11 @@ function FeedShop() {
   }
   if (과일==NaN){
     과일=0
-  }
+  }*/
   
   
   
+
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
@@ -79,14 +102,7 @@ function FeedShop() {
   const [feedpicture, setfeedpicture] = useState(1);
   const [feedcoin, setfeedcoin] = useState(1);
   //초기값은 서버에서 받아오거나 앱 내의 값으로 설정해준다.
-  const [feeditems, setfeeditems] = useState([
-    { id: 0, num: 물고기 },
-    { id: 1, num: 풀 }, 
-    { id: 2, num: 소고기},
-    { id: 3, num: 지렁이 },
-    { id: 4, num: 사료},
-    { id: 5, num: 과일 },
-  ]);
+ 
 
   
   
@@ -94,21 +110,6 @@ function FeedShop() {
   const dispatch = useAppDispatch();
   // 서버에서 사용자의 먹이 불러와서 redux에 저장하기
   useEffect(() => {
-    async function loadFood() {
-      try {
-        const response = await axios.get(`${Config.API_URL}/foodlist`, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          withCredentials: true,
-        });
-        dispatch(foodSlice.actions.setFood(response.data));
-      } catch (error) {
-        const errorResponse = (error as AxiosError).response;
-        console.log(errorResponse);
-      }
-    }
-    loadFood();
     async function loadCoin() {
       try {
         const response = await axios.get(`${Config.API_URL}/credit`, {
@@ -124,7 +125,25 @@ function FeedShop() {
       }
     }
     loadCoin();
-  }, [dispatch, coin, feeditems]);
+    async function loadFood() {
+      try {
+        const response = await axios.get(`${Config.API_URL}/foodlist`, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          withCredentials: true,
+        });
+        dispatch(foodSlice.actions.setFood(response.data));
+      } catch (error) {
+        const errorResponse = (error as AxiosError).response;
+        console.log(errorResponse);
+      }
+    }
+    loadFood();
+    
+  }, [dispatch, coin, feeditems,물고기,소고기,지렁이,풀,사료,과일]);
+
+  
   
 
   //서버에 먹이 추가
