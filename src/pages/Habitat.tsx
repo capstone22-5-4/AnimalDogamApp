@@ -1,7 +1,7 @@
 import { useIsFocused } from '@react-navigation/native';
 import axios, { AxiosError } from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Config from 'react-native-config';
 import NaverMapView, { Marker } from 'react-native-nmap';
 
@@ -9,9 +9,7 @@ function Habitat() {
   const [locationData, setLocationData] = useState([]);
   const isFocused = useIsFocused();
 
-  const P0 = { animalname: '공작', latitude: 37.564362, longitude: 126.977011 };
-  const P1 = { animalname: '거북', latitude: 37.565051, longitude: 126.978567 };
-  const P2 = { animalname: '토끼', latitude: 37.565383, longitude: 126.976292 };
+  const P0 = { latitude: 37.564362, longitude: 126.977011 };
 
   let markerKey = 0;
 
@@ -25,7 +23,6 @@ function Habitat() {
           withCredentials: true,
         });
         setLocationData(response.data);
-        console.log(response.data);
       } catch (error) {
         const errorResponse = (error as AxiosError).response;
         console.log(errorResponse);
@@ -33,41 +30,49 @@ function Habitat() {
     }
 
     loadLocation();
-    console.log(locationData);
   }, [isFocused]);
 
-  const markerList = locationData.map((location) => (
-    <Marker key={markerKey++} coordinate={location} pinColor="blue" />
-  ));
+  const markerList = locationData.map(
+    (location: {
+      animal_name: string;
+      latitude: number;
+      longitude: number;
+    }) => (
+      <Marker
+        key={markerKey++}
+        coordinate={location}
+        image={require('../../images/map_marker.png')}
+        width={20}
+        height={20}
+        onClick={() => console.log(location.animal_name)}
+        caption={{
+          text: location.animal_name,
+          minZoom: 16,
+          color: '#f04400',
+        }}
+        isHideCollidedCaptions={true}
+      />
+    ),
+  );
 
   return (
     <View>
       <NaverMapView
-        style={{ width: '100%', height: '100%' }}
+        style={styles.mapView}
         showsMyLocationButton={true}
         center={{ ...P0, zoom: 16 }}
       >
-        {/* <Marker
-          coordinate={locationData[0]}
-          pinColor="yellow"
-          onClick={() => console.warn('onClick! p1')}
-        />
-        <Marker
-          coordinate={P1}
-          pinColor="blue"
-          onClick={() => console.warn('onClick! p1')}
-        />
-        <Marker
-          coordinate={P2}
-          pinColor="red"
-          onClick={() => console.warn('onClick! p2')}
-        /> */}
         {markerList}
       </NaverMapView>
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  mapView: {
+    width: '100%',
+    height: '100%',
+  },
+});
 
 export default Habitat;
