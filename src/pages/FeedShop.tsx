@@ -9,6 +9,7 @@ import { useAppDispatch } from '../store';
 import foodSlice from '../slices/food';
 import coinSlice from '../slices/user';
 import { useSelector } from 'react-redux';
+import Shop from '../animations/Shop';
 
 /* 
 강아지 사료
@@ -34,19 +35,16 @@ import { useSelector } from 'react-redux';
 */
 
 function FeedShop() {
-
-  
-  let 물고기= useSelector((state: RootState) => state.food.물고기);
+  let 물고기 = useSelector((state: RootState) => state.food.물고기);
   let 풀 = useSelector((state: RootState) => state.food.풀);
   let 소고기 = useSelector((state: RootState) => state.food.소고기);
   let 지렁이 = useSelector((state: RootState) => state.food.지렁이);
   let 사료 = useSelector((state: RootState) => state.food.사료);
   let 과일 = useSelector((state: RootState) => state.food.과일);
 
-  
   const [feeditems, setfeeditems] = useState([
     { id: 0, num: 물고기 },
-    { id: 1, num: 풀 }, 
+    { id: 1, num: 풀 },
     { id: 2, num: 소고기 },
     { id: 3, num: 지렁이 },
     { id: 4, num: 사료 },
@@ -54,19 +52,17 @@ function FeedShop() {
   ]);
 
   useEffect(() => {
-    feeditems[0].num=물고기
-    feeditems[1].num=풀
-    feeditems[2].num=소고기
-    feeditems[3].num=지렁이
-    feeditems[4].num=사료
-    feeditems[5].num=과일
-    console.log("아이템",feeditems)
-  },[물고기,풀,소고기,지렁이,사료,과일]);
-  
+    feeditems[0].num = 물고기;
+    feeditems[1].num = 풀;
+    feeditems[2].num = 소고기;
+    feeditems[3].num = 지렁이;
+    feeditems[4].num = 사료;
+    feeditems[5].num = 과일;
+    console.log('아이템', feeditems);
+  }, [물고기, 풀, 소고기, 지렁이, 사료, 과일]);
 
   const credits = useSelector((state: RootState) => state.user.credit); // 코인
   // 예시입니다. 소고기라는 변수에 소고기 보유 수량이 담기게 됩니다.
-  
 
   //서버에 0값이 저장되어있다면 필요가없음
   /*if (물고기==NaN){
@@ -87,9 +83,6 @@ function FeedShop() {
   if (과일==NaN){
     과일=0
   }*/
-  
-  
-  
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
@@ -100,10 +93,6 @@ function FeedShop() {
   const [feedpicture, setfeedpicture] = useState(1);
   const [feedcoin, setfeedcoin] = useState(1);
   //초기값은 서버에서 받아오거나 앱 내의 값으로 설정해준다.
- 
-
-  
-  
 
   const dispatch = useAppDispatch();
   // 서버에서 사용자의 먹이 불러와서 redux에 저장하기
@@ -138,11 +127,7 @@ function FeedShop() {
       }
     }
     loadFood();
-    
-  }, [dispatch, coin, feeditems,물고기,풀,소고기,지렁이,사료,과일]);
-
-  
-  
+  }, [dispatch, coin, feeditems, 물고기, 풀, 소고기, 지렁이, 사료, 과일]);
 
   //서버에 먹이 추가
   let postfeeditemdata = async () => {
@@ -197,31 +182,33 @@ function FeedShop() {
         }}
       >
         <View style={styles.encycloContainer}>
-          <Text style={styles.bigtext}>나의 보유 먹이</Text>
-          <View style={styles.feedhavetextContainer}>
-            <View style={styles.FeedTextContainer4}>
-              <Text style={styles.statetext}>물고기</Text>
-              <Text style={styles.statetext}>풀</Text>
-              <Text style={styles.statetext}>소고기</Text>
-              <Text style={styles.statetext}>지렁이</Text>
-              <Text style={styles.statetext}>사료</Text>
-              <Text style={styles.statetext}>과일</Text>
+          <View style={styles.foodModalContainer}>
+            <Text style={styles.bigtext}>나의 보유 먹이</Text>
+            <View style={styles.feedhavetextContainer}>
+              <View style={styles.FeedTextContainer4}>
+                <Text style={styles.statetext}>물고기</Text>
+                <Text style={styles.statetext}>풀</Text>
+                <Text style={styles.statetext}>소고기</Text>
+                <Text style={styles.statetext}>지렁이</Text>
+                <Text style={styles.statetext}>사료</Text>
+                <Text style={styles.statetext}>과일</Text>
+              </View>
+              <View style={styles.FeedTextContainer4}>
+                <Text style={styles.statetext}>{feeditems[0].num}개</Text>
+                <Text style={styles.statetext}>{feeditems[1].num}개</Text>
+                <Text style={styles.statetext}>{feeditems[2].num}개</Text>
+                <Text style={styles.statetext}>{feeditems[3].num}개</Text>
+                <Text style={styles.statetext}>{feeditems[4].num}개</Text>
+                <Text style={styles.statetext}>{feeditems[5].num}개</Text>
+              </View>
             </View>
-            <View style={styles.FeedTextContainer4}>
-              <Text style={styles.statetext}>{feeditems[0].num}개</Text>
-              <Text style={styles.statetext}>{feeditems[1].num}개</Text>
-              <Text style={styles.statetext}>{feeditems[2].num}개</Text>
-              <Text style={styles.statetext}>{feeditems[3].num}개</Text>
-              <Text style={styles.statetext}>{feeditems[4].num}개</Text>
-              <Text style={styles.statetext}>{feeditems[5].num}개</Text>
-            </View>
+            <Pressable
+              style={[styles.ModalbuttonContainer]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.statetext}>닫기</Text>
+            </Pressable>
           </View>
-          <Pressable
-            style={[styles.ModalbuttonContainer]}
-            onPress={() => setModalVisible(!modalVisible)}
-          >
-            <Text style={styles.statetext}>닫기</Text>
-          </Pressable>
         </View>
       </Modal>
 
@@ -330,23 +317,24 @@ function FeedShop() {
           </View>
         </View>
       </Modal>
-
-      <View style={styles.stateContainer}>
-        <View style={styles.smallstateContainer}>
-          <Text style={styles.statetext}>나의 보유 코인</Text>
-          <Text style={styles.statetext}>{coin}</Text>
+      <View style={{ flexDirection: 'row'  }}>
+        <View style={{ flex: 4, justifyContent: 'center' }}>
+          <Shop style={styles.animationStyle} />
         </View>
-
-        <Pressable
-          style={styles.smallstateContainer2}
-          onPress={() => setModalVisible(true)}
-        >
-          <Text style={styles.statetext2}>나의 보유 먹이</Text>
-          <Image
-            source={require('../../images/icon.png')}
-            style={styles.buttonImage}
-          />
-        </Pressable>
+        <View style={styles.stateContainer}>
+          <View style={styles.smallstateContainer}>
+            <Text style={styles.statetext}>보유 코인</Text>
+            <Text style={styles.statetext}>{coin}</Text>
+          </View>
+          <View>
+            <Pressable
+              style={styles.smallstateContainer2}
+              onPress={() => setModalVisible(true)}
+            >
+              <Text style={styles.statetext2}>나의 보유 먹이    ></Text>
+            </Pressable>
+          </View>
+        </View>
       </View>
 
       <View style={styles.FeedContainer}>
@@ -563,6 +551,15 @@ function FeedShop() {
   );
 }
 const styles = StyleSheet.create({
+  animationStyle: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
+  },
+  foodModalContainer: {
+    backgroundColor: '#FFF7EB',
+    alignItems: 'center',
+  },
   buyfeedContainer: {
     width: 250,
     height: 350,
@@ -606,28 +603,27 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
     fontFamily: 'OneMobileBold',
-    padding: 3,
+    padding: 8,
   },
 
   feedhavetextContainer: {
     width: 250,
-    height: 150,
-    borderRadius: 8,
-    borderWidth: 1,
-    backgroundColor: '#FFF7EB',
+    height: 200,
+    backgroundColor: 'white',
     flexDirection: 'row',
   },
 
   encycloContainer: {
     flex: 1,
-    backgroundColor: 'transpart',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   stateContainer: {
-    flex: 1,
-    flexDirection: 'row',
+    flex: 5,
+    flexDirection: 'column',
+    paddingVertical: 10,
   },
 
   stateContainer2: {
@@ -639,39 +635,43 @@ const styles = StyleSheet.create({
     padding: 10,
     marginHorizontal: 20,
     alignItems: 'center',
-    backgroundColor: 'white',
-    borderWidth: 1,
+    justifyContent: 'center',
     borderColor: 'gray',
-    marginVertical: 20,
-    paddingHorizontal: 20,
+    marginVertical: 10,
+    paddingHorizontal: 0,
     flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    elevation: 5,
   },
 
   smallstateContainer2: {
     borderRadius: 8,
-    padding: 20,
+    padding: 10,
     marginHorizontal: 20,
     alignItems: 'center',
-    backgroundColor: '#F2A03F',
-    borderWidth: 1,
+    justifyContent: 'center',
     borderColor: 'gray',
-    marginVertical: 20,
-    paddingHorizontal: 20,
-    flexDirection: 'row',
+    marginVertical: 10,
+    paddingHorizontal: 0,
     flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#F2A03F',
+    elevation: 5,
   },
 
   statetext: {
     color: 'black',
-    fontSize: 12,
+    fontSize: 15,
     fontFamily: 'OneMobileBold',
     padding: 3,
   },
 
   statetext2: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 15,
     fontFamily: 'OneMobileBold',
+    paddingVertical: 5,
   },
 
   buttonImage: {
@@ -708,6 +708,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'space-around',
   },
 
   buttonContainer: {
@@ -750,7 +751,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 
-  SubText: { fontFamily: 'OneMobileRegular', paddingTop: 5 },
+  SubText: { fontFamily: 'OneMobileRegular', paddingTop: 5, color: 'black' },
 });
 
 export default FeedShop;
