@@ -5,10 +5,10 @@ type StyleProps = {
   style: { height: string };
 };
 
-function DogamAnimals({ style }: StyleProps) {
+function Dog({ style }: StyleProps) {
   return (
     <LottieView
-      source={require('../../assets/animations/dogam_animals.json')}
+      source={require('../../assets/animations/dog.json')}
       autoPlay
       resizeMode="contain"
       loop
@@ -17,4 +17,4 @@ function DogamAnimals({ style }: StyleProps) {
   );
 }
 
-export default DogamAnimals;
+export default Dog;
