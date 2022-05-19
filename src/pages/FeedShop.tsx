@@ -10,7 +10,7 @@ import foodSlice from '../slices/food';
 import coinSlice from '../slices/user';
 import { useSelector } from 'react-redux';
 import Shop from '../animations/Shop';
-
+import { Card, WhiteSpace, WingBlank } from '@ant-design/react-native'
 /* 
 강아지 사료
 거북이 밀웜
@@ -325,14 +325,15 @@ function FeedShop() {
           <View style={styles.smallstateContainer}>
             <Text style={styles.statetext}>보유 코인</Text>
             <Text style={styles.statetext}>{coin}</Text>
-          </View>
-          <View>
+            </View>
+            <View>
             <Pressable
               style={styles.smallstateContainer2}
               onPress={() => setModalVisible(true)}
             >
               <Text style={styles.statetext2}>나의 보유 먹이    ></Text>
             </Pressable>
+
           </View>
         </View>
       </View>

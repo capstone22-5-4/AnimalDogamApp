@@ -111,7 +111,7 @@ function AppInner() {
             }}
           />
           <Drawer.Screen
-            name="일일 퀘스트"
+            name="퀘스트"
             component={Quest}
             options={{
               headerShown: true,

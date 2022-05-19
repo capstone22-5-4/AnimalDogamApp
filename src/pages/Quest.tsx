@@ -29,7 +29,6 @@ import foodSlice from '../slices/food';
 import coinSlice from '../slices/user';
 import axios, { AxiosError } from 'axios';
 
-
 function Quest() {
   const [flag, setFlag] = useState(false);
   const [visitModalVisible, setVisitModalVisible] = useState(false);
@@ -41,7 +40,6 @@ function Quest() {
   const [dogamOwnerName, setDogamOwnerName] = useState('');
   const [pressedAnimalName, setPressedAnimalName] = useState('');
   const [pressedAnimalPhoto, setPressedAnimalPhoto] = useState('');
-
 
   const otherDogamPhoto = useSelector(
     (state: RootState) => state.photo.otherPhotos,
@@ -100,19 +98,18 @@ function Quest() {
   사료 - 강아지
   과일 - 코끼리 비둘기 여우
   */
- 
-  let 물고기= useSelector((state: RootState) => state.food.물고기);
+
+  let 물고기 = useSelector((state: RootState) => state.food.물고기);
   let 풀 = useSelector((state: RootState) => state.food.풀);
   let 소고기 = useSelector((state: RootState) => state.food.소고기);
   let 지렁이 = useSelector((state: RootState) => state.food.지렁이);
   let 사료 = useSelector((state: RootState) => state.food.사료);
   let 과일 = useSelector((state: RootState) => state.food.과일);
 
-
-  let nofeedstate1 = false
+  let nofeedstate1 = false;
   const [feeditems, setfeeditems] = useState([
     { id: 0, num: 물고기 },
-    { id: 1, num: 풀 }, 
+    { id: 1, num: 풀 },
     { id: 2, num: 소고기 },
     { id: 3, num: 지렁이 },
     { id: 4, num: 사료 },
@@ -120,14 +117,14 @@ function Quest() {
   ]);
 
   useEffect(() => {
-    feeditems[0].num=물고기
-    feeditems[1].num=풀
-    feeditems[2].num=소고기
-    feeditems[3].num=지렁이
-    feeditems[4].num=사료
-    feeditems[5].num=과일
-    console.log("아이템",feeditems)
-  },[물고기,풀,소고기,지렁이,사료,과일]);
+    feeditems[0].num = 물고기;
+    feeditems[1].num = 풀;
+    feeditems[2].num = 소고기;
+    feeditems[3].num = 지렁이;
+    feeditems[4].num = 사료;
+    feeditems[5].num = 과일;
+    console.log('아이템', feeditems);
+  }, [물고기, 풀, 소고기, 지렁이, 사료, 과일]);
 
   // 서버에서 사용자의 먹이 불러와서 redux에 저장하기
   useEffect(() => {
@@ -161,19 +158,17 @@ function Quest() {
       }
     }
     loadFood();
-    
-  }, [dispatch, feeditems,물고기,풀,소고기,지렁이,사료,과일]);
+  }, [dispatch, feeditems, 물고기, 풀, 소고기, 지렁이, 사료, 과일]);
 
-
-  async function waitusefeed(){
+  async function waitusefeed() {
     await usefeed();
   }
 
-  let usefeed = async ()=>{
-    console.log("이용전 소고기수",feeditems[2].num)
-    
-    if (pressedAnimalName=="닭"){
-      if (feeditems[1].num>=1){
+  let usefeed = async () => {
+    console.log('이용전 소고기수', feeditems[2].num);
+
+    if (pressedAnimalName == '닭') {
+      if (feeditems[1].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 1
@@ -181,15 +176,12 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use풀`)
+          await axios.get(`${Config.API_URL}/use풀`);
+      } else {
+        nofeedstate1 = true;
       }
-      else{
-        nofeedstate1 = true
-      }
-      
-    }
-    else if (pressedAnimalName=="기린"){
-      if (feeditems[1].num>=1){
+    } else if (pressedAnimalName == '기린') {
+      if (feeditems[1].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 1
@@ -197,14 +189,12 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use풀`)
+          await axios.get(`${Config.API_URL}/use풀`);
+      } else {
+        nofeedstate1 = true;
       }
-      else{
-        nofeedstate1 = true
-      }
-    }
-    else if (pressedAnimalName=="사슴"){
-      if (feeditems[1].num>=1 && feeditems[5].num>=1){
+    } else if (pressedAnimalName == '사슴') {
+      if (feeditems[1].num >= 1 && feeditems[5].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 1
@@ -212,7 +202,7 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use풀`)
+          await axios.get(`${Config.API_URL}/use풀`);
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 5
@@ -220,14 +210,12 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use과일`)
+          await axios.get(`${Config.API_URL}/use과일`);
+      } else {
+        nofeedstate1 = true;
       }
-      else{
-        nofeedstate1 = true
-      }
-    }
-    else if (pressedAnimalName=="코끼리"){
-      if (feeditems[1].num>=1){
+    } else if (pressedAnimalName == '코끼리') {
+      if (feeditems[1].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 1
@@ -235,14 +223,16 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use풀`)
+          await axios.get(`${Config.API_URL}/use풀`);
+      } else {
+        nofeedstate1 = true;
       }
-      else{
-        nofeedstate1 = true
-      }
-    }
-    else if (pressedAnimalName=="여우"){
-      if (feeditems[0].num>=1 && feeditems[2].num>=1 && feeditems[5].num>=1){
+    } else if (pressedAnimalName == '여우') {
+      if (
+        feeditems[0].num >= 1 &&
+        feeditems[2].num >= 1 &&
+        feeditems[5].num >= 1
+      ) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 0
@@ -250,7 +240,7 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use물고기`)
+          await axios.get(`${Config.API_URL}/use물고기`);
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 2
@@ -258,7 +248,7 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use소고기`)
+          await axios.get(`${Config.API_URL}/use소고기`);
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 5
@@ -266,14 +256,12 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use과일`)
+          await axios.get(`${Config.API_URL}/use과일`);
+      } else {
+        nofeedstate1 = true;
       }
-      else{
-        nofeedstate1 = true
-      }
-    }
-    else if (pressedAnimalName=="수달"){
-      if (feeditems[0].num>=1){
+    } else if (pressedAnimalName == '수달') {
+      if (feeditems[0].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 0
@@ -281,14 +269,12 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use물고기`)
+          await axios.get(`${Config.API_URL}/use물고기`);
+      } else {
+        nofeedstate1 = true;
       }
-      else{
-        nofeedstate1 = true
-      }
-    }
-    else if (pressedAnimalName=="고양이"){
-      if (feeditems[2].num>=1){
+    } else if (pressedAnimalName == '고양이') {
+      if (feeditems[2].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 2
@@ -296,14 +282,12 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use소고기`)
+          await axios.get(`${Config.API_URL}/use소고기`);
+      } else {
+        nofeedstate1 = true;
       }
-      else{
-        nofeedstate1 = true
-      }
-    }
-    else if (pressedAnimalName=="호랑이"){
-      if (feeditems[2].num>=1){
+    } else if (pressedAnimalName == '호랑이') {
+      if (feeditems[2].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 2
@@ -311,15 +295,13 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use소고기`)
-        console.log("tiger",feeditems);
+          await axios.get(`${Config.API_URL}/use소고기`);
+        console.log('tiger', feeditems);
+      } else {
+        nofeedstate1 = true;
       }
-      else {
-        nofeedstate1 = true
-      }
-    }
-    else if (pressedAnimalName=="비둘기"){
-      if (feeditems[3].num>=1 && feeditems[5].num>=1){
+    } else if (pressedAnimalName == '비둘기') {
+      if (feeditems[3].num >= 1 && feeditems[5].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 3
@@ -327,7 +309,7 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use지렁이`)
+          await axios.get(`${Config.API_URL}/use지렁이`);
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 5
@@ -335,14 +317,12 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use과일`)
+          await axios.get(`${Config.API_URL}/use과일`);
+      } else {
+        nofeedstate1 = true;
       }
-      else{
-        nofeedstate1 = true
-      }
-    }
-    else if (pressedAnimalName=="거북"){
-      if (feeditems[3].num>=1){
+    } else if (pressedAnimalName == '거북') {
+      if (feeditems[3].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 3
@@ -350,14 +330,12 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use지렁이`)
+          await axios.get(`${Config.API_URL}/use지렁이`);
+      } else {
+        nofeedstate1 = true;
       }
-      else{
-        nofeedstate1 = true
-      }
-    }
-    else if (pressedAnimalName=="강아지"){
-      if (feeditems[4].num>=1){
+    } else if (pressedAnimalName == '강아지') {
+      if (feeditems[4].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
             feeditems.id == 4
@@ -365,90 +343,85 @@ function Quest() {
               : feeditems,
           ),
         ),
-        await axios.get(`${Config.API_URL}/use사료`)
+          await axios.get(`${Config.API_URL}/use사료`);
+      } else {
+        nofeedstate1 = true;
       }
-      else{
-        nofeedstate1 = true
-      }
     }
+  };
 
-  }
-
-
-  const feedanimalmatch = () =>{
-    if (pressedAnimalName=="닭"){
-      return <Text>풀</Text>
+  const feedanimalmatch = () => {
+    if (pressedAnimalName == '닭') {
+      return <Text>풀</Text>;
     }
-    if (pressedAnimalName=="기린"){
-      return <Text>풀</Text>
+    if (pressedAnimalName == '기린') {
+      return <Text>풀</Text>;
     }
-    if (pressedAnimalName=="사슴"){
-      return <Text>풀 과일</Text>
+    if (pressedAnimalName == '사슴') {
+      return <Text>풀 과일</Text>;
     }
-    if (pressedAnimalName=="코끼리"){
-      return <Text>풀</Text>
+    if (pressedAnimalName == '코끼리') {
+      return <Text>풀</Text>;
     }
-    if (pressedAnimalName=="여우"){
-      return <Text>물고기 소고기 과일</Text>
+    if (pressedAnimalName == '여우') {
+      return <Text>물고기 소고기 과일</Text>;
     }
-    if (pressedAnimalName=="수달"){
-      return <Text>물고기</Text>
+    if (pressedAnimalName == '수달') {
+      return <Text>물고기</Text>;
     }
-    if (pressedAnimalName=="고양이"){
-      return <Text>소고기</Text>
+    if (pressedAnimalName == '고양이') {
+      return <Text>소고기</Text>;
     }
-    if (pressedAnimalName=="호랑이"){
-      return <Text>소고기</Text>
+    if (pressedAnimalName == '호랑이') {
+      return <Text>소고기</Text>;
     }
-    if (pressedAnimalName=="비둘기"){
-      return <Text>지렁이 과일</Text>
+    if (pressedAnimalName == '비둘기') {
+      return <Text>지렁이 과일</Text>;
     }
-    if (pressedAnimalName=="거북"){
-      return <Text>지렁이</Text>
+    if (pressedAnimalName == '거북') {
+      return <Text>지렁이</Text>;
     }
-    if (pressedAnimalName=="강아지"){
-      return <Text>사료</Text>
+    if (pressedAnimalName == '강아지') {
+      return <Text>사료</Text>;
     }
-  }
-
+  };
 
   //working
-  const animationMatch = () =>{
-    
-    if (pressedAnimalName=="닭"){
-      return <Chicken style={styles.animationStyle} />
+  const animationMatch = () => {
+    if (pressedAnimalName == '닭') {
+      return <Chicken style={styles.animationStyle} />;
     }
-    if (pressedAnimalName=="기린"){
-      return <Girafe style={styles.animationStyle} />
+    if (pressedAnimalName == '기린') {
+      return <Girafe style={styles.animationStyle} />;
     }
-    if (pressedAnimalName=="사슴"){
-      return <Deer style={styles.animationStyle} />
+    if (pressedAnimalName == '사슴') {
+      return <Deer style={styles.animationStyle} />;
     }
-    if (pressedAnimalName=="코끼리"){
-      return <Elephant style={styles.animationStyle} />
+    if (pressedAnimalName == '코끼리') {
+      return <Elephant style={styles.animationStyle} />;
     }
-    if (pressedAnimalName=="여우"){
-      return <Fox style={styles.animationStyle} />
+    if (pressedAnimalName == '여우') {
+      return <Fox style={styles.animationStyle} />;
     }
-    if (pressedAnimalName=="수달"){
-      return <Text>수달</Text>
+    if (pressedAnimalName == '수달') {
+      return <Text>수달</Text>;
     }
-    if (pressedAnimalName=="고양이"){
-      return <Cat style={styles.animationStyle} />
+    if (pressedAnimalName == '고양이') {
+      return <Cat style={styles.animationStyle} />;
     }
-    if (pressedAnimalName=="호랑이"){
-      return <Tiger style={styles.animationStyle} />
+    if (pressedAnimalName == '호랑이') {
+      return <Tiger style={styles.animationStyle} />;
     }
-    if (pressedAnimalName=="비둘기"){
-      return <Pigeon style={styles.animationStyle} />
+    if (pressedAnimalName == '비둘기') {
+      return <Pigeon style={styles.animationStyle} />;
     }
-    if (pressedAnimalName=="거북"){
-      return <Turtle style={styles.animationStyle} />
+    if (pressedAnimalName == '거북') {
+      return <Turtle style={styles.animationStyle} />;
     }
-    if (pressedAnimalName=="강아지"){
-      return <Dog style={styles.animationStyle} />
+    if (pressedAnimalName == '강아지') {
+      return <Dog style={styles.animationStyle} />;
     }
-  }
+  };
   return (
     <View>
       <View style={styles.visitButtonContainer}>
@@ -458,7 +431,6 @@ function Quest() {
           </Text>
         </Pressable>
       </View>
-
       <Modal
         animationType="slide"
         transparent={true}
@@ -474,7 +446,9 @@ function Quest() {
             </View>
             <Pressable
               style={[styles.ModalbuttonContainer]}
-              onPress={() => {setnofeedModalVisible(!nofeedModalVisible)}}
+              onPress={() => {
+                setnofeedModalVisible(!nofeedModalVisible);
+              }}
             >
               <Text style={styles.visitButtonText}>확인</Text>
             </Pressable>
@@ -492,18 +466,13 @@ function Quest() {
       >
         <View style={styles.encycloContainer}>
           <View style={styles.thanksTextContainer}>
-            <Text style={styles.ModalbigText}>
-              고마워요
-            </Text>
-            <Text style={styles.ModalbigText}>
-              잘 먹겠습니다!!
-            </Text>
+            <Text style={styles.ModalbigText}>고마워요</Text>
+            <Text style={styles.ModalbigText}>잘 먹겠습니다!!</Text>
           </View>
-            
+
           {animationMatch()}
         </View>
       </Modal>
-
 
       <Modal
         animationType="slide"
@@ -512,32 +481,30 @@ function Quest() {
         onRequestClose={() => {
           setfeedlistModalVisible(!feedlistModalVisible);
         }}
-
       >
         <View style={styles.encycloContainer}>
           <View style={styles.feedhaveContainer}>
             <Text style={styles.ModalText}>필요한 먹이 리스트</Text>
-            
+
             {feedanimalmatch()}
-            {nofeedstate1 = false}
+            {(nofeedstate1 = false)}
             <View style={styles.feedhavestateContainer}>
               <Pressable
                 style={[styles.ModalbuttonContainer]}
                 onPress={() => {
                   usefeed();
-                  if (nofeedstate1){
-                    setnofeedModalVisible(!nofeedModalVisible)
-                    setfeedlistModalVisible(!feedlistModalVisible)
-                  }else{
-                    setthanksModalVisible(true)
+                  if (nofeedstate1) {
+                    setnofeedModalVisible(!nofeedModalVisible);
+                    setfeedlistModalVisible(!feedlistModalVisible);
+                  } else {
+                    setthanksModalVisible(true);
                     setTimeout(() => setthanksModalVisible(false), 5000);
                   }
-                    
-                  console.log("good",feeditems);
-                  console.log("nofeedstate1",nofeedstate1);
+
+                  console.log('good', feeditems);
+                  console.log('nofeedstate1', nofeedstate1);
 
                   //nofeedstate값을 바꾸고자함
-                  
                 }}
               >
                 <Text style={styles.visitButtonText}>예</Text>
@@ -546,7 +513,7 @@ function Quest() {
               <Pressable
                 style={[styles.ModalbuttonContainer]}
                 onPress={() => {
-                  setfeedlistModalVisible(!feedlistModalVisible)
+                  setfeedlistModalVisible(!feedlistModalVisible);
                 }}
               >
                 <Text style={styles.visitButtonText}>아니오</Text>
@@ -554,10 +521,7 @@ function Quest() {
             </View>
           </View>
         </View>
-
       </Modal>
-
-
 
       <Modal
         animationType="fade"
@@ -633,13 +597,16 @@ function Quest() {
               />
             </View>
             <View style={styles.feedButtonContainer}>
-              <Pressable style={styles.closeButton} onPress={() => {
-                  setfeedlistModalVisible(true)
+              <Pressable
+                style={styles.closeButton}
+                onPress={() => {
+                  setfeedlistModalVisible(true);
 
-// 먹이 보유 리스트 보여주기
-// 먹이선택시 동물이랑 비교-> 먹을 수 있는지 -> 성공/ 실패 -> 성공시 애니메이션, 실패시 동물이 못먹는 먹이
-// 퀘스트 부분 성공
-              }}>
+                  // 먹이 보유 리스트 보여주기
+                  // 먹이선택시 동물이랑 비교-> 먹을 수 있는지 -> 성공/ 실패 -> 성공시 애니메이션, 실패시 동물이 못먹는 먹이
+                  // 퀘스트 부분 성공
+                }}
+              >
                 <Text style={styles.closeButtonText}>먹이주기</Text>
               </Pressable>
             </View>
@@ -799,7 +766,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  feedhaveContainer:{
+  feedhaveContainer: {
     width: 250,
     height: 350,
     borderWidth: 1,
@@ -807,15 +774,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-
-  },ModalbuttonContainer: {
+  },
+  ModalbuttonContainer: {
     padding: 5,
     margin: 15,
     alignItems: 'center',
     paddingHorizontal: 25,
     backgroundColor: '#F27E00',
     borderRadius: 10,
-    
   },
   feedhavestateContainer: {
     flexDirection: 'row',
