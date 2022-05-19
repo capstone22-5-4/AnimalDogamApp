@@ -4,6 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   nickname: '',
   email: '',
+  score: 0,
+  credit: 0,
   //accessToken: '',
 };
 const userSlice = createSlice({
@@ -13,7 +15,15 @@ const userSlice = createSlice({
     setUser(state, action) {
       state.email = action.payload.email;
       state.nickname = action.payload.nickname;
+      state.score = action.payload.score;
+      state.credit = action.payload.credit;
       //state.accessToken = action.payload.accessToken;
+    },
+    setCredit(state, action) {
+      state.credit = action.payload;
+    },
+    setScore(state, action) {
+      state.score = action.payload;
     },
   },
   extraReducers: (builder) => {},

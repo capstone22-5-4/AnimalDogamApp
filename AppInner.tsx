@@ -10,7 +10,7 @@ import Dogam from './src/pages/Dogam';
 import Ranking from './src/pages/Ranking';
 import Quest from './src/pages/Quest';
 import Achievement from './src/pages/Achievement';
-import Setting from './src/pages/Setting';
+import Habitat from './src/pages/Habitat';
 import FeedShop from './src/pages/FeedShop';
 import MainStackNavigator from './src/components/MainStackNavigator';
 import { useSelector } from 'react-redux';
@@ -30,7 +30,7 @@ export type LoggedInParamList = {
   Ranking: undefined;
   Quest: undefined;
   Achievement: undefined;
-  Setting: undefined;
+  Habitat: undefined;
   FeedShop: undefined;
 };
 
@@ -111,7 +111,7 @@ function AppInner() {
             }}
           />
           <Drawer.Screen
-            name="일일 퀘스트"
+            name="퀘스트"
             component={Quest}
             options={{
               headerShown: true,
@@ -126,6 +126,7 @@ function AppInner() {
               headerTitleStyle: {
                 fontFamily: 'OneMobileBold',
               },
+              unmountOnBlur: true,
             }}
           />
           <Drawer.Screen
@@ -162,16 +163,18 @@ function AppInner() {
               headerTitleStyle: {
                 fontFamily: 'OneMobileBold',
               },
+              unmountOnBlur: true,
             }}
           />
           <Drawer.Screen
-            name="설정"
-            component={Setting}
+            name="서식지도"
+            component={Habitat}
             options={{
               headerShown: true,
               drawerIcon: ({ color }) => (
-                <FontAwesome5Icon name="tools" size={20} color={color} />
+                <FontAwesome5Icon name="map" size={20} color={color} />
               ),
+              unmountOnBlur: true,
               headerStyle: {
                 borderBottomWidth: 1,
                 borderBottomColor: 'gray',
