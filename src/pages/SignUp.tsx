@@ -4,6 +4,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
+  Dimensions,
   Image,
   Platform,
   Pressable,
@@ -17,6 +18,7 @@ import { RootStackParamList } from '../../AppInner';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import axios, { AxiosError } from 'axios';
 import Config from 'react-native-config';
+import FastImage from 'react-native-fast-image';
 
 type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
@@ -110,8 +112,8 @@ function SignUp({ navigation }: SignUpScreenProps) {
   return (
     <DismissKeyboardView style={{ backgroundColor: 'white' }}>
       <View style={styles.appLogoWrapper}>
-        <Image
-          source={{ uri: 'https://ifh.cc/g/Hsn11h.png' }} // Sample image
+        <FastImage
+          source={require('../../images/logo_one_line.jpg')} // Sample image
           style={styles.appLogo}
         />
       </View>
@@ -207,8 +209,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   appLogo: {
-    width: 156,
-    height: 112,
+    width: Dimensions.get('window').width - 70,
+    height: 80,
   },
   textInput: {
     padding: 5,
