@@ -271,6 +271,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 8,
+    borderColor: '#532800',
   },
   closeButton: {
     borderRadius: 10,
@@ -300,12 +302,16 @@ const styles = StyleSheet.create({
   photoWrapper: {
     height: Dimensions.get('window').width / 3 - 20,
     width: Dimensions.get('window').width / 3 - 20,
-    backgroundColor: 'yellow',
     margin: 5,
+    borderRadius: 7,
   },
   photoContainer: {
-    borderWidth: 0.7,
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
+    backgroundColor: '#fdecd6',
+    borderRadius: 6,
+    borderColor: '#d66800',
+    elevation: 5,
   },
   collectionRateContainer: {
     borderWidth: 0.5,
@@ -328,12 +334,13 @@ const styles = StyleSheet.create({
   animationWrapper: {
     flex: 3,
     alignItems: 'center',
-    margin: 5,
+    margin: 9,
   },
   animalNameText: {
-    fontFamily: 'ONEMobileBold',
-    fontSize: 18,
+    fontFamily: 'Cafe24Shiningstar',
+    fontSize: 25,
     textAlign: 'center',
+    color: '#000',
   },
   animationStyle: {
     width: '100%',

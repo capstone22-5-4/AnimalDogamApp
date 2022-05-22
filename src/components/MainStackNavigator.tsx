@@ -63,6 +63,10 @@ const MainStackNavigator = ({ navigation }) => {
           headerTitleStyle: {
             fontFamily: 'OneMobileBold',
           },
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: 'gray',
+          },
         }}
       />
       <Stack.Screen
@@ -74,6 +78,10 @@ const MainStackNavigator = ({ navigation }) => {
           headerTitleStyle: {
             fontFamily: 'OneMobileBold',
           },
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: 'gray',
+          },
         }}
       />
       <Stack.Screen
@@ -84,6 +92,10 @@ const MainStackNavigator = ({ navigation }) => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontFamily: 'OneMobileBold',
+          },
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: 'gray',
           },
         }}
       />

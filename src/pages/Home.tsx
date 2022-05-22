@@ -133,12 +133,15 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   buttonMainText: {
-    color: 'black',
+    color: '#f78400',
     fontSize: 22,
     fontFamily: 'OneMobileBold',
     marginRight: 15,
   },
-  buttonSubText: { fontFamily: 'OneMobileRegular', paddingTop: 3 },
+  buttonSubText: {
+    fontFamily: 'OneMobileRegular',
+    paddingTop: 3,
+  },
   icon: { flex: 0.5 },
 });
 
