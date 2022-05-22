@@ -215,7 +215,9 @@ function Dogam() {
                 style={[styles.closeButton, { margin: 20 }]}
                 onPress={() => setLessAnimalModalVisible(false)}
               >
-                <Text style={styles.closeButtonText}>닫기</Text>
+                <Text style={[styles.closeButtonText, { marginTop: 0 }]}>
+                  닫기
+                </Text>
               </Pressable>
             </View>
           </View>
@@ -314,7 +316,7 @@ const styles = StyleSheet.create({
   },
   closeButtonContainer: {
     alignItems: 'center',
-    marginTop: 5,
+    marginTop: 15,
   },
   closeButtonText: {
     color: 'white',

@@ -1,65 +1,137 @@
-import React, { useState } from 'react';
-import {
-  FlatList,
-  Image,
-  ListRenderItem,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import axios, { AxiosError } from 'axios';
+import React, { useEffect, useState } from 'react';
+import { FlatList, ListRenderItem, StyleSheet, Text, View } from 'react-native';
+import Config from 'react-native-config';
 import Trophy from '../animations/Trophy';
+import Confetti from '../animations/Confetti';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/reducer';
+import FastImage from 'react-native-fast-image';
 
 type RankingProps = {
-  rank: number;
+  no: number;
   nickname: string;
   score: number;
 };
 
 function Ranking() {
-  const [ranks, setRanks] = useState<RankingProps[] | null>([
-    { rank: 1, nickname: 'gildong', score: 880 },
-    { rank: 2, nickname: 'puang', score: 820 },
-    { rank: 3, nickname: 'cau123', score: 770 },
-    { rank: 4, nickname: 'zzanggu', score: 750 },
-    { rank: 5, nickname: 'adminNickname', score: 730 },
-    { rank: 6, nickname: 'capstone22', score: 720 },
-    { rank: 7, nickname: 'dogamAnimal', score: 500 },
-    { rank: 8, nickname: 'gogo9876', score: 470 },
-    { rank: 9, nickname: 'happy', score: 220 },
-    { rank: 10, nickname: 'simpson', score: 180 },
-    { rank: 11, nickname: 'apple001', score: 150 },
-    { rank: 12, nickname: 'animalLove', score: 110 },
-  ]); // mockup data
+  const myNickname = useSelector((state: RootState) => state.user.nickname);
+  const [ranks, setRanks] = useState<RankingProps[] | null>([]); // mockup data
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    async function loadRanking() {
+      try {
+        const response = await axios.get(`${Config.API_URL}/top10`, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          withCredentials: true,
+        });
+        setRanks(response.data);
+      } catch (error) {
+        const errorResponse = (error as AxiosError).response;
+        console.log(errorResponse);
+      }
+    }
 
-  const Item = ({ rank, nickname, score }: RankingProps) => (
-    <View style={styles.item}>
-      <Text style={styles.rankingText}>{rank}위</Text>
-      <Text style={styles.nicknameText}>{nickname}</Text>
-      <Text style={styles.scoreText}>{score}점</Text>
-    </View>
-  );
+    loadRanking();
+  }, [isFocused]);
+
+  const Item = ({ no, nickname, score }: RankingProps) =>
+    nickname === myNickname ? (
+      no === 1 ? (
+        <View
+          style={[
+            styles.item,
+            {
+              backgroundColor: '#ffef11',
+            },
+          ]}
+        >
+          <Text style={styles.rankingText}>{no}위</Text>
+          <Text style={styles.nicknameText}>{nickname} (나)</Text>
+          <Text style={styles.scoreText}>{score}점</Text>
+        </View>
+      ) : no === 2 ? (
+        <View
+          style={[
+            styles.item,
+            {
+              backgroundColor: '#d8d8d8',
+            },
+          ]}
+        >
+          <Text style={styles.rankingText}>{no}위</Text>
+          <Text style={styles.nicknameText}>{nickname} (나)</Text>
+          <Text style={styles.scoreText}>{score}점</Text>
+        </View>
+      ) : no === 3 ? (
+        <View
+          style={[
+            styles.item,
+            {
+              backgroundColor: '#df9100ab',
+            },
+          ]}
+        >
+          <Text style={styles.rankingText}>{no}위</Text>
+          <Text style={styles.nicknameText}>{nickname} (나)</Text>
+          <Text style={styles.scoreText}>{score}점</Text>
+        </View>
+      ) : (
+        <View style={styles.item}>
+          <Text style={styles.rankingText}>{no}위</Text>
+          <Text style={styles.nicknameText}>{nickname}</Text>
+          <Text style={styles.scoreText}>{score}점</Text>
+        </View>
+      )
+    ) : no === 1 ? (
+      <View style={[styles.item, { backgroundColor: '#ffef11' }]}>
+        <Text style={styles.rankingText}>{no}위</Text>
+        <Text style={styles.nicknameText}>{nickname}</Text>
+        <Text style={styles.scoreText}>{score}점</Text>
+      </View>
+    ) : no === 2 ? (
+      <View style={[styles.item, { backgroundColor: '#d8d8d8' }]}>
+        <Text style={styles.rankingText}>{no}위</Text>
+        <Text style={styles.nicknameText}>{nickname}</Text>
+        <Text style={styles.scoreText}>{score}점</Text>
+      </View>
+    ) : no === 3 ? (
+      <View style={[styles.item, { backgroundColor: '#df9100ab' }]}>
+        <Text style={styles.rankingText}>{no}위</Text>
+        <Text style={styles.nicknameText}>{nickname}</Text>
+        <Text style={styles.scoreText}>{score}점</Text>
+      </View>
+    ) : (
+      <View style={styles.item}>
+        <Text style={styles.rankingText}>{no}위</Text>
+        <Text style={styles.nicknameText}>{nickname}</Text>
+        <Text style={styles.scoreText}>{score}점</Text>
+      </View>
+    );
 
   const renderItem: ListRenderItem<RankingProps> = ({ item }) => (
-    <Item rank={item.rank} nickname={item.nickname} score={item.score} />
+    <Item no={item.no} nickname={item.nickname} score={item.score} />
   );
 
   return (
     <View style={styles.container}>
       <View style={styles.rankingImageWrapper}>
-        {/* <Image
-          source={require('../../images/ranking_main.png')}
-          style={styles.rankingImage}
-        /> */}
         <Trophy style={styles.rankingImage} />
       </View>
       <View style={styles.tableWrapper}>
         <FlatList
           data={ranks}
           renderItem={renderItem}
-          keyExtractor={(item) => item.rank.toString()}
+          keyExtractor={(item) => item.no.toString()}
           style={styles.flatList}
         />
       </View>
+      <Confetti
+        style={[styles.rankingImage, { position: 'absolute', height: '100%' }]}
+      />
     </View>
   );
 }
@@ -84,7 +156,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   tableWrapper: {
-    flex: 4,
+    flex: 3,
     width: '90%',
   },
   BasicText: {
@@ -98,18 +170,21 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 0,
     marginHorizontal: 3,
-    borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: 0.5,
+    borderRadius: 10,
   },
   nicknameText: {
     flex: 3,
     fontSize: 15,
     fontFamily: 'OneMobileBold',
+    color: 'black',
   },
   rankingText: {
     flex: 1,
     fontSize: 15,
     fontFamily: 'OneMobileRegular',
     paddingLeft: 5,
+    color: '#000',
   },
   scoreText: {
     flex: 1,
@@ -121,6 +196,7 @@ const styles = StyleSheet.create({
   flatList: {
     flexGrow: 0,
     height: '90%',
-    backgroundColor: '#F97500',
+    backgroundColor: '#ffeee0',
+    borderRadius: 10,
   },
 });
