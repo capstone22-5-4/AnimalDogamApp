@@ -102,8 +102,27 @@ function Dogam() {
     );
   }, []);
 
+  const renderList = useCallback(({ item }) => {
+    return (
+      <View style={styles.lessAnimalContainer}>
+        <FastImage
+          source={require('../../images/question_mark.png')}
+          resizeMode="center"
+          style={styles.lessListWrapper}
+        />
+        <Text
+          style={[
+            styles.animalNameText,
+            { fontFamily: 'OneMobileRegular', fontSize: 15, marginBottom: 10 },
+          ]}
+        >
+          {item}
+        </Text>
+      </View>
+    );
+  }, []);
+
   let collectionRate = animalPhotos.length / 61;
-  //console.log({ credits });
 
   return (
     <View style={styles.container}>
@@ -181,17 +200,15 @@ function Dogam() {
       >
         <View style={styles.modalContainer}>
           <View style={styles.lessAnimalListContainer}>
-            <Text style={styles.lessAnimalTitle}>
-              내가 아직 만나지 못한 동물들
-            </Text>
-            <FlatList
-              data={lessAnimalList}
-              numColumns={1}
-              renderItem={({ item }) => (
-                <Text style={styles.lessAnimalsName}>{item}</Text>
-              )}
-              disableVirtualization={false}
-            />
+            <Text style={styles.lessAnimalTitle}>아직 모으지 못한 동물들</Text>
+            <View style={styles.photoGrid}>
+              <FlatList
+                data={lessAnimalList}
+                keyExtractor={(item) => item.toString()}
+                numColumns={3}
+                renderItem={renderList}
+              />
+            </View>
 
             <View style={styles.closeButtonContainer}>
               <Pressable
@@ -218,9 +235,9 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   lessAnimalTitle: {
-    fontSize: 30,
-    margin: 10,
-    fontFamily: 'Cafe24Shiningstar',
+    fontSize: 25,
+    margin: 15,
+    fontFamily: 'OneMobilePOP',
     color: '#000',
   },
   lessAnimalButton: {
@@ -242,7 +259,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   lessAnimalListContainer: {
-    backgroundColor: '#FFE8C9',
+    backgroundColor: '#ffffff',
     width: Dimensions.get('window').width - 50,
     height: Dimensions.get('window').height - 100,
     alignItems: 'center',
@@ -282,6 +299,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F27E00',
   },
+  lessListWrapper: {
+    height: Dimensions.get('window').width / 4,
+    width: Dimensions.get('window').width / 4,
+    borderRadius: 7,
+  },
   detailButton: {
     borderRadius: 10,
     padding: 10,
@@ -292,7 +314,7 @@ const styles = StyleSheet.create({
   },
   closeButtonContainer: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 5,
   },
   closeButtonText: {
     color: 'white',
@@ -311,6 +333,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fdecd6',
     borderRadius: 6,
     borderColor: '#d66800',
+    elevation: 5,
+  },
+  lessAnimalContainer: {
+    borderWidth: StyleSheet.hairlineWidth,
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 6,
+    borderColor: '#5e5e5e',
     elevation: 5,
   },
   collectionRateContainer: {
@@ -354,5 +384,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
     marginBottom: 15,
+    alignItems: 'center',
   },
 });
