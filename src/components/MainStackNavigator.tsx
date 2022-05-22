@@ -7,6 +7,7 @@ import Achievement from '../pages/Achievement';
 import { Pressable, StyleSheet } from 'react-native';
 import { LoggedInParamList } from '../../AppInner';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import FeedShop from '../pages/FeedShop';
 
 const Stack = createStackNavigator<LoggedInParamList>();
 
@@ -69,6 +70,17 @@ const MainStackNavigator = ({ navigation }) => {
         component={Achievement}
         options={{
           title: '업적',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'OneMobileBold',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="FeedShop"
+        component={FeedShop}
+        options={{
+          title: '상점',
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontFamily: 'OneMobileBold',
