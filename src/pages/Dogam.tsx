@@ -22,6 +22,7 @@ import DogamAnimals from '../animations/DogamAnimals';
 import lessAnimalSlice from '../slices/lessAnimal';
 import * as Progress from 'react-native-progress';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface IEncyclo {
   [key: string]: { [key: string]: string };
@@ -134,7 +135,7 @@ function Dogam() {
           <Text style={styles.collectionRateText}>
             도감 수집률 ({animalPhotos.length}/61)
           </Text>
-          <Progress.Bar progress={collectionRate} width={200} color="orange" />
+          <Progress.Bar progress={collectionRate} width={200} color="#fc8f00" />
         </View>
       </View>
       <View style={styles.photoGrid}>
@@ -166,29 +167,37 @@ function Dogam() {
               </Text>
               <View style={styles.closeButtonContainer}>
                 <Pressable
-                  style={styles.detailButton}
                   onPress={() => Linking.openURL(encyclo[animalName].link)}
                 >
-                  <Text style={styles.closeButtonText}>더 알아보기</Text>
+                  <LinearGradient
+                    colors={['#685b53', '#524032', '#30221b']}
+                    style={styles.detailButton}
+                  >
+                    <Text style={styles.closeButtonText}>더 알아보기</Text>
+                  </LinearGradient>
                 </Pressable>
               </View>
               <View style={styles.closeButtonContainer}>
-                <Pressable
-                  style={styles.closeButton}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.closeButtonText}>닫기</Text>
+                <Pressable onPress={() => setModalVisible(false)}>
+                  <LinearGradient
+                    colors={['#ff9c5b', '#fd8624', '#e66700']}
+                    style={styles.closeButton}
+                  >
+                    <Text style={styles.closeButtonText}>닫기</Text>
+                  </LinearGradient>
                 </Pressable>
               </View>
             </ImageBackground>
           </View>
         </Modal>
       ) : null}
-      <Pressable
-        style={styles.lessAnimalButton}
-        onPress={() => setLessAnimalModalVisible(true)}
-      >
-        <FontAwesome5Icon name="book-open" size={20} color={'white'} />
+      <Pressable onPress={() => setLessAnimalModalVisible(true)}>
+        <LinearGradient
+          colors={['#fc8638', '#ff8119', '#ff7b00']}
+          style={styles.lessAnimalButton}
+        >
+          <FontAwesome5Icon name="book-open" size={20} color={'white'} />
+        </LinearGradient>
       </Pressable>
       <Modal
         animationType="fade"
@@ -212,12 +221,17 @@ function Dogam() {
 
             <View style={styles.closeButtonContainer}>
               <Pressable
-                style={[styles.closeButton, { margin: 20 }]}
+                style={{ margin: 20 }}
                 onPress={() => setLessAnimalModalVisible(false)}
               >
-                <Text style={[styles.closeButtonText, { marginTop: 0 }]}>
-                  닫기
-                </Text>
+                <LinearGradient
+                  colors={['#ff9c5b', '#ff9239', '#ec7200']}
+                  style={styles.closeButton}
+                >
+                  <Text style={[styles.closeButtonText, { marginTop: 0 }]}>
+                    닫기
+                  </Text>
+                </LinearGradient>
               </Pressable>
             </View>
           </View>
