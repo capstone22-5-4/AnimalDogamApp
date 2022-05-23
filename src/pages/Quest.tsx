@@ -28,6 +28,7 @@ import { RootState } from '../store/reducer';
 import foodSlice from '../slices/food';
 import coinSlice from '../slices/user';
 import axios, { AxiosError } from 'axios';
+import LinearGradient from 'react-native-linear-gradient';
 
 function Quest() {
   const [flag, setFlag] = useState(false);
@@ -87,7 +88,7 @@ function Quest() {
     setTimeout(function () {
       setLoadingModalVisible(false);
       setVisitModalVisible(true);
-    }, 3000);
+    }, 2000);
   };
   /*
   7가지 판매
@@ -351,38 +352,286 @@ function Quest() {
   };
 
   const feedanimalmatch = () => {
-    if (pressedAnimalName == '닭') {
-      return <Text>풀</Text>;
+    if (pressedAnimalName === '닭') {
+      return (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/풀.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <Text style={styles.feedText}>'풀'</Text>
+        </View>
+      );
     }
-    if (pressedAnimalName == '기린') {
-      return <Text>풀</Text>;
+    if (pressedAnimalName === '기린') {
+      return <Text style={styles.feedText}>'풀'</Text>;
     }
-    if (pressedAnimalName == '사슴') {
-      return <Text>풀 과일</Text>;
+    if (pressedAnimalName === '사슴') {
+      return (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/풀.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/과일.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <Text style={styles.feedText}>'풀', '과일'</Text>
+        </View>
+      );
     }
-    if (pressedAnimalName == '코끼리') {
-      return <Text>풀</Text>;
+    if (pressedAnimalName === '코끼리') {
+      return (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/풀.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <Text style={styles.feedText}>'풀'</Text>
+        </View>
+      );
     }
-    if (pressedAnimalName == '여우') {
-      return <Text>물고기 소고기 과일</Text>;
+    if (pressedAnimalName === '여우') {
+      return (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/물고기.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/소고기.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/과일.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <Text style={styles.feedText}>'물고기', '소고기', '과일'</Text>
+        </View>
+      );
     }
-    if (pressedAnimalName == '수달') {
-      return <Text>물고기</Text>;
+    if (pressedAnimalName === '수달') {
+      return (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/물고기.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <Text style={styles.feedText}>'물고기'</Text>
+        </View>
+      );
     }
-    if (pressedAnimalName == '고양이') {
-      return <Text>소고기</Text>;
+    if (pressedAnimalName === '고양이') {
+      return (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/소고기.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <Text style={styles.feedText}>'소고기'</Text>
+        </View>
+      );
     }
-    if (pressedAnimalName == '호랑이') {
-      return <Text>소고기</Text>;
+    if (pressedAnimalName === '호랑이') {
+      return (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/소고기.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <Text style={styles.feedText}>'소고기'</Text>
+        </View>
+      );
     }
-    if (pressedAnimalName == '비둘기') {
-      return <Text>지렁이 과일</Text>;
+    if (pressedAnimalName === '비둘기') {
+      return (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/지렁이.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/과일.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <Text style={styles.feedText}>'지렁이', '과일'</Text>
+        </View>
+      );
     }
-    if (pressedAnimalName == '거북') {
-      return <Text>지렁이</Text>;
+    if (pressedAnimalName === '거북') {
+      return (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/지렁이.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <Text style={styles.feedText}>'지렁이'</Text>
+        </View>
+      );
     }
-    if (pressedAnimalName == '강아지') {
-      return <Text>사료</Text>;
+    if (pressedAnimalName === '강아지') {
+      return (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <FastImage
+                source={require('../../images/사료.png')}
+                style={{ height: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+          <Text style={styles.feedText}>'사료'</Text>
+        </View>
+      );
     }
   };
 
@@ -475,7 +724,7 @@ function Quest() {
       </Modal>
 
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={feedlistModalVisible}
         onRequestClose={() => {
@@ -484,11 +733,18 @@ function Quest() {
       >
         <View style={styles.encycloContainer}>
           <View style={styles.feedhaveContainer}>
-            <Text style={styles.ModalText}>필요한 먹이 리스트</Text>
+            <Text
+              style={[
+                styles.ModalText,
+                { fontFamily: 'OneMobileBold', marginTop: 5 },
+              ]}
+            >
+              필요한 먹이 리스트
+            </Text>
 
             {feedanimalmatch()}
             {(nofeedstate1 = false)}
-            <View style={styles.feedhavestateContainer}>
+            <View style={[styles.feedhavestateContainer, { marginBottom: 0 }]}>
               <Pressable
                 style={[styles.ModalbuttonContainer]}
                 onPress={() => {
@@ -500,10 +756,6 @@ function Quest() {
                     setthanksModalVisible(true);
                     setTimeout(() => setthanksModalVisible(false), 5000);
                   }
-
-                  console.log('good', feeditems);
-                  console.log('nofeedstate1', nofeedstate1);
-
                   //nofeedstate값을 바꾸고자함
                 }}
               >
@@ -583,41 +835,56 @@ function Quest() {
         }}
       >
         <View style={styles.modalContainer}>
-          <View style={styles.visitDetailModal}>
-            <View style={styles.visitDetailAnimalNameTextContainer}>
-              <Text style={styles.visitDetailAnimalNameText}>
-                {pressedAnimalName}
-              </Text>
-            </View>
-            <View style={styles.detailPhotoContainer}>
-              <FastImage
-                source={{ uri: `${Config.API_URL}/book/${pressedAnimalPhoto}` }}
-                resizeMode="contain"
-                style={styles.detailPhoto}
-              />
-            </View>
-            <View style={styles.feedButtonContainer}>
-              <Pressable
-                style={styles.closeButton}
-                onPress={() => {
-                  setfeedlistModalVisible(true);
+          <View>
+            <LinearGradient
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              colors={['#ffeee3', '#ffe2cb', '#ffd2a8']}
+              style={styles.visitDetailModal}
+            >
+              <View style={styles.visitDetailAnimalNameTextContainer}>
+                <Text style={styles.visitDetailAnimalNameText}>
+                  {pressedAnimalName}
+                </Text>
+              </View>
+              <View style={styles.detailPhotoContainer}>
+                <FastImage
+                  source={{
+                    uri: `${Config.API_URL}/book/${pressedAnimalPhoto}`,
+                  }}
+                  resizeMode="contain"
+                  style={styles.detailPhoto}
+                />
+              </View>
+              <View style={styles.feedButtonContainer}>
+                <Pressable
+                  onPress={() => {
+                    setfeedlistModalVisible(true);
 
-                  // 먹이 보유 리스트 보여주기
-                  // 먹이선택시 동물이랑 비교-> 먹을 수 있는지 -> 성공/ 실패 -> 성공시 애니메이션, 실패시 동물이 못먹는 먹이
-                  // 퀘스트 부분 성공
-                }}
-              >
-                <Text style={styles.closeButtonText}>먹이주기</Text>
-              </Pressable>
-            </View>
-            <View style={styles.closeButtonContainer}>
-              <Pressable
-                style={styles.closeButton}
-                onPress={() => setDetailModalVisible(false)}
-              >
-                <Text style={styles.closeButtonText}>닫기</Text>
-              </Pressable>
-            </View>
+                    // 먹이 보유 리스트 보여주기
+                    // 먹이선택시 동물이랑 비교-> 먹을 수 있는지 -> 성공/ 실패 -> 성공시 애니메이션, 실패시 동물이 못먹는 먹이
+                    // 퀘스트 부분 성공
+                  }}
+                >
+                  <LinearGradient
+                    colors={['#ff9c5b', '#ff9239', '#ec7200']}
+                    style={styles.closeButton}
+                  >
+                    <Text style={styles.closeButtonText}>먹이주기</Text>
+                  </LinearGradient>
+                </Pressable>
+              </View>
+              <View style={styles.closeButtonContainer}>
+                <Pressable onPress={() => setDetailModalVisible(false)}>
+                  <LinearGradient
+                    colors={['#5f5f5f', '#4d4d4d', '#383838']}
+                    style={styles.closeButton}
+                  >
+                    <Text style={styles.closeButtonText}>닫기</Text>
+                  </LinearGradient>
+                </Pressable>
+              </View>
+            </LinearGradient>
           </View>
         </View>
       </Modal>
@@ -628,22 +895,29 @@ function Quest() {
 export default Quest;
 
 const styles = StyleSheet.create({
+  feedText: {
+    fontSize: 15,
+    fontFamily: 'OneMobileBold',
+    textAlign: 'center',
+    marginTop: 20,
+  },
   visitDetailModal: {
     width: Dimensions.get('window').width - 40,
-    height: Dimensions.get('window').height * 0.8,
-    backgroundColor: '#b8efff',
+    height: Dimensions.get('window').height * 0.7,
+    backgroundColor: '#ffecdf',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    elevation: 10,
   },
   detailPhotoContainer: {
-    marginTop: 10,
+    marginTop: 0,
     alignItems: 'center',
     justifyContent: 'center',
   },
   detailPhoto: {
-    height: 250,
-    width: 250,
+    height: 220,
+    width: 220,
     margin: 5,
   },
   visitDetailAnimalNameTextContainer: {
@@ -730,12 +1004,16 @@ const styles = StyleSheet.create({
   photoWrapper: {
     height: Dimensions.get('window').width / 3 - 20,
     width: Dimensions.get('window').width / 3 - 20,
-    backgroundColor: 'yellow',
     margin: 5,
+    borderRadius: 7,
   },
   photoContainer: {
-    borderWidth: 0.7,
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
+    backgroundColor: '#fdecd6',
+    borderRadius: 6,
+    borderColor: '#d66800',
+    elevation: 5,
   },
   animationWrapper: {
     alignItems: 'center',
@@ -743,9 +1021,10 @@ const styles = StyleSheet.create({
     flex: 5,
   },
   animalNameText: {
-    fontFamily: 'ONEMobileBold',
-    fontSize: 18,
+    fontFamily: 'Cafe24Shiningstar',
+    fontSize: 25,
     textAlign: 'center',
+    color: '#000',
   },
   animationStyle: {
     width: '90%',
@@ -762,14 +1041,14 @@ const styles = StyleSheet.create({
   },
   encycloContainer: {
     flex: 1,
-    backgroundColor: 'transpart',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   feedhaveContainer: {
     width: 250,
-    height: 350,
-    borderWidth: 1,
+    height: 250,
+    borderRadius: 10,
     backgroundColor: 'white',
     flexDirection: 'column',
     alignItems: 'center',
@@ -780,8 +1059,9 @@ const styles = StyleSheet.create({
     margin: 15,
     alignItems: 'center',
     paddingHorizontal: 25,
-    backgroundColor: '#F27E00',
+    backgroundColor: '#ff8800',
     borderRadius: 10,
+    elevation: 5,
   },
   feedhavestateContainer: {
     flexDirection: 'row',
@@ -790,9 +1070,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   ModalText: {
-    fontSize: 15,
+    fontSize: 20,
     fontFamily: 'OneMobileRegluar',
     color: 'black',
+    marginBottom: 10,
   },
   ModalbigText: {
     fontSize: 20,
@@ -823,7 +1104,7 @@ const styles = StyleSheet.create({
   animationContainer: {
     width: 300,
     height: 300,
-    backgroundColor: 'transpart',
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
   },

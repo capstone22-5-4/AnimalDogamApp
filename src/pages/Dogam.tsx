@@ -208,32 +208,41 @@ function Dogam() {
         }}
       >
         <View style={styles.modalContainer}>
-          <View style={styles.lessAnimalListContainer}>
-            <Text style={styles.lessAnimalTitle}>아직 모으지 못한 동물들</Text>
-            <View style={styles.photoGrid}>
-              <FlatList
-                data={lessAnimalList}
-                keyExtractor={(item) => item.toString()}
-                numColumns={3}
-                renderItem={renderList}
-              />
-            </View>
+          <View>
+            <LinearGradient
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              colors={['#ffeee3', '#ffe2cb', '#ffd2a8']}
+              style={styles.lessAnimalListContainer}
+            >
+              <Text style={styles.lessAnimalTitle}>
+                아직 모으지 못한 동물들
+              </Text>
+              <View style={styles.photoGrid}>
+                <FlatList
+                  data={lessAnimalList}
+                  keyExtractor={(item) => item.toString()}
+                  numColumns={3}
+                  renderItem={renderList}
+                />
+              </View>
 
-            <View style={styles.closeButtonContainer}>
-              <Pressable
-                style={{ margin: 20 }}
-                onPress={() => setLessAnimalModalVisible(false)}
-              >
-                <LinearGradient
-                  colors={['#ff9c5b', '#ff9239', '#ec7200']}
-                  style={styles.closeButton}
+              <View style={styles.closeButtonContainer}>
+                <Pressable
+                  style={{ margin: 20 }}
+                  onPress={() => setLessAnimalModalVisible(false)}
                 >
-                  <Text style={[styles.closeButtonText, { marginTop: 0 }]}>
-                    닫기
-                  </Text>
-                </LinearGradient>
-              </Pressable>
-            </View>
+                  <LinearGradient
+                    colors={['#ff9c5b', '#ff9239', '#ec7200']}
+                    style={styles.closeButton}
+                  >
+                    <Text style={[styles.closeButtonText, { marginTop: 0 }]}>
+                      닫기
+                    </Text>
+                  </LinearGradient>
+                </Pressable>
+              </View>
+            </LinearGradient>
           </View>
         </View>
       </Modal>
@@ -251,9 +260,9 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   lessAnimalTitle: {
-    fontSize: 25,
+    fontSize: 22,
     margin: 15,
-    fontFamily: 'OneMobilePOP',
+    fontFamily: 'OneMobileTitle',
     color: '#000',
   },
   lessAnimalButton: {
@@ -400,6 +409,5 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
     marginBottom: 15,
-    alignItems: 'center',
   },
 });
