@@ -192,6 +192,7 @@ function Dogam() {
               )}
               disableVirtualization={false}
             />
+            
 
             <View style={styles.closeButtonContainer}>
               <Pressable

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image
 } from 'react-native';
 import Config from 'react-native-config';
 import FastImage from 'react-native-fast-image';
@@ -37,13 +38,27 @@ function Quest() {
   const [detailModalVisible, setDetailModalVisible] = useState(false);
   const [nofeedModalVisible, setnofeedModalVisible] = useState(false);
   const [thanksModalVisible, setthanksModalVisible] = useState(false);
+  const [QuestModalVisible, setQuestModalVisible] = useState(false);
+  const [yesQuestModalVisible, setyesQuestModalVisible] = useState(false);
   const [dogamOwnerName, setDogamOwnerName] = useState('');
   const [pressedAnimalName, setPressedAnimalName] = useState('');
   const [pressedAnimalPhoto, setPressedAnimalPhoto] = useState('');
+  const [questcheck, setquestcheck] = useState(false);
+  const [questanimalname, setquestanimalname] = useState('');
 
   const otherDogamPhoto = useSelector(
     (state: RootState) => state.photo.otherPhotos,
   );
+
+  //퀘스트 랜덤 동물 선정
+  const questanimallist = ['닭','기린','사슴','코끼리', '여우','수달','고양이','호랑이','비둘기' ,'거북','시바견'];
+  useEffect(()=>{
+    changequestanimalname();
+  },[]);
+  const changequestanimalname=()=>{
+    const rand_0_10 = Math.floor(Math.random()*11);
+    setquestanimalname(questanimallist[rand_0_10])
+  };
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -105,6 +120,18 @@ function Quest() {
   let 지렁이 = useSelector((state: RootState) => state.food.지렁이);
   let 사료 = useSelector((state: RootState) => state.food.사료);
   let 과일 = useSelector((state: RootState) => state.food.과일);
+
+  const star = [
+    {
+      id: false,
+      src: require('../../images/emptystar.png'),
+    },
+    {
+      id: true,
+      src: require('../../images/star.png'),
+    }
+  ]
+
 
   let nofeedstate1 = false;
   const [feeditems, setfeeditems] = useState([
@@ -334,7 +361,7 @@ function Quest() {
       } else {
         nofeedstate1 = true;
       }
-    } else if (pressedAnimalName == '강아지') {
+    } else if (pressedAnimalName == '시바견') {
       if (feeditems[4].num >= 1) {
         setfeeditems(
           feeditems.map((feeditems) =>
@@ -381,10 +408,11 @@ function Quest() {
     if (pressedAnimalName == '거북') {
       return <Text>지렁이</Text>;
     }
-    if (pressedAnimalName == '강아지') {
+    if (pressedAnimalName == '시바견') {
       return <Text>사료</Text>;
     }
   };
+
 
   //working
   const animationMatch = () => {
@@ -418,10 +446,24 @@ function Quest() {
     if (pressedAnimalName == '거북') {
       return <Turtle style={styles.animationStyle} />;
     }
-    if (pressedAnimalName == '강아지') {
+    if (pressedAnimalName == '시바견') {
       return <Dog style={styles.animationStyle} />;
     }
   };
+
+  let pluscoinandscore = async () => {
+    
+    await axios.get(`${Config.API_URL}/addscore30`);
+    await axios.get(`${Config.API_URL}/addcoin30`);
+  };
+
+  let plusquestachive = async () => {
+    
+    await axios.get(`${Config.API_URL}/putachieve`);
+  };
+
+
+
   return (
     <View>
       <View style={styles.visitButtonContainer}>
@@ -431,6 +473,105 @@ function Quest() {
           </Text>
         </Pressable>
       </View>
+
+      <View style={styles.QuestContainer}>
+        <View style={styles.Questiondivide}>
+          <View style={styles.QuestTextContainer}>
+            <Text style={styles.ModalText}>{questanimalname} 에게 먹이주기</Text>        
+          </View>
+          <View style={styles.QuestImageContainer}>
+            <Image
+              source={
+                
+                questcheck == false
+                  ? require('../../images/emptystar.png')
+                  : require('../../images/star.png')
+              }
+            />
+          </View>
+          
+        </View>
+        <View style={styles.Questiondivide}>
+          <Pressable
+              style={styles.QuestbuttonContainer}
+              onPress={() => {
+                if (questcheck == true){
+                  setyesQuestModalVisible(!yesQuestModalVisible);
+                  changequestanimalname();
+                  
+                  //코인, 점수 30씩 추가
+                  pluscoinandscore();
+                  //업적 퀘스트 횟수 추가
+                  plusquestachive();
+                }
+                else {
+                  setQuestModalVisible(!QuestModalVisible);
+                }
+                setquestcheck(false);
+              }}
+            >
+              <Text style={styles.visitButtonText}>완료</Text>
+          </Pressable>
+        </View>
+        
+        
+      </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={yesQuestModalVisible}
+        onRequestClose={() => {
+          setyesQuestModalVisible(!yesQuestModalVisible);
+        }}
+      >
+        <View style={styles.encycloContainer}>
+          <View style={styles.buyresultContainer}>
+            <View style={styles.buyresultTextContainer}>
+              <Text style={styles.ModalText}>퀘스트를 완료했습니다.</Text>
+            </View>
+            <View style={styles.buyresultTextContainer}>
+              <Text style={styles.ModalText}>코인 및 점수가 추가됩니다.</Text>
+            </View>
+            <Pressable
+              style={[styles.ModalbuttonContainer]}
+              onPress={() => {
+                setyesQuestModalVisible(!yesQuestModalVisible);
+              }}
+            >
+              <Text style={styles.visitButtonText}>확인</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={QuestModalVisible}
+        onRequestClose={() => {
+          setQuestModalVisible(!QuestModalVisible);
+        }}
+      >
+        <View style={styles.encycloContainer}>
+          <View style={styles.buyresultContainer}>
+            <View style={styles.buyresultTextContainer}>
+              <Text style={styles.ModalText}>퀘스트를 완료해주세요!</Text>
+            </View>
+            <Pressable
+              style={[styles.ModalbuttonContainer]}
+              onPress={() => {
+                setQuestModalVisible(!QuestModalVisible);
+              }}
+            >
+              <Text style={styles.visitButtonText}>확인</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      
+
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -497,6 +638,12 @@ function Quest() {
                     setnofeedModalVisible(!nofeedModalVisible);
                     setfeedlistModalVisible(!feedlistModalVisible);
                   } else {
+                    //비교
+                    if (questanimalname==pressedAnimalName){
+                      //퀘스트 완료
+                      setquestcheck(true)
+
+                    }
                     setthanksModalVisible(true);
                     setTimeout(() => setthanksModalVisible(false), 5000);
                   }
@@ -692,6 +839,7 @@ const styles = StyleSheet.create({
   },
   visitButtonContainer: {
     alignItems: 'center',
+    
   },
   visitButtonText: {
     fontSize: 15,
@@ -826,5 +974,29 @@ const styles = StyleSheet.create({
     backgroundColor: 'transpart',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  QuestContainer: {
+    flexDirection: 'row',
+    borderRadius: 8,
+    padding: 6,
+    marginHorizontal: 10,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'gray',
+    marginVertical: 5,
+    paddingHorizontal: 20,
+  },
+  QuestTextContainer: {
+    flexDirection: 'column',alignItems:'center'
+  },
+  QuestImageContainer: {alignItems:'center'},
+  Questiondivide: {flex:1},
+  QuestbuttonContainer: {
+    padding: 3,
+    marginHorizontal: 40,
+    alignItems: 'center',
+    backgroundColor: '#F27E00',
+    borderRadius: 10,
   },
 });
