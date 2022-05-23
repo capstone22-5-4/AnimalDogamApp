@@ -56,6 +56,7 @@ function SignIn({ navigation }: SignInScreenProps) {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
+          withCredentials: true,
         },
       );
       console.log(response.data);
@@ -65,6 +66,8 @@ function SignIn({ navigation }: SignInScreenProps) {
         userSlice.actions.setUser({
           nickname: response.data.nickname,
           email: response.data.email,
+          score: response.data.score,
+          credit: response.data.credit,
         }),
       );
     } catch (error) {
@@ -84,82 +87,89 @@ function SignIn({ navigation }: SignInScreenProps) {
 
   const canGoNext = email && password;
   return (
-    <DismissKeyboardView style={{ backgroundColor: 'white' }}>
-      <View style={styles.appLogoWrapper}>
-        <FastImage
-          source={{ uri: 'https://ifh.cc/g/fvOgR4.png' }} // *TODO: Change the app logo when determined
-          style={styles.appLogo}
-        />
-      </View>
-      <View style={styles.appNameWrapper}>
-        <Text style={styles.appNameText}>신비한 동물도감</Text>
-      </View>
-      <View style={styles.inputWrapper}>
-        <Text style={styles.label}>이메일</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="이메일을 입력해주세요."
-          value={email}
-          onChangeText={onChangeEmail}
-          importantForAutofill="yes"
-          autoComplete="email" // 자동완성(상황에 맞게)
-          textContentType="emailAddress"
-          keyboardType="email-address" // @가 있는 키보드를 띄우게
-          returnKeyType="next" // 키보드의 다음버튼 변경(화살표로)
-          onSubmitEditing={() => {
-            passwordRef.current?.focus();
-          }} // 엔터 쳤을 때 처리할 동작
-          blurOnSubmit={false} // 키보드가 없어지는 것을 막음
-          ref={emailRef}
-          clearButtonMode="while-editing" // 입력 중에 X 표시 누르면 모두 지워지게끔 (for IOS)
-        />
-      </View>
-      <View style={styles.inputWrapper}>
-        <Text style={styles.label}>비밀번호</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="비밀번호를 입력해주세요."
-          value={password}
-          onChangeText={onChangePassword}
-          secureTextEntry
-          importantForAutofill="yes"
-          autoComplete="password" // 자동완성
-          textContentType="password"
-          ref={passwordRef}
-          onSubmitEditing={onSubmit} // 엔터 쳤을 때 처리할 동작
-          clearButtonMode="while-editing" // 입력 중에 X 표시 누르면 모두 지워지게끔 (for IOS)
-        />
-      </View>
-      <View style={styles.buttonZone}>
-        <Pressable
-          onPress={onSubmit}
-          style={
-            !canGoNext
-              ? styles.loginButton
-              : StyleSheet.compose(styles.loginButton, styles.loginButtonActive)
-          }
-          disabled={!canGoNext}
-        >
-          <Text style={styles.loginButtonText}>로그인</Text>
-        </Pressable>
-        <Pressable onPress={toSignUp}>
-          <Text style={{ fontFamily: 'OneMobileRegular' }}>
-            아직 회원이 아니신가요? 회원가입
-          </Text>
-        </Pressable>
-      </View>
-    </DismissKeyboardView>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <DismissKeyboardView
+        style={{
+          backgroundColor: 'white',
+          width: '100%',
+        }}
+      >
+        <View style={styles.appLogoWrapper}>
+          <FastImage
+            source={require('../../images/logo_main_square.jpg')} // *TODO: Change the app logo when determined
+            style={styles.appLogo}
+          />
+        </View>
+
+        <View style={styles.inputWrapper}>
+          <Text style={styles.label}>이메일</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="이메일을 입력해주세요."
+            value={email}
+            onChangeText={onChangeEmail}
+            importantForAutofill="yes"
+            autoComplete="email" // 자동완성(상황에 맞게)
+            textContentType="emailAddress"
+            keyboardType="email-address" // @가 있는 키보드를 띄우게
+            returnKeyType="next" // 키보드의 다음버튼 변경(화살표로)
+            onSubmitEditing={() => {
+              passwordRef.current?.focus();
+            }} // 엔터 쳤을 때 처리할 동작
+            blurOnSubmit={false} // 키보드가 없어지는 것을 막음
+            ref={emailRef}
+            clearButtonMode="while-editing" // 입력 중에 X 표시 누르면 모두 지워지게끔 (for IOS)
+          />
+        </View>
+        <View style={styles.inputWrapper}>
+          <Text style={styles.label}>비밀번호</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="비밀번호를 입력해주세요."
+            value={password}
+            onChangeText={onChangePassword}
+            secureTextEntry
+            importantForAutofill="yes"
+            autoComplete="password" // 자동완성
+            textContentType="password"
+            ref={passwordRef}
+            onSubmitEditing={onSubmit} // 엔터 쳤을 때 처리할 동작
+            clearButtonMode="while-editing" // 입력 중에 X 표시 누르면 모두 지워지게끔 (for IOS)
+          />
+        </View>
+        <View style={styles.buttonZone}>
+          <Pressable
+            onPress={onSubmit}
+            style={
+              !canGoNext
+                ? styles.loginButton
+                : StyleSheet.compose(
+                    styles.loginButton,
+                    styles.loginButtonActive,
+                  )
+            }
+            disabled={!canGoNext}
+          >
+            <Text style={styles.loginButtonText}>로그인</Text>
+          </Pressable>
+          <Pressable onPress={toSignUp}>
+            <Text style={{ fontFamily: 'OneMobileRegular' }}>
+              아직 회원이 아니신가요? 회원가입
+            </Text>
+          </Pressable>
+        </View>
+      </DismissKeyboardView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   appLogoWrapper: {
-    paddingTop: 50,
     alignItems: 'center',
   },
   appLogo: {
-    width: 192,
-    height: 81,
+    width: 250,
+    height: 250,
   },
   appNameWrapper: {
     alignItems: 'center',
@@ -173,7 +183,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   inputWrapper: {
-    paddingVertical: 12,
+    paddingBottom: 12,
     paddingHorizontal: 30,
   },
   textInput: {

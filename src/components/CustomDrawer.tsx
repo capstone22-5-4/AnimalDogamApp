@@ -35,6 +35,8 @@ const CustomDrawer = (props) => {
         userSlice.actions.setUser({
           nickname: '',
           email: '',
+          score: 0,
+          credit: 0,
         }),
       );
     } catch (error) {
