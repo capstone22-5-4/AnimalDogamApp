@@ -7,7 +7,6 @@ import Trophy from '../animations/Trophy';
 import Confetti from '../animations/Confetti';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/reducer';
-import FastImage from 'react-native-fast-image';
 
 type RankingProps = {
   no: number;
