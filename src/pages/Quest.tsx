@@ -54,6 +54,8 @@ function Quest() {
     (state: RootState) => state.photo.otherPhotos,
   );
 
+  const userName = useSelector((state: RootState) => state.user.nickname);
+
   //퀘스트 랜덤 동물 선정
   const questanimallist = [
     '닭',
@@ -940,11 +942,10 @@ function Quest() {
         }}
       >
         <View style={styles.animalAnimationModalBG}>
-          <View style={styles.thanksTextContainer}>
-            <Text style={styles.ModalbigText}>고마워요</Text>
-            <Text style={styles.ModalbigText}>잘 먹을게요!</Text>
-          </View>
           {animationMatch()}
+          <Text style={styles.animalThanksText}>
+            "{userName}님, 고마워요. 잘 먹을게요!"
+          </Text>
         </View>
       </Modal>
 
@@ -1328,6 +1329,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'OneMobileRegluar',
     color: 'white',
+  },
+  animalThanksText: {
+    fontSize: 30,
+    fontFamily: 'Cafe24Shiningstar',
+    color: 'white',
+    marginBottom: 20,
   },
   buyresultContainer: {
     width: 250,
