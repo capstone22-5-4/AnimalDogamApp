@@ -34,7 +34,6 @@ function Habitat() {
   useEffect(() => {
     async function loadMyLocation() {
       await requestPermission().then((result) => {
-        console.log({ result });
         if (result === 'granted') {
           Geolocation.getCurrentPosition(
             (pos) => {
@@ -59,7 +58,6 @@ function Habitat() {
       });
     }
     loadMyLocation();
-    console.log(myLocation);
   }, []);
 
   useEffect(() => {
@@ -103,7 +101,6 @@ function Habitat() {
     ),
   );
 
-  console.log(myLocation);
   return (
     <View>
       <NaverMapView

@@ -82,7 +82,7 @@ function Dogam() {
         },
       );
       dispatch(lessAnimalSlice.actions.setLessAnimal(response.data));
-      //console.log(response.data);
+      console.log(response.data);
     }
     getPhotos();
     getLessAnimals();
