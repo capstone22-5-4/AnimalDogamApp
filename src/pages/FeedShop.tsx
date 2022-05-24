@@ -15,6 +15,7 @@ import BuySuccess from '../animations/BuySuccess';
 import { Card, WhiteSpace, WingBlank } from '@ant-design/react-native'
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage from 'react-native-fast-image';
+
 /* 
 강아지 사료
 거북이 밀웜
@@ -143,6 +144,8 @@ function FeedShop() {
       },
     });
   };
+
+  
 
   const array = [
     {
@@ -336,7 +339,7 @@ function FeedShop() {
               style={styles.smallstateContainer2}
               onPress={() => setModalVisible(true)}
             >
-              <Text style={styles.statetext2}>나의 보유 먹이    ></Text>
+              <Text style={styles.statetext2}>나의 보유 먹이</Text>
             </Pressable>
 
           </View>
@@ -512,7 +515,7 @@ function FeedShop() {
         <View style={styles.FeedTextContainer}>
           <View style={styles.FeedTextContainer2}>
             <Text style={styles.SubText} numberOfLines={1}>
-              먹는 동물: 강아지
+              먹는 동물: 시바견
             </Text>
             <Text style={styles.SubText} numberOfLines={1}>
               가격: 40 코인
