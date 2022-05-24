@@ -31,6 +31,8 @@ import foodSlice from '../slices/food';
 import coinSlice from '../slices/user';
 import axios, { AxiosError } from 'axios';
 import LinearGradient from 'react-native-linear-gradient';
+import BuyFail from '../animations/BuyFail';
+import Hearts from '../animations/Hearts';
 
 function Quest() {
   const [flag, setFlag] = useState(false);
@@ -390,6 +392,16 @@ function Quest() {
     }
   };
 
+  const closeAllModal = useCallback(() => {
+    setfeedlistModalVisible(false);
+    setDetailModalVisible(false);
+  }, []);
+
+  const afterFeeding = useCallback(() => {
+    setthanksModalVisible(false);
+    closeAllModal();
+  }, []);
+
   const feedanimalmatch = () => {
     if (pressedAnimalName === '닭') {
       return (
@@ -675,41 +687,95 @@ function Quest() {
   };
 
   //working
-  const animationMatch = () => {
+  const animationMatch = useCallback(() => {
     if (pressedAnimalName === '닭') {
-      return <Chicken style={styles.animationStyle} />;
+      return (
+        <View>
+          <Chicken style={styles.animalAnimationStyle} />
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
     if (pressedAnimalName === '기린') {
-      return <Girafe style={styles.animationStyle} />;
+      return (
+        <View>
+          <Girafe style={styles.animalAnimationStyle} />
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
     if (pressedAnimalName === '사슴') {
-      return <Deer style={styles.animationStyle} />;
+      return (
+        <View>
+          <Deer style={styles.animalAnimationStyle} />
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
     if (pressedAnimalName === '코끼리') {
-      return <Elephant style={styles.animationStyle} />;
+      return (
+        <View>
+          <Elephant style={styles.animalAnimationStyle} />
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
     if (pressedAnimalName === '여우') {
-      return <Fox style={styles.animationStyle} />;
+      return (
+        <View>
+          <Fox style={styles.animalAnimationStyle} />
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
     if (pressedAnimalName === '수달') {
-      return <Text>수달</Text>;
+      return (
+        <View>
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
     if (pressedAnimalName === '고양이') {
-      return <Cat style={styles.animationStyle} />;
+      return (
+        <View>
+          <Cat style={styles.animalAnimationStyle} />
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
     if (pressedAnimalName === '호랑이') {
-      return <Tiger style={styles.animationStyle} />;
+      return (
+        <View>
+          <Tiger style={styles.animalAnimationStyle} />
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
     if (pressedAnimalName === '비둘기') {
-      return <Pigeon style={styles.animationStyle} />;
+      return (
+        <View>
+          <Pigeon style={styles.animalAnimationStyle} />
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
     if (pressedAnimalName === '거북') {
-      return <Turtle style={styles.animationStyle} />;
+      return (
+        <View>
+          <Turtle style={styles.animalAnimationStyle} />
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
     if (pressedAnimalName === '시바견') {
-      return <Dog style={styles.animationStyle} />;
+      return (
+        <View>
+          <Dog style={styles.animalAnimationStyle} />
+          <Hearts style={styles.heartAnimationStyle} />
+        </View>
+      );
     }
-  };
+  }, [pressedAnimalName]);
 
   let pluscoinandscore = async () => {
     await axios.get(`${Config.API_URL}/addscore30`);
@@ -824,7 +890,7 @@ function Quest() {
       </Modal>
 
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={nofeedModalVisible}
         onRequestClose={() => {
@@ -834,12 +900,29 @@ function Quest() {
         <View style={styles.encycloContainer}>
           <View style={styles.buyresultContainer}>
             <View style={styles.buyresultTextContainer}>
-              <Text style={styles.ModalText}>먹이가 부족해요!</Text>
+              <BuyFail style={styles.animationStyle} />
+              <Text
+                style={[
+                  styles.bigtext,
+                  {
+                    fontSize: 18,
+                    padding: 3,
+                    marginBottom: 0,
+                    color: '#e45b00',
+                  },
+                ]}
+              >
+                먹이가 부족해요!
+              </Text>
+              <Text style={{ fontSize: 14, fontFamily: 'OneMobileRegular' }}>
+                상점에서 먹이를 구매하세요.
+              </Text>
             </View>
             <Pressable
               style={[styles.ModalbuttonContainer]}
               onPress={() => {
                 setnofeedModalVisible(!nofeedModalVisible);
+                setDetailModalVisible(!detailModalVisible);
               }}
             >
               <Text style={styles.visitButtonText}>확인</Text>
@@ -849,19 +932,18 @@ function Quest() {
       </Modal>
 
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={thanksModalVisible}
         onRequestClose={() => {
           setthanksModalVisible(!thanksModalVisible);
         }}
       >
-        <View style={styles.encycloContainer}>
+        <View style={styles.animalAnimationModalBG}>
           <View style={styles.thanksTextContainer}>
             <Text style={styles.ModalbigText}>고마워요</Text>
-            <Text style={styles.ModalbigText}>잘 먹겠습니다!!</Text>
+            <Text style={styles.ModalbigText}>잘 먹을게요!</Text>
           </View>
-
           {animationMatch()}
         </View>
       </Modal>
@@ -902,7 +984,7 @@ function Quest() {
                       setquestcheck(true);
                     }
                     setthanksModalVisible(true);
-                    setTimeout(() => setthanksModalVisible(false), 5000);
+                    setTimeout(() => afterFeeding(), 5000);
                   }
                   //nofeedstate값을 바꾸고자함
                 }}
@@ -1043,6 +1125,12 @@ function Quest() {
 export default Quest;
 
 const styles = StyleSheet.create({
+  heartAnimationStyle: {
+    flex: 1,
+    position: 'absolute',
+    height: '100%',
+    left: Dimensions.get('window').width / 4,
+  },
   feedText: {
     fontSize: 15,
     fontFamily: 'OneMobileBold',
@@ -1175,8 +1263,15 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   animationStyle: {
-    width: '90%',
+    width: '100%',
+    height: '100%',
+    flex: 1,
+  },
+  animalAnimationStyle: {
     height: '90%',
+    width: '90%',
+    left: Dimensions.get('window').width / 20,
+    bottom: Dimensions.get('window').height / 40,
   },
   container: {
     flex: 1,
@@ -1190,6 +1285,12 @@ const styles = StyleSheet.create({
   encycloContainer: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  animalAnimationModalBG: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -1230,8 +1331,9 @@ const styles = StyleSheet.create({
   },
   buyresultContainer: {
     width: 250,
-    height: 150,
-    borderWidth: 1,
+    height: 180,
+    borderRadius: 10,
+    elevation: 10,
     backgroundColor: 'white',
   },
   buyresultTextContainer: {
@@ -1280,5 +1382,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F27E00',
     borderRadius: 10,
+  },
+  bigtext: {
+    color: 'black',
+    fontSize: 20,
+    fontFamily: 'OneMobileBold',
+    padding: 5,
   },
 });
