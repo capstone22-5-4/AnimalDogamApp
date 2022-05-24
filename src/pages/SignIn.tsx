@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import axios, { AxiosError } from 'axios';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Pressable,
@@ -16,6 +16,7 @@ import { RootStackParamList } from '../../AppInner';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import userSlice from '../slices/user';
 import { useAppDispatch } from '../store';
+import SplashScreen from 'react-native-splash-screen';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
@@ -26,6 +27,12 @@ function SignIn({ navigation }: SignInScreenProps) {
   const emailRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 1500);
+  }, []);
 
   const onChangeEmail = useCallback((text) => {
     setEmail(text);
