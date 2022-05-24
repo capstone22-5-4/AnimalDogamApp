@@ -5,16 +5,16 @@ type StyleProps = {
   style: { height: string };
 };
 
-function Trophy({ style }: StyleProps) {
+function BuyFail({ style }: StyleProps) {
   return (
     <LottieView
-      source={require('../../assets/animations/trophy.json')}
+      source={require('../../assets/animations/buy_fail.json')}
       autoPlay
       resizeMode="contain"
-      loop={false}
       style={style}
+      loop={false}
     />
   );
 }
 
-export default Trophy;
+export default BuyFail;

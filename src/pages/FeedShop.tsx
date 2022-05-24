@@ -10,6 +10,12 @@ import foodSlice from '../slices/food';
 import coinSlice from '../slices/user';
 import { useSelector } from 'react-redux';
 import Shop from '../animations/Shop';
+import BuyFail from '../animations/BuyFail';
+import BuySuccess from '../animations/BuySuccess';
+import { Card, WhiteSpace, WingBlank } from '@ant-design/react-native'
+import LinearGradient from 'react-native-linear-gradient';
+import FastImage from 'react-native-fast-image';
+
 /* 
 강아지 사료
 거북이 밀웜
@@ -184,7 +190,7 @@ function FeedShop() {
       >
         <View style={styles.encycloContainer}>
           <View style={styles.foodModalContainer}>
-            <Text style={styles.bigtext}>나의 보유 먹이</Text>
+            <Text style={[styles.bigtext, {marginVertical: 10}]}>나의 보유 먹이</Text>
             <View style={styles.feedhavetextContainer}>
               <View style={styles.FeedTextContainer4}>
                 <Text style={styles.statetext}>물고기</Text>
@@ -207,14 +213,14 @@ function FeedShop() {
               style={[styles.ModalbuttonContainer]}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.statetext}>닫기</Text>
+              <Text style={[styles.statetext, {marginVertical: 5}]}>닫기</Text>
             </Pressable>
           </View>
         </View>
       </Modal>
 
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible2}
         onRequestClose={() => {
@@ -230,10 +236,9 @@ function FeedShop() {
                 style={styles.FeedImageonbuybutton}
               />
             </View>
-
-            <Text>"{feedname}"을(를) 구매하시겠습니까?</Text>
-            <Text>가격: {feedcoin}코인</Text>
-            <Text>현재 보유 코인: {coin}코인</Text>
+            <Text style={styles.buyConfirmText}>"{feedname}"을(를) 구매하시겠습니까?</Text>
+            <Text style={styles.priceText}>가격: {feedcoin}코인</Text>
+            <Text style={styles.myCoinText}>현재 보유 코인: {coin}코인</Text>
 
             <View style={styles.stateContainer2}>
               <Pressable
@@ -256,7 +261,7 @@ function FeedShop() {
                   else if (coin < feedcoin) return setModalVisible4(true);
                 }}
               >
-                <Text style={styles.statetext}>예</Text>
+                <Text style={[styles.statetext, {fontSize: 17}]}>예</Text>
               </Pressable>
 
               <Pressable
@@ -265,7 +270,7 @@ function FeedShop() {
                   setModalVisible2(!modalVisible2);
                 }}
               >
-                <Text style={styles.statetext}>아니오</Text>
+                <Text style={[styles.statetext, {fontSize: 17}]}>아니오</Text>
               </Pressable>
             </View>
           </View>
@@ -273,7 +278,7 @@ function FeedShop() {
       </Modal>
 
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible3}
         onRequestClose={() => {
@@ -283,14 +288,15 @@ function FeedShop() {
         <View style={styles.encycloContainer}>
           <View style={styles.buyresultContainer}>
             <View style={styles.buyresultTextContainer}>
-              <Text style={styles.bigtext}>"{feedname}"을(를)</Text>
-              <Text style={styles.bigtext}>성공적으로 구매하였습니다.</Text>
+            <BuySuccess style={styles.animationStyle} />
+              <Text style={[styles.bigtext, {fontSize: 18, paddingBottom: 0}]}>"{feedname}"을(를)</Text>
+              <Text style={[styles.bigtext, {fontSize: 18, paddingBottom: 10}]}>성공적으로 구매하였습니다.</Text>
             </View>
             <Pressable
               style={[styles.ModalbuttonContainer]}
               onPress={() => setModalVisible3(!modalVisible3)}
             >
-              <Text style={styles.statetext}>확인</Text>
+              <Text style={[styles.statetext, {marginBottom: 5}]}>확인</Text>
             </Pressable>
           </View>
         </View>
@@ -307,13 +313,14 @@ function FeedShop() {
         <View style={styles.encycloContainer}>
           <View style={styles.buyresultContainer}>
             <View style={styles.buyresultTextContainer}>
-              <Text style={styles.bigtext}>코인이 부족해요!</Text>
+            <BuyFail style={styles.animationStyle} />
+              <Text style={[styles.bigtext, {fontSize: 18, padding: 3,marginBottom: 5, color: '#e45b00'}]}>코인이 부족해요!</Text>
             </View>
             <Pressable
               style={[styles.ModalbuttonContainer]}
               onPress={() => setModalVisible4(!modalVisible4)}
             >
-              <Text style={styles.statetext}>확인</Text>
+              <Text style={[styles.statetext, {marginBottom: 5}]}>확인</Text>
             </Pressable>
           </View>
         </View>
@@ -324,7 +331,7 @@ function FeedShop() {
         </View>
         <View style={styles.stateContainer}>
           <View style={styles.smallstateContainer}>
-            <Text style={styles.statetext}>보유 코인</Text>
+            <Text style={styles.statetext}>보유 코인:</Text>
             <Text style={styles.statetext}>{coin}</Text>
             </View>
             <View>
@@ -355,20 +362,24 @@ function FeedShop() {
               먹는 동물: 여우 수달
             </Text>
             <Text style={styles.SubText} numberOfLines={1}>
-              가격: 10 코인
+              가격: 20 코인
             </Text>
           </View>
           <View style={styles.FeedTextContainer3}>
             <Pressable
-              style={styles.buttonContainer}
               onPress={() => {
                 setfeedname('물고기'),
                   setModalVisible2(true),
                   setfeedpicture(0),
-                  setfeedcoin(10);
+                  setfeedcoin(20);
               }}
             >
+              <LinearGradient
+                    colors={['#ff9c5b', '#fc640d', '#e64900']}
+                    style={styles.buttonContainer}
+                  >
               <Text style={styles.buttonContainer2}>구매</Text>
+              </LinearGradient>
             </Pressable>
           </View>
         </View>
@@ -395,15 +406,19 @@ function FeedShop() {
           </View>
           <View style={styles.FeedTextContainer3}>
             <Pressable
-              style={styles.buttonContainer}
-              onPress={() => {
+               onPress={() => {
                 setfeedname('풀'),
                   setModalVisible2(true),
                   setfeedpicture(1),
                   setfeedcoin(10);
               }}
             >
+              <LinearGradient
+                colors={['#ff9c5b', '#fc640d', '#e64900']}
+                style={styles.buttonContainer}
+              >
               <Text style={styles.buttonContainer2}>구매</Text>
+              </LinearGradient>
             </Pressable>
           </View>
         </View>
@@ -425,20 +440,24 @@ function FeedShop() {
               먹는 동물: 고양이 호랑이 여우
             </Text>
             <Text style={styles.SubText} numberOfLines={1}>
-              가격: 10 코인
+              가격: 80 코인
             </Text>
           </View>
           <View style={styles.FeedTextContainer3}>
             <Pressable
-              style={styles.buttonContainer}
               onPress={() => {
                 setfeedname('소고기'),
                   setModalVisible2(true),
                   setfeedpicture(2),
-                  setfeedcoin(10);
+                  setfeedcoin(80);
               }}
             >
+              <LinearGradient
+                    colors={['#ff9c5b', '#fc640d', '#e64900']}
+                    style={styles.buttonContainer}
+                  >
               <Text style={styles.buttonContainer2}>구매</Text>
+              </LinearGradient>
             </Pressable>
           </View>
         </View>
@@ -460,20 +479,24 @@ function FeedShop() {
               먹는 동물: 비둘기 거북이
             </Text>
             <Text style={styles.SubText} numberOfLines={1}>
-              가격: 10 코인
+              가격: 15 코인
             </Text>
           </View>
           <View style={styles.FeedTextContainer3}>
             <Pressable
-              style={styles.buttonContainer}
-              onPress={() => {
+                onPress={() => {
                 setfeedname('지렁이'),
                   setModalVisible2(true),
                   setfeedpicture(3),
-                  setfeedcoin(10);
+                  setfeedcoin(15);
               }}
             >
+              <LinearGradient
+                colors={['#ff9c5b', '#fc640d', '#e64900']}
+                style={styles.buttonContainer}
+              >
               <Text style={styles.buttonContainer2}>구매</Text>
+              </LinearGradient>
             </Pressable>
           </View>
         </View>
@@ -495,20 +518,24 @@ function FeedShop() {
               먹는 동물: 시바견
             </Text>
             <Text style={styles.SubText} numberOfLines={1}>
-              가격: 10 코인
+              가격: 40 코인
             </Text>
           </View>
           <View style={styles.FeedTextContainer3}>
             <Pressable
-              style={styles.buttonContainer}
-              onPress={() => {
+                  onPress={() => {
                 setfeedname('사료'),
                   setModalVisible2(true),
                   setfeedpicture(4),
-                  setfeedcoin(10);
+                  setfeedcoin(40);
               }}
             >
+              <LinearGradient
+                colors={['#ff9c5b', '#fc640d', '#e64900']}
+                style={styles.buttonContainer}
+              >
               <Text style={styles.buttonContainer2}>구매</Text>
+              </LinearGradient>
             </Pressable>
           </View>
         </View>
@@ -530,21 +557,25 @@ function FeedShop() {
               먹는 동물: 코끼리 비둘기 여우
             </Text>
             <Text style={styles.SubText} numberOfLines={1}>
-              가격: 10 코인
+              가격: 50 코인
             </Text>
           </View>
 
           <View style={styles.FeedTextContainer3}>
             <Pressable
-              style={styles.buttonContainer}
               onPress={() => {
                 setfeedname('과일'),
                   setModalVisible2(true),
                   setfeedpicture(5),
-                  setfeedcoin(10);
+                  setfeedcoin(50);
               }}
             >
+              <LinearGradient
+                colors={['#ff9c5b', '#fc640d', '#e64900']}
+                style={styles.buttonContainer}
+              >
               <Text style={styles.buttonContainer2}>구매</Text>
+              </LinearGradient>
             </Pressable>
           </View>
         </View>
@@ -553,25 +584,44 @@ function FeedShop() {
   );
 }
 const styles = StyleSheet.create({
+  buyConfirmText: {
+    marginBottom: 5,
+    fontSize: 18,
+    fontFamily: 'OneMobileRegular',
+    color: 'black'
+  },
+  priceText: {
+    fontFamily: 'OneMobileRegular',
+    fontSize: 15,
+    marginTop: 10,
+    marginBottom: 5
+  },
+  myCoinText: {
+    fontFamily: 'OneMobileRegular',
+    fontSize: 15,
+    marginBottom: 10
+  },
   animationStyle: {
     width: '100%',
     height: '100%',
     flex: 1,
   },
   foodModalContainer: {
-    backgroundColor: '#FFF7EB',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
+    borderRadius: 10,
+    elevation: 10
   },
   buyfeedContainer: {
-    width: 250,
+    width: 300,
     height: 350,
-    borderWidth: 1,
     backgroundColor: 'white',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 10,
+    elevation: 10
   },
-
   buyresultTextContainer: {
     flex: 3,
     flexDirection: 'column',
@@ -580,8 +630,9 @@ const styles = StyleSheet.create({
   },
   buyresultContainer: {
     width: 250,
-    height: 150,
-    borderWidth: 1,
+    height: 180,
+    borderRadius: 10,
+    elevation: 10,
     backgroundColor: 'white',
   },
 
@@ -589,9 +640,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     height: 150,
     width: 150,
-    borderRadius: 90,
-    borderWidth: 1,
-    backgroundColor: '#FFF7EB',
+    elevation: 5
   },
 
   FeedImageonbuybutton: {
@@ -605,7 +654,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
     fontFamily: 'OneMobileBold',
-    padding: 8,
+    padding: 5,
   },
 
   feedhavetextContainer: {
@@ -718,8 +767,7 @@ const styles = StyleSheet.create({
     padding: 5,
     alignItems: 'center',
     backgroundColor: '#E3562A',
-    borderWidth: 1,
-    borderColor: 'gray',
+    elevation: 3,
     paddingHorizontal: 25,
   },
   ModalbuttonContainer: {
@@ -740,15 +788,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     alignItems: 'center',
     backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'gray',
+    elevation: 3,
     marginVertical: 5,
     paddingHorizontal: 20,
   },
 
   MainText: {
     color: 'black',
-    fontSize: 12,
+    fontSize: 15,
     fontFamily: 'OneMobileBold',
     padding: 10,
   },

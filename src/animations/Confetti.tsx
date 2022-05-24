@@ -5,16 +5,15 @@ type StyleProps = {
   style: { height: string };
 };
 
-function Trophy({ style }: StyleProps) {
+function Confetti({ style }: StyleProps) {
   return (
     <LottieView
-      source={require('../../assets/animations/trophy.json')}
+      source={require('../../assets/animations/confetti.json')}
       autoPlay
       resizeMode="contain"
-      loop={false}
       style={style}
     />
   );
 }
 
-export default Trophy;
+export default Confetti;
