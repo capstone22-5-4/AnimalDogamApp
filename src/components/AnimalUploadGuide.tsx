@@ -1,18 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  ImageBackground,
-  Linking,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import LinearGradient from 'react-native-linear-gradient';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+
 import Swiper from 'react-native-swiper';
 
 const AnimalUploadGuide = () => {

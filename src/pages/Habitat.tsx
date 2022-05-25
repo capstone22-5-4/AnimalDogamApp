@@ -38,11 +38,11 @@ function Habitat() {
           Geolocation.getCurrentPosition(
             (pos) => {
               setMyLocation({
-                // latitude: pos.coords.latitude,
-                // longitude: pos.coords.longitude,
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
                 // 임시로 CAU 위치로 설정, 나중에 아래 좌표 지우고 위의 사용자 gps 데이터 사용
-                latitude: 37.5051,
-                longitude: 126.9571,
+                // latitude: 37.5051,
+                // longitude: 126.9571,
               });
             },
             (error) => {
