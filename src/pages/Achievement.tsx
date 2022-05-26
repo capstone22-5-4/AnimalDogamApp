@@ -183,7 +183,7 @@ function Achievement() {
       pluscoin25andscore40();
       }
 
-
+      console.log("업적 점수 : ",achievenum)
       //cuteanimal... achivement4
       let cuteanimal = 0
       animals.map((name)=> name['animalName'] =='고양이'
