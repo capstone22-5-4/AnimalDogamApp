@@ -108,6 +108,7 @@ function AppInner() {
               headerTitleStyle: {
                 fontFamily: 'OneMobileBold',
               },
+              unmountOnBlur: true,
             }}
           />
           <Drawer.Screen

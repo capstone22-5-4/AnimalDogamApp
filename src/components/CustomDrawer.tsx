@@ -3,12 +3,12 @@ import {
   View,
   Text,
   ImageBackground,
-  Image,
   Pressable,
   Alert,
   StyleSheet,
 } from 'react-native';
 import {
+  DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
@@ -21,7 +21,7 @@ import userSlice from '../slices/user';
 import Config from 'react-native-config';
 import { Gravatar } from 'react-native-gravatar';
 
-const CustomDrawer = (props) => {
+const CustomDrawer = (props: DrawerContentComponentProps) => {
   const nickname = useSelector((state: RootState) => state.user.nickname);
   const email = useSelector((state: RootState) => state.user.email);
 

@@ -22,6 +22,7 @@ import DogamAnimals from '../animations/DogamAnimals';
 import lessAnimalSlice from '../slices/lessAnimal';
 import * as Progress from 'react-native-progress';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface IEncyclo {
   [key: string]: { [key: string]: string };
@@ -81,7 +82,7 @@ function Dogam() {
         },
       );
       dispatch(lessAnimalSlice.actions.setLessAnimal(response.data));
-      //console.log(response.data);
+      console.log(response.data);
     }
     getPhotos();
     getLessAnimals();
@@ -102,8 +103,27 @@ function Dogam() {
     );
   }, []);
 
+  const renderList = useCallback(({ item }) => {
+    return (
+      <View style={styles.lessAnimalContainer}>
+        <FastImage
+          source={require('../../images/question_mark.png')}
+          resizeMode="center"
+          style={styles.lessListWrapper}
+        />
+        <Text
+          style={[
+            styles.animalNameText,
+            { fontFamily: 'OneMobileRegular', fontSize: 15, marginBottom: 10 },
+          ]}
+        >
+          {item}
+        </Text>
+      </View>
+    );
+  }, []);
+
   let collectionRate = animalPhotos.length / 61;
-  //console.log({ credits });
 
   return (
     <View style={styles.container}>
@@ -115,7 +135,7 @@ function Dogam() {
           <Text style={styles.collectionRateText}>
             도감 수집률 ({animalPhotos.length}/61)
           </Text>
-          <Progress.Bar progress={collectionRate} width={200} color="orange" />
+          <Progress.Bar progress={collectionRate} width={200} color="#fc8f00" />
         </View>
       </View>
       <View style={styles.photoGrid}>
@@ -147,29 +167,37 @@ function Dogam() {
               </Text>
               <View style={styles.closeButtonContainer}>
                 <Pressable
-                  style={styles.detailButton}
                   onPress={() => Linking.openURL(encyclo[animalName].link)}
                 >
-                  <Text style={styles.closeButtonText}>더 알아보기</Text>
+                  <LinearGradient
+                    colors={['#685b53', '#524032', '#30221b']}
+                    style={styles.detailButton}
+                  >
+                    <Text style={styles.closeButtonText}>더 알아보기</Text>
+                  </LinearGradient>
                 </Pressable>
               </View>
               <View style={styles.closeButtonContainer}>
-                <Pressable
-                  style={styles.closeButton}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.closeButtonText}>닫기</Text>
+                <Pressable onPress={() => setModalVisible(false)}>
+                  <LinearGradient
+                    colors={['#ff9c5b', '#fd8624', '#e66700']}
+                    style={styles.closeButton}
+                  >
+                    <Text style={styles.closeButtonText}>닫기</Text>
+                  </LinearGradient>
                 </Pressable>
               </View>
             </ImageBackground>
           </View>
         </Modal>
       ) : null}
-      <Pressable
-        style={styles.lessAnimalButton}
-        onPress={() => setLessAnimalModalVisible(true)}
-      >
-        <FontAwesome5Icon name="book-open" size={20} color={'white'} />
+      <Pressable onPress={() => setLessAnimalModalVisible(true)}>
+        <LinearGradient
+          colors={['#fc8638', '#ff8119', '#ff7b00']}
+          style={styles.lessAnimalButton}
+        >
+          <FontAwesome5Icon name="book-open" size={20} color={'white'} />
+        </LinearGradient>
       </Pressable>
       <Modal
         animationType="fade"
@@ -180,28 +208,41 @@ function Dogam() {
         }}
       >
         <View style={styles.modalContainer}>
-          <View style={styles.lessAnimalListContainer}>
-            <Text style={styles.lessAnimalTitle}>
-              내가 아직 만나지 못한 동물들
-            </Text>
-            <FlatList
-              data={lessAnimalList}
-              numColumns={1}
-              renderItem={({ item }) => (
-                <Text style={styles.lessAnimalsName}>{item}</Text>
-              )}
-              disableVirtualization={false}
-            />
-            
+          <View>
+            <LinearGradient
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              colors={['#ffeee3', '#ffe2cb', '#ffd2a8']}
+              style={styles.lessAnimalListContainer}
+            >
+              <Text style={styles.lessAnimalTitle}>
+                아직 모으지 못한 동물들
+              </Text>
+              <View style={styles.photoGrid}>
+                <FlatList
+                  data={lessAnimalList}
+                  keyExtractor={(item) => item.toString()}
+                  numColumns={3}
+                  renderItem={renderList}
+                />
+              </View>
 
-            <View style={styles.closeButtonContainer}>
-              <Pressable
-                style={[styles.closeButton, { margin: 20 }]}
-                onPress={() => setLessAnimalModalVisible(false)}
-              >
-                <Text style={styles.closeButtonText}>닫기</Text>
-              </Pressable>
-            </View>
+              <View style={styles.closeButtonContainer}>
+                <Pressable
+                  style={{ margin: 20 }}
+                  onPress={() => setLessAnimalModalVisible(false)}
+                >
+                  <LinearGradient
+                    colors={['#ff9c5b', '#ff9239', '#ec7200']}
+                    style={styles.closeButton}
+                  >
+                    <Text style={[styles.closeButtonText, { marginTop: 0 }]}>
+                      닫기
+                    </Text>
+                  </LinearGradient>
+                </Pressable>
+              </View>
+            </LinearGradient>
           </View>
         </View>
       </Modal>
@@ -219,9 +260,9 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   lessAnimalTitle: {
-    fontSize: 30,
-    margin: 10,
-    fontFamily: 'Cafe24Shiningstar',
+    fontSize: 22,
+    margin: 15,
+    fontFamily: 'OneMobileTitle',
     color: '#000',
   },
   lessAnimalButton: {
@@ -243,7 +284,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   lessAnimalListContainer: {
-    backgroundColor: '#FFE8C9',
+    backgroundColor: '#ffffff',
     width: Dimensions.get('window').width - 50,
     height: Dimensions.get('window').height - 100,
     alignItems: 'center',
@@ -272,6 +313,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 8,
+    borderColor: '#532800',
   },
   closeButton: {
     borderRadius: 10,
@@ -280,6 +323,11 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width / 2,
     alignItems: 'center',
     backgroundColor: '#F27E00',
+  },
+  lessListWrapper: {
+    height: Dimensions.get('window').width / 4,
+    width: Dimensions.get('window').width / 4,
+    borderRadius: 7,
   },
   detailButton: {
     borderRadius: 10,
@@ -291,7 +339,7 @@ const styles = StyleSheet.create({
   },
   closeButtonContainer: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 15,
   },
   closeButtonText: {
     color: 'white',
@@ -301,12 +349,24 @@ const styles = StyleSheet.create({
   photoWrapper: {
     height: Dimensions.get('window').width / 3 - 20,
     width: Dimensions.get('window').width / 3 - 20,
-    backgroundColor: 'yellow',
     margin: 5,
+    borderRadius: 7,
   },
   photoContainer: {
-    borderWidth: 0.7,
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
+    backgroundColor: '#fdecd6',
+    borderRadius: 6,
+    borderColor: '#d66800',
+    elevation: 5,
+  },
+  lessAnimalContainer: {
+    borderWidth: StyleSheet.hairlineWidth,
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 6,
+    borderColor: '#5e5e5e',
+    elevation: 5,
   },
   collectionRateContainer: {
     borderWidth: 0.5,
@@ -329,12 +389,13 @@ const styles = StyleSheet.create({
   animationWrapper: {
     flex: 3,
     alignItems: 'center',
-    margin: 5,
+    margin: 9,
   },
   animalNameText: {
-    fontFamily: 'ONEMobileBold',
-    fontSize: 18,
+    fontFamily: 'Cafe24Shiningstar',
+    fontSize: 25,
     textAlign: 'center',
+    color: '#000',
   },
   animationStyle: {
     width: '100%',
