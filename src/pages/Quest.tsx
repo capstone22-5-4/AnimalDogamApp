@@ -33,6 +33,7 @@ import axios, { AxiosError } from 'axios';
 import LinearGradient from 'react-native-linear-gradient';
 import BuyFail from '../animations/BuyFail';
 import Hearts from '../animations/Hearts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Quest() {
   const [flag, setFlag] = useState(false);
@@ -48,8 +49,7 @@ function Quest() {
   const [pressedAnimalName, setPressedAnimalName] = useState('');
   const [pressedAnimalPhoto, setPressedAnimalPhoto] = useState('');
   const [questcheck, setquestcheck] = useState(false);
-  const [questanimalname, setquestanimalname] = useState('');
-
+  const [questanimalname, setquestanimalname] = useState('닭');
   const otherDogamPhoto = useSelector(
     (state: RootState) => state.photo.otherPhotos,
   );
@@ -71,11 +71,29 @@ function Quest() {
     '시바견',
   ];
   useEffect(() => {
-    changequestanimalname();
+    
+    getanimalname();
   }, []);
-  const changequestanimalname = () => {
+
+  //마구 바꾸면 안됨. 처음, 완료시
+
+  const getanimalname = async ()=>{
+    await AsyncStorage.getItem(userName+'퀘스트동물', (err, result) => {
+      if (result != null){
+        setquestanimalname(result)
+      }
+    });
+
+
+  }
+  const changequestanimalname = async () => {
+
     const rand_0_10 = Math.floor(Math.random() * 11);
     setquestanimalname(questanimallist[rand_0_10]);
+    AsyncStorage.setItem(userName+'퀘스트동물', questanimallist[rand_0_10], () => {
+      console.log('퀘스트 완료시 셋팅')
+    });
+
   };
 
   const dispatch = useAppDispatch();
@@ -834,6 +852,14 @@ function Quest() {
             }}
           >
             <Text style={styles.visitButtonText}>완료</Text>
+          </Pressable>
+          <Pressable
+            style={styles.QuestbuttonContainer}
+            onPress={() => {
+              changequestanimalname();
+            }}
+          >
+            <Text style={styles.visitButtonText}>새로고침</Text>
           </Pressable>
         </View>
       </View>
