@@ -446,7 +446,7 @@ function Quest() {
           >
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/풀.png')}
+                source={require('../../images/grass.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
@@ -474,14 +474,14 @@ function Quest() {
           >
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/풀.png')}
+                source={require('../../images/grass.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
             </View>
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/과일.png')}
+                source={require('../../images/fruit.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
@@ -506,7 +506,7 @@ function Quest() {
           >
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/풀.png')}
+                source={require('../../images/grass.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
@@ -531,21 +531,21 @@ function Quest() {
           >
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/물고기.png')}
+                source={require('../../images/fish.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
             </View>
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/소고기.png')}
+                source={require('../../images/beef.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
             </View>
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/과일.png')}
+                source={require('../../images/fruit.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
@@ -570,7 +570,7 @@ function Quest() {
           >
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/물고기.png')}
+                source={require('../../images/fish.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
@@ -595,7 +595,7 @@ function Quest() {
           >
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/소고기.png')}
+                source={require('../../images/beef.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
@@ -620,7 +620,7 @@ function Quest() {
           >
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/소고기.png')}
+                source={require('../../images/beef.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
@@ -645,14 +645,14 @@ function Quest() {
           >
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/지렁이.png')}
+                source={require('../../images/worm.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
             </View>
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/과일.png')}
+                source={require('../../images/fruit.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
@@ -677,7 +677,7 @@ function Quest() {
           >
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/지렁이.png')}
+                source={require('../../images/worm.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />
@@ -702,7 +702,7 @@ function Quest() {
           >
             <View style={{ flex: 1 }}>
               <FastImage
-                source={require('../../images/사료.png')}
+                source={require('../../images/dogFood.png')}
                 style={{ height: 60 }}
                 resizeMode="contain"
               />

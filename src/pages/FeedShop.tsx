@@ -146,27 +146,27 @@ function FeedShop() {
   const array = [
     {
       id: 0,
-      src: require('../../images/물고기.png'),
+      src: require('../../images/fish.png'),
     },
     {
       id: 1,
-      src: require('../../images/풀.png'),
+      src: require('../../images/grass.png'),
     },
     {
       id: 2,
-      src: require('../../images/소고기.png'),
+      src: require('../../images/beef.png'),
     },
     {
       id: 3,
-      src: require('../../images/지렁이.png'),
+      src: require('../../images/worm.png'),
     },
     {
       id: 4,
-      src: require('../../images/사료.png'),
+      src: require('../../images/dogFood.png'),
     },
     {
       id: 5,
-      src: require('../../images/과일.png'),
+      src: require('../../images/fruit.png'),
     },
 
     //추가 먹이있으면 array 에 정렬
@@ -370,7 +370,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/물고기.png')}
+            source={require('../../images/fish.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
@@ -409,7 +409,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/풀.png')}
+            source={require('../../images/grass.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
@@ -448,7 +448,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/소고기.png')}
+            source={require('../../images/beef.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
@@ -487,7 +487,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/지렁이.png')}
+            source={require('../../images/worm.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
@@ -526,7 +526,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/사료.png')}
+            source={require('../../images/dogFood.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
@@ -565,7 +565,7 @@ function FeedShop() {
       <View style={styles.FeedContainer}>
         <View style={styles.FeedImageContainer}>
           <Image
-            source={require('../../images/과일.png')}
+            source={require('../../images/fruit.png')}
             style={styles.FeedImage}
           />
           <Text style={styles.MainText} numberOfLines={1}>
