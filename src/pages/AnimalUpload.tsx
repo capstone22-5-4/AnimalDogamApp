@@ -6,6 +6,7 @@ import Config from 'react-native-config';
 import { WebView } from 'react-native-webview';
 import userSlice from '../slices/user';
 import { useAppDispatch } from '../store';
+import AnimalUploadGuide from '../components/AnimalUploadGuide';
 
 function AnimalUpload() {
   const dispatch = useAppDispatch();
@@ -56,6 +57,7 @@ function AnimalUpload() {
           uri: `${Config.API_URL}/analmal`,
         }}
       />
+      <AnimalUploadGuide />
     </View>
   );
 }

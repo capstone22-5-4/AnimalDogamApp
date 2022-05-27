@@ -2,18 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>서비스 동작을 위해 위치 정보가 필요합니다</string>
-  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-  <string>서비스 동작을 위해 위치 정보가 필요합니다</string>
-  <key>NSLocationAlwaysUsageDescription</key>
-  <string>서비스 동작을 위해 위치 정보가 필요합니다</string>
-  <key>NMFClientId</key>
-  <string>pd9msqq7mx</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>서비스 동작을 위해 위치 정보가 필요합니다</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>서비스 동작을 위해 위치 정보가 필요합니다</string>
+	<key>NMFClientId</key>
+	<string>pd9msqq7mx</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>AnimalDogamApp</string>
+	<string>신비한 동물도감</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -43,8 +43,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -67,23 +65,9 @@
 		<string>OneMobileRegular.ttf</string>
 		<string>OneMobileTitle.ttf</string>
 		<string>Cafe24Shiningstar.ttf</string>
-		<string>AntDesign.ttf</string>
-		<string>Entypo.ttf</string>
-		<string>EvilIcons.ttf</string>
-		<string>Feather.ttf</string>
-		<string>FontAwesome.ttf</string>
-		<string>FontAwesome5_Brands.ttf</string>
-		<string>FontAwesome5_Regular.ttf</string>
-		<string>FontAwesome5_Solid.ttf</string>
-		<string>Fontisto.ttf</string>
-		<string>Foundation.ttf</string>
-		<string>Ionicons.ttf</string>
-		<string>MaterialCommunityIcons.ttf</string>
-		<string>MaterialIcons.ttf</string>
-		<string>Octicons.ttf</string>
-		<string>SimpleLineIcons.ttf</string>
-		<string>Zocial.ttf</string>
 		<string>KOTRA_Songuelssi.ttf</string>
+		<string>antfill.ttf</string>
+		<string>antoutline.ttf</string>
 	</array>
 </dict>
 </plist>
