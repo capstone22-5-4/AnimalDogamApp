@@ -7,6 +7,7 @@ import Trophy from '../animations/Trophy';
 import Confetti from '../animations/Confetti';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/reducer';
+import LinearGradient from 'react-native-linear-gradient';
 
 type RankingProps = {
   no: number;
@@ -116,7 +117,10 @@ function Ranking() {
   );
 
   return (
-    <View style={styles.container}>
+    <LinearGradient
+      colors={['#00028a', '#00014e', '#000127']}
+      style={styles.container}
+    >
       <View style={styles.rankingImageWrapper}>
         <Trophy style={styles.rankingImage} />
       </View>
@@ -131,7 +135,7 @@ function Ranking() {
       <Confetti
         style={[styles.rankingImage, { position: 'absolute', height: '100%' }]}
       />
-    </View>
+    </LinearGradient>
   );
 }
 

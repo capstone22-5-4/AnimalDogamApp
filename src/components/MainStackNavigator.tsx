@@ -31,7 +31,7 @@ const MainStackNavigator = ({ navigation }) => {
               />
             </Pressable>
           ),
-          title: '홈',
+          title: '신비한 동물도감',
           headerStyle: {
             borderBottomWidth: 1,
             borderBottomColor: 'gray',

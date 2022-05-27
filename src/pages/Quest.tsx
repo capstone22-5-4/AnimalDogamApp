@@ -9,6 +9,7 @@ import {
   Text,
   View,
   Image,
+  ImageBackground,
 } from 'react-native';
 import Config from 'react-native-config';
 import FastImage from 'react-native-fast-image';
@@ -34,6 +35,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import BuyFail from '../animations/BuyFail';
 import Hearts from '../animations/Hearts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import QuestSuccess from '../animations/QuestSuccess';
+import QuestConfetti from '../animations/QuestConfetti';
 
 function Quest() {
   const [flag, setFlag] = useState(false);
@@ -48,11 +51,12 @@ function Quest() {
   const [dogamOwnerName, setDogamOwnerName] = useState('');
   const [pressedAnimalName, setPressedAnimalName] = useState('');
   const [pressedAnimalPhoto, setPressedAnimalPhoto] = useState('');
-  const [questcheck, setquestcheck] = useState(false);
   const [questanimalname, setquestanimalname] = useState('닭');
   const otherDogamPhoto = useSelector(
     (state: RootState) => state.photo.otherPhotos,
   );
+
+  let questChecker = false;
 
   const userName = useSelector((state: RootState) => state.user.nickname);
 
@@ -72,7 +76,7 @@ function Quest() {
   ];
   useEffect(() => {
     getanimalname();
-    getcheckquest();
+    // getcheckquest();
   }, []);
 
   //마구 바꾸면 안됨. 처음, 완료시
@@ -81,17 +85,6 @@ function Quest() {
     await AsyncStorage.getItem(userName + '퀘스트동물', (err, result) => {
       if (result != null) {
         setquestanimalname(result);
-      }
-    });
-  };
-  const getcheckquest = async () => {
-    await AsyncStorage.getItem(userName + '퀘스트체크', (err, result) => {
-      if (result != null) {
-        if (result == '0') {
-          setquestcheck(false);
-        } else {
-          setquestcheck(true);
-        }
       }
     });
   };
@@ -106,17 +99,6 @@ function Quest() {
         console.log('퀘스트 완료시 셋팅');
       },
     );
-  };
-
-  const setquestcheck0 = async () => {
-    AsyncStorage.setItem(userName + '퀘스트체크', '0', () => {
-      console.log('0할당');
-    });
-  };
-  const setquestcheck1 = async () => {
-    AsyncStorage.setItem(userName + '퀘스트체크', '1', () => {
-      console.log('1할당');
-    });
   };
 
   const dispatch = useAppDispatch();
@@ -440,10 +422,17 @@ function Quest() {
     setDetailModalVisible(false);
   }, []);
 
-  const afterFeeding = useCallback(() => {
+  const afterFeeding = () => {
     setthanksModalVisible(false);
     closeAllModal();
-  }, []);
+    if (questChecker === true) {
+      pluscoinandscore();
+      plusquestachive();
+      setyesQuestModalVisible(true);
+      changequestanimalname();
+      questChecker = false;
+    }
+  };
 
   const feedanimalmatch = () => {
     if (pressedAnimalName === '닭') {
@@ -831,345 +820,370 @@ function Quest() {
 
   return (
     <View>
-      <View style={styles.visitButtonContainer}>
-        <Pressable style={styles.visitButton} onPress={() => handleVisit()}>
-          <Text style={styles.visitButtonText}>
-            다른 친구의 도감에 방문하기
-          </Text>
-        </Pressable>
-      </View>
-
-      <View style={styles.QuestContainer}>
-        <View style={styles.Questiondivide}>
-          <View style={styles.QuestTextContainer}>
-            <Text style={styles.ModalText}>
-              {questanimalname} 에게 먹이주기
-            </Text>
-          </View>
-          <View style={styles.QuestImageContainer}>
-            <Image
-              source={
-                questcheck === false
-                  ? require('../../images/emptystar.png')
-                  : require('../../images/star.png')
-              }
-            />
-          </View>
-        </View>
-        <View style={styles.Questiondivide}>
-          <Pressable
-            style={styles.QuestbuttonContainer}
-            onPress={() => {
-              if (questcheck === true) {
-                setyesQuestModalVisible(!yesQuestModalVisible);
-                changequestanimalname();
-
-                //코인, 점수 30씩 추가
-                pluscoinandscore();
-                //업적 퀘스트 횟수 추가
-                plusquestachive();
-                setquestcheck(false);
-                setquestcheck0();
-              } else {
-                setQuestModalVisible(!QuestModalVisible);
-              }
-            }}
-          >
-            <Text style={styles.visitButtonText}>완료</Text>
-          </Pressable>
-          <Pressable
-            style={styles.QuestbuttonContainer}
-            onPress={() => {
-              changequestanimalname();
-            }}
-          >
-            <Text style={styles.visitButtonText}>새로고침</Text>
-          </Pressable>
-        </View>
-      </View>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={yesQuestModalVisible}
-        onRequestClose={() => {
-          setyesQuestModalVisible(!yesQuestModalVisible);
-        }}
+      <ImageBackground
+        source={require('../../images/board.jpg')}
+        resizeMode="stretch"
+        style={styles.background}
       >
-        <View style={styles.encycloContainer}>
-          <View style={styles.buyresultContainer}>
-            <View style={styles.buyresultTextContainer}>
-              <Text style={styles.ModalText}>퀘스트를 완료했습니다.</Text>
-            </View>
-            <View style={styles.buyresultTextContainer}>
-              <Text style={styles.ModalText}>코인 및 점수가 추가됩니다.</Text>
-            </View>
-            <Pressable
-              style={[styles.ModalbuttonContainer]}
-              onPress={() => {
-                setyesQuestModalVisible(!yesQuestModalVisible);
-              }}
-            >
-              <Text style={styles.visitButtonText}>확인</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={QuestModalVisible}
-        onRequestClose={() => {
-          setQuestModalVisible(!QuestModalVisible);
-        }}
-      >
-        <View style={styles.encycloContainer}>
-          <View style={styles.buyresultContainer}>
-            <View style={styles.buyresultTextContainer}>
-              <Text style={styles.ModalText}>퀘스트를 완료해주세요!</Text>
-            </View>
-            <Pressable
-              style={[styles.ModalbuttonContainer]}
-              onPress={() => {
-                setQuestModalVisible(!QuestModalVisible);
-              }}
-            >
-              <Text style={styles.visitButtonText}>확인</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={nofeedModalVisible}
-        onRequestClose={() => {
-          setnofeedModalVisible(!nofeedModalVisible);
-        }}
-      >
-        <View style={styles.encycloContainer}>
-          <View style={styles.buyresultContainer}>
-            <View style={styles.buyresultTextContainer}>
-              <BuyFail style={styles.animationStyle} />
+        <View style={styles.QuestContainer}>
+          <View style={styles.Questiondivide}>
+            <View style={styles.QuestTextContainer}>
               <Text
-                style={[
-                  styles.bigtext,
-                  {
-                    fontSize: 18,
-                    padding: 3,
-                    marginBottom: 0,
-                    color: '#e45b00',
-                  },
-                ]}
+                style={{
+                  fontFamily: 'Cafe24Shiningstar',
+                  fontSize: 30,
+                  color: 'black',
+                }}
               >
-                먹이가 부족해요!
-              </Text>
-              <Text style={{ fontSize: 14, fontFamily: 'OneMobileRegular' }}>
-                상점에서 먹이를 구매하세요.
+                {questanimalname}에게 먹이주기
               </Text>
             </View>
-            <Pressable
-              style={[styles.ModalbuttonContainer]}
-              onPress={() => {
-                setnofeedModalVisible(!nofeedModalVisible);
-                setDetailModalVisible(!detailModalVisible);
+            <Text
+              style={{
+                fontFamily: 'OneMobileRegular',
+                fontSize: 13,
+                marginTop: 10,
               }}
             >
-              <Text style={styles.visitButtonText}>확인</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={thanksModalVisible}
-        onRequestClose={() => {
-          setthanksModalVisible(!thanksModalVisible);
-        }}
-      >
-        <View style={styles.animalAnimationModalBG}>
-          {animationMatch()}
-          <Text style={styles.animalThanksText}>
-            "{userName}님, 고마워요. 잘 먹을게요!"
-          </Text>
-        </View>
-      </Modal>
-
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={feedlistModalVisible}
-        onRequestClose={() => {
-          setfeedlistModalVisible(!feedlistModalVisible);
-        }}
-      >
-        <View style={styles.encycloContainer}>
-          <View style={styles.feedhaveContainer}>
+              * 다른 친구의 도감에 방문하여 퀘스트를 수행하세요!
+            </Text>
             <Text
-              style={[
-                styles.ModalText,
-                { fontFamily: 'OneMobileBold', marginTop: 5 },
-              ]}
+              style={{
+                fontFamily: 'OneMobileRegular',
+                fontSize: 13,
+                marginTop: 5,
+              }}
             >
-              필요한 먹이 리스트
-            </Text>
-
-            {feedanimalmatch()}
-            {(nofeedstate1 = false)}
-            <View style={[styles.feedhavestateContainer, { marginBottom: 0 }]}>
-              <Pressable
-                style={[styles.ModalbuttonContainer]}
-                onPress={() => {
-                  usefeed();
-                  if (nofeedstate1) {
-                    setnofeedModalVisible(!nofeedModalVisible);
-                    setfeedlistModalVisible(!feedlistModalVisible);
-                  } else {
-                    //비교
-                    if (questanimalname === pressedAnimalName) {
-                      //퀘스트 완료
-                      setquestcheck(true);
-                      setquestcheck1();
-                    }
-                    setthanksModalVisible(true);
-                    setTimeout(() => afterFeeding(), 5000);
-                  }
-                  //nofeedstate값을 바꾸고자함
-                }}
-              >
-                <Text style={styles.visitButtonText}>예</Text>
-              </Pressable>
-
-              <Pressable
-                style={[styles.ModalbuttonContainer]}
-                onPress={() => {
-                  setfeedlistModalVisible(!feedlistModalVisible);
-                }}
-              >
-                <Text style={styles.visitButtonText}>아니오</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
-
-      <Modal
-        animationType="fade"
-        transparent={false}
-        visible={visitModalVisible}
-        onRequestClose={() => {
-          setVisitModalVisible(!visitModalVisible);
-        }}
-      >
-        <View style={styles.container}>
-          <View style={styles.modalTitleContainer}>
-            <Text style={styles.modalTitleText}>
-              {dogamOwnerName} 님의 도감
+              * 완료 시, 30코인 + 30점 지급
             </Text>
           </View>
-          <View style={styles.photoGrid}>
-            <FlatList
-              data={otherDogamPhoto}
-              keyExtractor={(o) => o.no}
-              numColumns={3}
-              renderItem={renderItem}
-            />
-          </View>
-          <View style={styles.closeButtonContainer}>
-            <Pressable
-              style={styles.closeButton}
-              onPress={() => setVisitModalVisible(false)}
-            >
-              <Text style={styles.closeButtonText}>닫기</Text>
-            </Pressable>
-          </View>
         </View>
-      </Modal>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={loadingModalVisible}
-        onRequestClose={() => {
-          setVisitModalVisible(!loadingModalVisible);
-        }}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.visitLoadingModal}>
-            <View style={styles.animationWrapper}>
-              <VisitLoading style={styles.animationStyle} />
-            </View>
-            <View style={styles.visitLoadingTextContainer}>
-              <Text style={styles.visitLoadingText}>잠시만 기다려주세요.</Text>
-            </View>
-          </View>
-        </View>
-      </Modal>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={detailModalVisible}
-        onRequestClose={() => {
-          setDetailModalVisible(!detailModalVisible);
-        }}
-      >
-        <View style={styles.modalContainer}>
-          <View>
+
+        <View style={{ alignItems: 'center' }}>
+          <Pressable onPress={() => handleVisit()}>
             <LinearGradient
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              colors={['#ffeee3', '#ffe2cb', '#ffd2a8']}
-              style={styles.visitDetailModal}
+              colors={['#ff9c5b', '#fc640d', '#e64900']}
+              style={styles.visitButton}
             >
-              <View style={styles.visitDetailAnimalNameTextContainer}>
-                <Text style={styles.visitDetailAnimalNameText}>
-                  {pressedAnimalName}
-                </Text>
-              </View>
-              <View style={styles.detailPhotoContainer}>
-                <FastImage
-                  source={{
-                    uri: `${Config.API_URL}/book/${pressedAnimalPhoto}`,
-                  }}
-                  resizeMode="contain"
-                  style={styles.detailPhoto}
-                />
-              </View>
-              <View style={styles.feedButtonContainer}>
-                <Pressable
-                  onPress={() => {
-                    setfeedlistModalVisible(true);
+              <Text style={styles.visitButtonText}>
+                다른 친구의 도감에 방문하기
+              </Text>
+            </LinearGradient>
+          </Pressable>
+        </View>
 
-                    // 먹이 보유 리스트 보여주기
-                    // 먹이선택시 동물이랑 비교-> 먹을 수 있는지 -> 성공/ 실패 -> 성공시 애니메이션, 실패시 동물이 못먹는 먹이
-                    // 퀘스트 부분 성공
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={yesQuestModalVisible}
+          onRequestClose={() => {
+            setyesQuestModalVisible(false);
+          }}
+        >
+          <View style={styles.encycloContainer}>
+            <QuestConfetti style={styles.animationStyle} />
+            <View style={[styles.buyresultContainer, { width: '100%' }]}>
+              <View style={styles.buyresultTextContainer}>
+                <Text
+                  style={[
+                    styles.ModalText,
+                    {
+                      fontFamily: 'Cafe24Shiningstar',
+                      fontSize: 28,
+                      marginTop: 10,
+                    },
+                  ]}
+                >
+                  퀘스트 완료!
+                </Text>
+                <QuestSuccess style={styles.animationStyle} />
+              </View>
+
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 15,
+                  fontFamily: 'OneMobileRegular',
+                  marginTop: 5,
+                }}
+              >
+                30코인과 30점이 지급되었습니다.
+              </Text>
+              <View style={{ alignItems: 'center' }}>
+                <Pressable
+                  style={[
+                    styles.ModalbuttonContainer,
+                    { padding: 8, width: '30%' },
+                  ]}
+                  onPress={() => {
+                    setyesQuestModalVisible(false);
                   }}
                 >
-                  <LinearGradient
-                    colors={['#ff9c5b', '#ff9239', '#ec7200']}
-                    style={styles.closeButton}
-                  >
-                    <Text style={styles.closeButtonText}>먹이주기</Text>
-                  </LinearGradient>
+                  <Text style={styles.visitButtonText}>확인</Text>
                 </Pressable>
               </View>
-              <View style={styles.closeButtonContainer}>
-                <Pressable onPress={() => setDetailModalVisible(false)}>
-                  <LinearGradient
-                    colors={['#5f5f5f', '#4d4d4d', '#383838']}
-                    style={styles.closeButton}
-                  >
-                    <Text style={styles.closeButtonText}>닫기</Text>
-                  </LinearGradient>
-                </Pressable>
-              </View>
-            </LinearGradient>
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={QuestModalVisible}
+          onRequestClose={() => {
+            setQuestModalVisible(!QuestModalVisible);
+          }}
+        >
+          <View style={styles.encycloContainer}>
+            <View style={styles.buyresultContainer}>
+              <View style={styles.buyresultTextContainer}>
+                <Text style={styles.ModalText}>퀘스트를 완료해주세요!</Text>
+              </View>
+              <Pressable
+                style={[styles.ModalbuttonContainer]}
+                onPress={() => {
+                  setQuestModalVisible(!QuestModalVisible);
+                }}
+              >
+                <Text style={styles.visitButtonText}>확인</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={nofeedModalVisible}
+          onRequestClose={() => {
+            setnofeedModalVisible(!nofeedModalVisible);
+          }}
+        >
+          <View style={styles.encycloContainer}>
+            <View style={styles.buyresultContainer}>
+              <View style={styles.buyresultTextContainer}>
+                <BuyFail style={styles.animationStyle} />
+                <Text
+                  style={[
+                    styles.bigtext,
+                    {
+                      fontSize: 18,
+                      padding: 3,
+                      marginBottom: 0,
+                      color: '#e45b00',
+                    },
+                  ]}
+                >
+                  먹이가 부족해요!
+                </Text>
+                <Text style={{ fontSize: 14, fontFamily: 'OneMobileRegular' }}>
+                  상점에서 먹이를 구매하세요.
+                </Text>
+              </View>
+              <Pressable
+                style={[styles.ModalbuttonContainer]}
+                onPress={() => {
+                  setnofeedModalVisible(!nofeedModalVisible);
+                  setDetailModalVisible(!detailModalVisible);
+                }}
+              >
+                <Text style={styles.visitButtonText}>확인</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={thanksModalVisible}
+          onRequestClose={() => {
+            setthanksModalVisible(!thanksModalVisible);
+          }}
+        >
+          <View style={styles.animalAnimationModalBG}>
+            {animationMatch()}
+            <Text style={styles.animalThanksText}>
+              "{userName}님, 고마워요. 잘 먹을게요!"
+            </Text>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={feedlistModalVisible}
+          onRequestClose={() => {
+            setfeedlistModalVisible(!feedlistModalVisible);
+          }}
+        >
+          <View style={styles.encycloContainer}>
+            <View style={styles.feedhaveContainer}>
+              <Text
+                style={[
+                  styles.ModalText,
+                  { fontFamily: 'OneMobileBold', marginTop: 5 },
+                ]}
+              >
+                필요한 먹이 리스트
+              </Text>
+
+              {feedanimalmatch()}
+              {(nofeedstate1 = false)}
+              <View
+                style={[styles.feedhavestateContainer, { marginBottom: 0 }]}
+              >
+                <Pressable
+                  style={[styles.ModalbuttonContainer]}
+                  onPress={() => {
+                    usefeed();
+                    if (nofeedstate1) {
+                      setnofeedModalVisible(!nofeedModalVisible);
+                      setfeedlistModalVisible(!feedlistModalVisible);
+                    } else {
+                      //비교
+                      if (questanimalname === pressedAnimalName) {
+                        //퀘스트 완료
+                        questChecker = true;
+                      }
+                      setthanksModalVisible(true);
+                      setTimeout(() => afterFeeding(), 3000);
+                    }
+                    //nofeedstate값을 바꾸고자함
+                  }}
+                >
+                  <Text style={styles.visitButtonText}>예</Text>
+                </Pressable>
+
+                <Pressable
+                  style={[styles.ModalbuttonContainer]}
+                  onPress={() => {
+                    setfeedlistModalVisible(!feedlistModalVisible);
+                  }}
+                >
+                  <Text style={styles.visitButtonText}>아니오</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="fade"
+          transparent={false}
+          visible={visitModalVisible}
+          onRequestClose={() => {
+            setVisitModalVisible(!visitModalVisible);
+          }}
+        >
+          <View style={styles.container}>
+            <View style={styles.modalTitleContainer}>
+              <Text style={styles.modalTitleText}>
+                {dogamOwnerName} 님의 도감
+              </Text>
+            </View>
+            <View style={styles.photoGrid}>
+              <FlatList
+                data={otherDogamPhoto}
+                keyExtractor={(o) => o.no}
+                numColumns={3}
+                renderItem={renderItem}
+              />
+            </View>
+            <View style={styles.closeButtonContainer}>
+              <Pressable
+                style={styles.closeButton}
+                onPress={() => setVisitModalVisible(false)}
+              >
+                <Text style={styles.closeButtonText}>닫기</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={loadingModalVisible}
+          onRequestClose={() => {
+            setVisitModalVisible(!loadingModalVisible);
+          }}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.visitLoadingModal}>
+              <View style={styles.animationWrapper}>
+                <VisitLoading style={styles.animationStyle} />
+              </View>
+              <View style={styles.visitLoadingTextContainer}>
+                <Text style={styles.visitLoadingText}>
+                  잠시만 기다려주세요.
+                </Text>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={detailModalVisible}
+          onRequestClose={() => {
+            setDetailModalVisible(!detailModalVisible);
+          }}
+        >
+          <View style={styles.modalContainer}>
+            <View>
+              <LinearGradient
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                colors={['#ffeee3', '#ffe2cb', '#ffd2a8']}
+                style={styles.visitDetailModal}
+              >
+                <View style={styles.visitDetailAnimalNameTextContainer}>
+                  <Text style={styles.visitDetailAnimalNameText}>
+                    {pressedAnimalName}
+                  </Text>
+                </View>
+                <View style={styles.detailPhotoContainer}>
+                  <FastImage
+                    source={{
+                      uri: `${Config.API_URL}/book/${pressedAnimalPhoto}`,
+                    }}
+                    resizeMode="contain"
+                    style={styles.detailPhoto}
+                  />
+                </View>
+                <View style={styles.feedButtonContainer}>
+                  <Pressable
+                    onPress={() => {
+                      setfeedlistModalVisible(true);
+
+                      // 먹이 보유 리스트 보여주기
+                      // 먹이선택시 동물이랑 비교-> 먹을 수 있는지 -> 성공/ 실패 -> 성공시 애니메이션, 실패시 동물이 못먹는 먹이
+                      // 퀘스트 부분 성공
+                    }}
+                  >
+                    <LinearGradient
+                      colors={['#ff9c5b', '#ff9239', '#ec7200']}
+                      style={styles.closeButton}
+                    >
+                      <Text style={styles.closeButtonText}>먹이주기</Text>
+                    </LinearGradient>
+                  </Pressable>
+                </View>
+                <View style={styles.closeButtonContainer}>
+                  <Pressable onPress={() => setDetailModalVisible(false)}>
+                    <LinearGradient
+                      colors={['#5f5f5f', '#4d4d4d', '#383838']}
+                      style={styles.closeButton}
+                    >
+                      <Text style={styles.closeButtonText}>닫기</Text>
+                    </LinearGradient>
+                  </Pressable>
+                </View>
+              </LinearGradient>
+            </View>
+          </View>
+        </Modal>
+      </ImageBackground>
     </View>
   );
 }
@@ -1177,6 +1191,10 @@ function Quest() {
 export default Quest;
 
 const styles = StyleSheet.create({
+  background: {
+    width: '100%',
+    height: '100%',
+  },
   heartAnimationStyle: {
     flex: 1,
     position: 'absolute',
@@ -1225,6 +1243,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: 'Cafe24Shiningstar',
     marginBottom: 20,
+    color: 'black',
   },
   visitLoadingModal: {
     backgroundColor: 'white',
@@ -1252,9 +1271,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F27E00',
   },
-  visitButtonContainer: {
-    alignItems: 'center',
-  },
   visitButtonText: {
     fontSize: 15,
     fontFamily: 'OneMobileRegluar',
@@ -1268,7 +1284,7 @@ const styles = StyleSheet.create({
   closeButton: {
     borderRadius: 10,
     padding: 10,
-    elevation: 2,
+    elevation: 5,
     width: Dimensions.get('window').width / 2,
     alignItems: 'center',
     backgroundColor: '#F27E00',
@@ -1390,7 +1406,8 @@ const styles = StyleSheet.create({
   buyresultContainer: {
     width: 250,
     height: 180,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     elevation: 10,
     backgroundColor: 'white',
   },
@@ -1418,15 +1435,14 @@ const styles = StyleSheet.create({
   },
   QuestContainer: {
     flexDirection: 'row',
-    borderRadius: 8,
-    padding: 6,
+    borderBottomRightRadius: 15,
+    padding: 15,
     marginHorizontal: 10,
     alignItems: 'center',
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'gray',
-    marginVertical: 5,
+    backgroundColor: '#fff7bb',
+    marginVertical: 20,
     paddingHorizontal: 20,
+    elevation: 10,
   },
   QuestTextContainer: {
     flexDirection: 'column',
