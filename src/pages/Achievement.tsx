@@ -57,7 +57,6 @@ function Achievement() {
       let achive5 = 0;
       let achive6 = 0;
       let achive7 = 0;
-
       let animalnum = 0;
       let achievenum = 0;
       await axios.get(`${Config.API_URL}/getachieve`).then((response) => {
