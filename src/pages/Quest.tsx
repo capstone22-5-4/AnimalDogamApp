@@ -109,7 +109,7 @@ function Quest() {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       });
-      console.log(response.data);
+
       setDogamOwnerName(response.data[0]);
       dispatch(photoSlice.actions.loadOtherPhotos(response.data));
     }
@@ -190,7 +190,6 @@ function Quest() {
     feeditems[3].num = 지렁이;
     feeditems[4].num = 사료;
     feeditems[5].num = 과일;
-    console.log('아이템', feeditems);
   }, [물고기, 풀, 소고기, 지렁이, 사료, 과일]);
 
   // 서버에서 사용자의 먹이 불러와서 redux에 저장하기
@@ -232,8 +231,6 @@ function Quest() {
   }
 
   let usefeed = async () => {
-    console.log('이용전 소고기수', feeditems[2].num);
-
     if (pressedAnimalName === '닭') {
       if (feeditems[1].num >= 1) {
         setfeeditems(
@@ -363,7 +360,6 @@ function Quest() {
           ),
         ),
           await axios.get(`${Config.API_URL}/use소고기`);
-        console.log('tiger', feeditems);
       } else {
         nofeedstate1 = true;
       }

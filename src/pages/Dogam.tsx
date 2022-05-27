@@ -67,9 +67,7 @@ function Dogam() {
         dispatch(photoSlice.actions.loadPhotos(response.data));
       } catch (error) {
         const errorResponse = (error as AxiosError).response;
-        console.log(errorResponse);
       }
-      //console.log(response.data);
     }
     async function getLessAnimals() {
       const response = await axios.get<{ data: String[] }>(
@@ -82,7 +80,6 @@ function Dogam() {
         },
       );
       dispatch(lessAnimalSlice.actions.setLessAnimal(response.data));
-      console.log(response.data);
     }
     getPhotos();
     getLessAnimals();

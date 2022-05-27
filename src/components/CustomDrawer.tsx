@@ -29,7 +29,6 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
   const onLogout = useCallback(async () => {
     try {
       const response = await axios.get(`${Config.API_URL}/user/logout`);
-      console.log(response.data);
       Alert.alert('알림', '로그아웃 되었습니다.');
       dispatch(
         userSlice.actions.setUser({

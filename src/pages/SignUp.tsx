@@ -79,7 +79,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
         '비밀번호는 영문,숫자를 조합하여 8자 이상 입력해주세요.',
       );
     }
-    console.log(email, name, nickname, password);
+
     try {
       setLoading(true);
       const data = {
@@ -98,7 +98,6 @@ function SignUp({ navigation }: SignUpScreenProps) {
           },
         },
       );
-      console.log(response.data);
       setLoading(false);
       Modal.alert('알림', '회원가입이 완료되었습니다.', [
         {

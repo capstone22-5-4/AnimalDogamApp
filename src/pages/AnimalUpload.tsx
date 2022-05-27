@@ -21,11 +21,10 @@ function AnimalUpload() {
           },
           withCredentials: true,
         });
-        //console.log(response.data);
+
         dispatch(userSlice.actions.setCredit(response.data));
       } catch (error) {
         const errorResponse = (error as AxiosError).response;
-        console.log(errorResponse);
       }
     }
     loadCoin();
@@ -40,11 +39,10 @@ function AnimalUpload() {
           },
           withCredentials: true,
         });
-        //console.log(response.data);
+
         dispatch(userSlice.actions.setScore(response.data));
       } catch (error) {
         const errorResponse = (error as AxiosError).response;
-        console.log(errorResponse);
       }
     }
     loadScore();

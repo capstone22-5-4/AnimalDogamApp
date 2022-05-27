@@ -62,7 +62,6 @@ function FeedShop() {
     feeditems[3].num = 지렁이;
     feeditems[4].num = 사료;
     feeditems[5].num = 과일;
-    console.log('아이템', feeditems);
   }, [물고기, 풀, 소고기, 지렁이, 사료, 과일]);
 
   const credits = useSelector((state: RootState) => state.user.credit); // 코인
