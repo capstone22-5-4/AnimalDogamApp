@@ -3,12 +3,12 @@ import {
   View,
   Text,
   ImageBackground,
-  Image,
   Pressable,
   Alert,
   StyleSheet,
 } from 'react-native';
 import {
+  DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
@@ -21,7 +21,7 @@ import userSlice from '../slices/user';
 import Config from 'react-native-config';
 import { Gravatar } from 'react-native-gravatar';
 
-const CustomDrawer = (props) => {
+const CustomDrawer = (props: DrawerContentComponentProps) => {
   const nickname = useSelector((state: RootState) => state.user.nickname);
   const email = useSelector((state: RootState) => state.user.email);
 
@@ -29,7 +29,6 @@ const CustomDrawer = (props) => {
   const onLogout = useCallback(async () => {
     try {
       const response = await axios.get(`${Config.API_URL}/user/logout`);
-      console.log(response.data);
       Alert.alert('알림', '로그아웃 되었습니다.');
       dispatch(
         userSlice.actions.setUser({

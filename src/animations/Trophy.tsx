@@ -11,7 +11,7 @@ function Trophy({ style }: StyleProps) {
       source={require('../../assets/animations/trophy.json')}
       autoPlay
       resizeMode="contain"
-      loop
+      loop={false}
       style={style}
     />
   );

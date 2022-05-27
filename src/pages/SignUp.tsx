@@ -4,7 +4,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Image,
+  Dimensions,
   Platform,
   Pressable,
   StyleSheet,
@@ -17,6 +17,11 @@ import { RootStackParamList } from '../../AppInner';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import axios, { AxiosError } from 'axios';
 import Config from 'react-native-config';
+import FastImage from 'react-native-fast-image';
+import { Modal, Provider } from '@ant-design/react-native';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
 
 type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
@@ -74,7 +79,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
         '비밀번호는 영문,숫자를 조합하여 8자 이상 입력해주세요.',
       );
     }
-    console.log(email, name, nickname, password);
+
     try {
       setLoading(true);
       const data = {
@@ -93,14 +98,27 @@ function SignUp({ navigation }: SignUpScreenProps) {
           },
         },
       );
-      console.log(response.data);
-      Alert.alert('알림', '회원가입이 완료되었습니다.');
       setLoading(false);
-      navigation.navigate('SignIn');
+      Modal.alert('알림', '회원가입이 완료되었습니다.', [
+        {
+          text: 'Cancel',
+          onPress: () => navigation.navigate('SignIn'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => navigation.navigate('SignIn') },
+      ]);
+      // setLoading(false);
+      // navigation.navigate('SignIn');
     } catch (error) {
       const errorResponse = (error as AxiosError).response;
       console.error(errorResponse);
-      Alert.alert('알림', '회원가입에 실패하였습니다.');
+      Modal.alert('로그인 실패', '회원가입에 실패하였습니다.', [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        { text: 'OK' },
+      ]);
       setLoading(false);
     } finally {
     }
@@ -108,96 +126,103 @@ function SignUp({ navigation }: SignUpScreenProps) {
 
   const canGoNext = email && name && nickname && password;
   return (
-    <DismissKeyboardView style={{ backgroundColor: 'white' }}>
-      <View style={styles.appLogoWrapper}>
-        <Image
-          source={{ uri: 'https://ifh.cc/g/Hsn11h.png' }} // Sample image
-          style={styles.appLogo}
-        />
-      </View>
-      <View style={styles.inputWrapper}>
-        <Text style={styles.label}>이름</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="이름을 입력해주세요."
-          placeholderTextColor="#666"
-          onChangeText={onChangeName}
-          value={name}
-          textContentType="name"
-          returnKeyType="next"
-          clearButtonMode="while-editing"
-          ref={nameRef}
-          onSubmitEditing={() => nicknameRef.current?.focus()}
-          blurOnSubmit={false}
-        />
-      </View>
-      <View style={styles.inputWrapper}>
-        <Text style={styles.label}>닉네임</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="닉네임을 입력해주세요."
-          placeholderTextColor="#666"
-          onChangeText={onChangeNickname}
-          value={nickname}
-          textContentType="nickname"
-          returnKeyType="next"
-          clearButtonMode="while-editing"
-          ref={nicknameRef}
-          onSubmitEditing={() => emailRef.current?.focus()}
-          blurOnSubmit={false}
-        />
-      </View>
-      <View style={styles.inputWrapper}>
-        <Text style={styles.label}>이메일</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={onChangeEmail}
-          placeholder="이메일을 입력해주세요."
-          placeholderTextColor="#666"
-          textContentType="emailAddress"
-          value={email}
-          returnKeyType="next"
-          clearButtonMode="while-editing"
-          ref={emailRef}
-          onSubmitEditing={() => passwordRef.current?.focus()}
-          blurOnSubmit={false} // 키보드 on 상태 유지
-        />
-      </View>
-      <View style={styles.inputWrapper}>
-        <Text style={styles.label}>비밀번호</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="영문, 숫자를 모두 포함하여 8자 이상"
-          placeholderTextColor="#666"
-          onChangeText={onChangePassword}
-          value={password}
-          keyboardType={Platform.OS === 'android' ? 'default' : 'ascii-capable'}
-          textContentType="password"
-          secureTextEntry
-          returnKeyType="send"
-          clearButtonMode="while-editing"
-          ref={passwordRef}
-          onSubmitEditing={onSubmit}
-        />
-      </View>
-      <View style={styles.buttonZone}>
-        <Pressable
-          style={
-            canGoNext
-              ? StyleSheet.compose(styles.loginButton, styles.loginButtonActive)
-              : styles.loginButton
-          }
-          disabled={!canGoNext || loading}
-          onPress={onSubmit}
-        >
-          {loading ? (
-            <ActivityIndicator color="white" />
-          ) : (
-            <Text style={styles.loginButtonText}>회원가입</Text>
-          )}
-        </Pressable>
-      </View>
-    </DismissKeyboardView>
+    <Provider>
+      <DismissKeyboardView style={{ backgroundColor: 'white' }}>
+        <View style={styles.appLogoWrapper}>
+          <FastImage
+            source={require('../../images/logo_one_line.jpg')} // Sample image
+            style={styles.appLogo}
+          />
+        </View>
+        <View style={styles.inputWrapper}>
+          <Text style={styles.label}>이름</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="이름을 입력해주세요."
+            placeholderTextColor="#666"
+            onChangeText={onChangeName}
+            value={name}
+            textContentType="name"
+            returnKeyType="next"
+            clearButtonMode="while-editing"
+            ref={nameRef}
+            onSubmitEditing={() => nicknameRef.current?.focus()}
+            blurOnSubmit={false}
+          />
+        </View>
+        <View style={styles.inputWrapper}>
+          <Text style={styles.label}>닉네임</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="닉네임을 입력해주세요."
+            placeholderTextColor="#666"
+            onChangeText={onChangeNickname}
+            value={nickname}
+            textContentType="nickname"
+            returnKeyType="next"
+            clearButtonMode="while-editing"
+            ref={nicknameRef}
+            onSubmitEditing={() => emailRef.current?.focus()}
+            blurOnSubmit={false}
+          />
+        </View>
+        <View style={styles.inputWrapper}>
+          <Text style={styles.label}>이메일</Text>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={onChangeEmail}
+            placeholder="이메일을 입력해주세요."
+            placeholderTextColor="#666"
+            textContentType="emailAddress"
+            value={email}
+            returnKeyType="next"
+            clearButtonMode="while-editing"
+            ref={emailRef}
+            onSubmitEditing={() => passwordRef.current?.focus()}
+            blurOnSubmit={false} // 키보드 on 상태 유지
+          />
+        </View>
+        <View style={styles.inputWrapper}>
+          <Text style={styles.label}>비밀번호</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="영문, 숫자를 모두 포함하여 8자 이상"
+            placeholderTextColor="#666"
+            onChangeText={onChangePassword}
+            value={password}
+            keyboardType={
+              Platform.OS === 'android' ? 'default' : 'ascii-capable'
+            }
+            textContentType="password"
+            secureTextEntry
+            returnKeyType="send"
+            clearButtonMode="while-editing"
+            ref={passwordRef}
+            onSubmitEditing={onSubmit}
+          />
+        </View>
+        <View style={styles.buttonZone}>
+          <Pressable
+            style={
+              canGoNext
+                ? StyleSheet.compose(
+                    styles.loginButton,
+                    styles.loginButtonActive,
+                  )
+                : styles.loginButton
+            }
+            disabled={!canGoNext || loading}
+            onPress={onSubmit}
+          >
+            {loading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text style={styles.loginButtonText}>회원가입</Text>
+            )}
+          </Pressable>
+        </View>
+      </DismissKeyboardView>
+    </Provider>
   );
 }
 
@@ -207,8 +232,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   appLogo: {
-    width: 156,
-    height: 112,
+    width: Dimensions.get('window').width - 70,
+    height: 80,
   },
   textInput: {
     padding: 5,

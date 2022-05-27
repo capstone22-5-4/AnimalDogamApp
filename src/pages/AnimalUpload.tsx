@@ -6,6 +6,7 @@ import Config from 'react-native-config';
 import { WebView } from 'react-native-webview';
 import userSlice from '../slices/user';
 import { useAppDispatch } from '../store';
+import AnimalUploadGuide from '../components/AnimalUploadGuide';
 
 function AnimalUpload() {
   const dispatch = useAppDispatch();
@@ -20,11 +21,10 @@ function AnimalUpload() {
           },
           withCredentials: true,
         });
-        //console.log(response.data);
+
         dispatch(userSlice.actions.setCredit(response.data));
       } catch (error) {
         const errorResponse = (error as AxiosError).response;
-        console.log(errorResponse);
       }
     }
     loadCoin();
@@ -39,7 +39,7 @@ function AnimalUpload() {
           },
           withCredentials: true,
         });
-        //console.log(response.data);
+
         dispatch(userSlice.actions.setScore(response.data));
       } catch (error) {
         const errorResponse = (error as AxiosError).response;
@@ -56,6 +56,7 @@ function AnimalUpload() {
           uri: `${Config.API_URL}/analmal`,
         }}
       />
+      <AnimalUploadGuide />
     </View>
   );
 }

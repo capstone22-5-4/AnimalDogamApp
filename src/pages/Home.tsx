@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useCallback } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
@@ -17,6 +18,10 @@ function Home({ navigation }: HomeScreenProps) {
 
   const toAchievement = useCallback(() => {
     navigation.navigate('Achievement');
+  }, [navigation]);
+
+  const toShop = useCallback(() => {
+    navigation.navigate('FeedShop');
   }, [navigation]);
 
   return (
@@ -42,7 +47,7 @@ function Home({ navigation }: HomeScreenProps) {
         <View style={styles.buttonImageContainer}>
           <Image
             source={require('../../images/home_dogam.png')}
-            style={styles.buttonImage}
+            style={[styles.buttonImage, { width: '80%', height: '80%' }]}
           />
         </View>
         <View style={styles.buttonTextContainer}>
@@ -72,6 +77,23 @@ function Home({ navigation }: HomeScreenProps) {
           <FontAwesome5Icon name="chevron-right" size={20} />
         </View>
       </Pressable>
+      <Pressable style={styles.mainButton} onPress={toShop}>
+        <View style={styles.buttonImageContainer}>
+          <Image
+            source={require('../../images/main_store.png')}
+            style={[styles.buttonImage, { width: '80%', height: '80%' }]}
+          />
+        </View>
+        <View style={styles.buttonTextContainer}>
+          <Text style={styles.buttonMainText}>상점</Text>
+          <Text style={styles.buttonSubText} numberOfLines={1}>
+            동물들의 먹이가 필요한가요?
+          </Text>
+        </View>
+        <View style={styles.icon}>
+          <FontAwesome5Icon name="chevron-right" size={20} />
+        </View>
+      </Pressable>
     </View>
   );
 }
@@ -92,18 +114,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'gray',
+
     marginVertical: 15,
     flexDirection: 'row',
     paddingHorizontal: 20,
+    elevation: 5,
   },
   buttonImage: {
     resizeMode: 'contain',
     width: '100%',
     height: '100%',
   },
-  buttonImageContainer: { flex: 3.5 },
+  buttonImageContainer: { flex: 3.5, alignItems: 'center' },
   buttonTextContainer: {
     flex: 8,
     alignItems: 'flex-start',
@@ -112,12 +134,15 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   buttonMainText: {
-    color: 'black',
+    color: '#f78400',
     fontSize: 22,
     fontFamily: 'OneMobileBold',
     marginRight: 15,
   },
-  buttonSubText: { fontFamily: 'OneMobileRegular', paddingTop: 3 },
+  buttonSubText: {
+    fontFamily: 'OneMobileRegular',
+    paddingTop: 3,
+  },
   icon: { flex: 0.5 },
 });
 

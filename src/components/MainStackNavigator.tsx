@@ -7,6 +7,7 @@ import Achievement from '../pages/Achievement';
 import { Pressable, StyleSheet } from 'react-native';
 import { LoggedInParamList } from '../../AppInner';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import FeedShop from '../pages/FeedShop';
 
 const Stack = createStackNavigator<LoggedInParamList>();
 
@@ -30,7 +31,7 @@ const MainStackNavigator = ({ navigation }) => {
               />
             </Pressable>
           ),
-          title: '홈',
+          title: '신비한 동물도감',
           headerStyle: {
             borderBottomWidth: 1,
             borderBottomColor: 'gray',
@@ -62,6 +63,10 @@ const MainStackNavigator = ({ navigation }) => {
           headerTitleStyle: {
             fontFamily: 'OneMobileBold',
           },
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: 'gray',
+          },
         }}
       />
       <Stack.Screen
@@ -72,6 +77,25 @@ const MainStackNavigator = ({ navigation }) => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontFamily: 'OneMobileBold',
+          },
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: 'gray',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="FeedShop"
+        component={FeedShop}
+        options={{
+          title: '상점',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'OneMobileBold',
+          },
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: 'gray',
           },
         }}
       />
