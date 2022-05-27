@@ -18,6 +18,7 @@ type AchiveProps = {
 
 function Achievement() {
   const [animals, setanimals] = useState([]);
+  const [animalnum, setanimalnum] = useState(0);
   const [achiv1, setachiv1] = useState(0);
   const [achiv2, setachiv2] = useState(0);
   const [achiv3, setachiv3] = useState(0);
@@ -66,11 +67,10 @@ function Achievement() {
       await axios.get(`${Config.API_URL}/book/list/has`).then((response) => {
         animalnum = response.data.length;
         setanimals(response.data);
-        AsyncStorage.setItem('animalnum', String(animalnum), () => {});
+        setanimalnum(response.data.length)
       });
       //업적 1 달성여부
 
-      await AsyncStorage.getItem('animalnum', (err, result) => {});
 
       await AsyncStorage.getItem(nickname + '업적1', (err, result) => {
         if (result === '1') {
@@ -198,7 +198,7 @@ function Achievement() {
       }
     }
     getinformation();
-  }, []);
+  }, [animalnum]);
 
   return (
     <ScrollView style={{ backgroundColor: '#ffe3c8' }}>
