@@ -43,6 +43,7 @@ function AnimalUpload() {
         dispatch(userSlice.actions.setScore(response.data));
       } catch (error) {
         const errorResponse = (error as AxiosError).response;
+        console.log(errorResponse);
       }
     }
     loadScore();

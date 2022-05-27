@@ -60,18 +60,13 @@ function Achievement() {
       let animalnum = 0;
       let achievenum = 0;
       await axios.get(`${Config.API_URL}/getachieve`).then((response) => {
-        console.log('업적 횟수: ', response.data);
         achievenum = response.data;
       });
 
       await axios.get(`${Config.API_URL}/book/list/has`).then((response) => {
-        console.log(response.data);
         animalnum = response.data.length;
         setanimals(response.data);
-        AsyncStorage.setItem('animalnum', String(animalnum), () => {
-          console.log('AsyncStorage에 저장');
-        });
-        console.log(response.data.length);
+        AsyncStorage.setItem('animalnum', String(animalnum), () => {});
       });
       //업적 1 달성여부
 
@@ -84,7 +79,6 @@ function Achievement() {
         }
       });
       await AsyncStorage.getItem(nickname + '업적2', (err, result) => {
-        console.log('업적2:', result);
         if (result === '1') {
           achive2 = 1; //to check
           setachiv2(achive2);
@@ -121,31 +115,22 @@ function Achievement() {
         }
       });
 
-      //console.log("업적1 변수: useeffect11111 : " , achive1);
-      //console.log("업적1 변수: useeffect22222 : " , achive1);
       if (animalnum >= 5 && achive1 === 0) {
-        AsyncStorage.setItem(nickname + '업적1', '1', () => {
-          console.log('업적 1 1번 완료 후 더이상들어오지않음');
-        });
+        AsyncStorage.setItem(nickname + '업적1', '1', () => {});
         //보상
         pluscoin10andscore20();
       }
       if (animalnum >= 10 && achive2 === 0) {
-        AsyncStorage.setItem(nickname + '업적2', '1', () => {
-          console.log('업적 2 1번 완료 후 더이상들어오지않음');
-        });
+        AsyncStorage.setItem(nickname + '업적2', '1', () => {});
         //보상
         pluscoin10andscore20();
       }
       if (achievenum >= 10 && achive3 === 0) {
-        AsyncStorage.setItem(nickname + '업적3', '1', () => {
-          console.log('업적 3 1번 완료 후 더이상들어오지않음');
-        });
+        AsyncStorage.setItem(nickname + '업적3', '1', () => {});
         //보상
         pluscoin25andscore40();
       }
 
-      console.log('업적 점수 : ', achievenum);
       //cuteanimal... achivement4
       let cuteanimal = 0;
       animals.map((name) =>
@@ -159,9 +144,7 @@ function Achievement() {
       );
 
       if (cuteanimal >= 3 && achive4 === 0) {
-        AsyncStorage.setItem(nickname + '업적4', '1', () => {
-          console.log('업적 4 1번 완료 후 더이상들어오지않음');
-        });
+        AsyncStorage.setItem(nickname + '업적4', '1', () => {});
         //보상
         pluscoin25andscore40();
       }
@@ -179,9 +162,7 @@ function Achievement() {
       );
 
       if (biganimal >= 3 && achive5 === 0) {
-        AsyncStorage.setItem(nickname + '업적5', '1', () => {
-          console.log('업적 5 1번 완료 후 더이상들어오지않음');
-        });
+        AsyncStorage.setItem(nickname + '업적5', '1', () => {});
         //보상
         pluscoin25andscore40();
       }
@@ -206,16 +187,12 @@ function Achievement() {
       );
 
       if (smallanimal >= 4 && achive6 === 0) {
-        AsyncStorage.setItem(nickname + '업적6', '1', () => {
-          console.log('업적 6 1번 완료 후 더이상들어오지않음');
-        });
+        AsyncStorage.setItem(nickname + '업적6', '1', () => {});
         //보상
         pluscoin40andscore70();
       }
       if (achievenum >= 20 && achive7 === 0) {
-        AsyncStorage.setItem(nickname + '업적7', '1', () => {
-          console.log('업적 7 1번 완료 후 더이상들어오지않음');
-        });
+        AsyncStorage.setItem(nickname + '업적7', '1', () => {});
         //보상
         pluscoin50andscore90();
       }
