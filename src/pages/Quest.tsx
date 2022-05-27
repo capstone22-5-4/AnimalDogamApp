@@ -71,61 +71,52 @@ function Quest() {
     '시바견',
   ];
   useEffect(() => {
-    
     getanimalname();
     getcheckquest();
   }, []);
 
   //마구 바꾸면 안됨. 처음, 완료시
 
-  const getanimalname = async ()=>{
-    await AsyncStorage.getItem(userName+'퀘스트동물', (err, result) => {
-      if (result != null){
-        setquestanimalname(result)
+  const getanimalname = async () => {
+    await AsyncStorage.getItem(userName + '퀘스트동물', (err, result) => {
+      if (result != null) {
+        setquestanimalname(result);
       }
     });
-    
-  }
-  const getcheckquest = async ()=>{
-    await AsyncStorage.getItem(userName+'퀘스트체크', (err, result) => {
-
-      if (result != null){
-        if (result == '0'){
-          setquestcheck(false)
+  };
+  const getcheckquest = async () => {
+    await AsyncStorage.getItem(userName + '퀘스트체크', (err, result) => {
+      if (result != null) {
+        if (result == '0') {
+          setquestcheck(false);
+        } else {
+          setquestcheck(true);
         }
-        else{
-          setquestcheck(true)
-        }
-        
       }
-      
     });
-    
-  }
+  };
 
   const changequestanimalname = async () => {
-
     const rand_0_10 = Math.floor(Math.random() * 11);
     setquestanimalname(questanimallist[rand_0_10]);
-    AsyncStorage.setItem(userName+'퀘스트동물', questanimallist[rand_0_10], () => {
-      console.log('퀘스트 완료시 셋팅')
-    });
-
+    AsyncStorage.setItem(
+      userName + '퀘스트동물',
+      questanimallist[rand_0_10],
+      () => {
+        console.log('퀘스트 완료시 셋팅');
+      },
+    );
   };
 
-  const setquestcheck0= async () => {
-
-    AsyncStorage.setItem(userName+'퀘스트체크', '0', () => {
-      console.log('0할당')
+  const setquestcheck0 = async () => {
+    AsyncStorage.setItem(userName + '퀘스트체크', '0', () => {
+      console.log('0할당');
     });
-
   };
-  const setquestcheck1= async () => {
-
-    AsyncStorage.setItem(userName+'퀘스트체크', '1', () => {
-      console.log('1할당')
+  const setquestcheck1 = async () => {
+    AsyncStorage.setItem(userName + '퀘스트체크', '1', () => {
+      console.log('1할당');
     });
-
   };
 
   const dispatch = useAppDispatch();
@@ -882,7 +873,6 @@ function Quest() {
               } else {
                 setQuestModalVisible(!QuestModalVisible);
               }
-              
             }}
           >
             <Text style={styles.visitButtonText}>완료</Text>
