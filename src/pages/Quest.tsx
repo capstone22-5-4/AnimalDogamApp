@@ -855,6 +855,34 @@ function Quest() {
           </View>
         </View>
 
+        <View
+          style={[
+            styles.QuestContainer,
+            { backgroundColor: '#faedfc', marginTop: 0 },
+          ]}
+        >
+          <View style={styles.Questiondivide}>
+            <View style={styles.QuestTextContainer}>
+              <Text
+                style={{
+                  fontFamily: 'Cafe24Shiningstar',
+                  fontSize: 30,
+                  color: '#000',
+                }}
+              >
+                새로운 퀘스트를 준비중입니다...
+              </Text>
+            </View>
+            <Text
+              style={{
+                fontFamily: 'Cafe24Shiningstar',
+                fontSize: 13,
+                marginTop: 10,
+              }}
+            ></Text>
+          </View>
+        </View>
+
         <View style={{ alignItems: 'center' }}>
           <Pressable onPress={() => handleVisit()}>
             <LinearGradient
